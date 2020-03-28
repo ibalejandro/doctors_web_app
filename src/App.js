@@ -7,6 +7,7 @@ import {
 
 import Reports from "./containers/Reports/Reports"
 import Login from "./containers/Login/Login"
+import VideoCall from "./containers/VideoCall/VideoCall"
 
 function App() {
     return (
@@ -21,7 +22,9 @@ function App() {
                 <Route path={"/reports"} exact>
                     <Reports/>
                 </Route>
-
+                <Route path={"/videocall"} exact>
+                    <VideoCall/>
+                </Route>
             </Router>
         </div>
 );
