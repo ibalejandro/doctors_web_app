@@ -8,7 +8,7 @@ function UserList() {
   	<>
   	<h1>Lista de usuarios</h1>
   	<br />
-    <Card border="danger" style={{ width: '18rem' }}>
+    <Card border="danger" style={{ width: '40rem' }}>
     	<Card.Header>Juan Sebastián Jaramillo</Card.Header>
 	    <Card.Body>
 	    	<Card.Title><strong>Puntaje: 14</strong></Card.Title>
@@ -21,7 +21,7 @@ function UserList() {
     	</Card.Body>
   	</Card>
   	<br />
-  	<Card border="secondary" style={{ width: '18rem' }}>
+  	<Card border="secondary" style={{ width: '40rem' }}>
     	<Card.Header>Camilo Velásquez</Card.Header>
 	    <Card.Body>
 	    	<Card.Title><strong>Puntaje: 10</strong></Card.Title>
@@ -34,7 +34,7 @@ function UserList() {
     	</Card.Body>
   	</Card>
   	<br />
-  	<Card border="primary" style={{ width: '18rem' }}>
+  	<Card border="primary" style={{ width: '40rem' }}>
     	<Card.Header>Alejandro Sánchez</Card.Header>
 	    <Card.Body>
 	    	<Card.Title><strong>Puntaje: 11</strong></Card.Title>
@@ -47,7 +47,7 @@ function UserList() {
     	</Card.Body>
   	</Card>
   	<br />
-  	<Card border="success" style={{ width: '18rem' }}>
+  	<Card border="success" style={{ width: '40rem' }}>
     	<Card.Header>Felipe Torres</Card.Header>
 	    <Card.Body>
 	    	<Card.Title><strong>Puntaje: 9</strong></Card.Title>

@@ -23,8 +23,7 @@ function App() {
       </header>
     </div>
     */
-    <UserList>
-    </UserList>
+    <UserList />
   );
 }
 
