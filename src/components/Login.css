@@ -1,0 +1,80 @@
+.Login {
+    background: LightBlue;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.login-container {
+    margin-top: 10vh;
+    flex-grow: 1;
+}
+.login-container .login-header{
+    text-align: center;
+}
+
+.login-container .login-header h1 {
+    font-size: 5em;
+    font-weight: 900;
+    color: #43B6C5;
+}
+.login-container .login-header h2 {
+    font-size: 3em;
+    font-weight: 800;
+}
+.login-container .login-header h3 {
+    font-size: 2em;
+    font-weight: 600;
+    color: #4c4c4c;
+}
+.login-container .login-content {
+    margin-top: 20px;
+    padding: 10px;
+}
+.login-content {
+    display: flex;
+    flex-direction: column;
+}
+.login-content > div.input-container {
+    flex-grow: 1;
+    display: block;
+    margin-top: 10px;
+}
+.login-content div.input-container label {
+    display: block;
+    text-align: center;
+    line-height: 150%;
+    font-size: 1.2em;
+}
+
+
+.login-content div.input-container input {
+    display: block;
+    border: none;
+    height: 35px;
+    font-size: 1.5em;
+    background-color: #f7f7f7;
+    border-radius: 2px;
+    width: 50%;
+    padding-left: 10px;
+    margin-left: 275px;
+}
+.login-content div.input-container input:focus {
+    outline: none;
+}
+.login-content div.input-container button:focus {
+    outline: none;
+}
+.login-content button.submit {
+    margin-top: 35px;
+    border: none;
+    background-color: #D5E962;
+    width: 50%;
+    font-size: 1.5em;
+    font-weight: 800;
+    margin-left: 275px;
+}
+.login-errors>span.error {
+    color: #FC5A5A;
+}
