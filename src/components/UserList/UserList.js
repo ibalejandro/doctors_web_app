@@ -8,8 +8,8 @@ import styled from 'styled-components';
 
 const Color = styled.div`
     background-color: red;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     color: white;
     font-weight: bold;
     text-align: center;
@@ -22,8 +22,11 @@ function UserList({reports}) {
             <Card key={r.citizenId}>
                 <Accordion.Toggle as={Card.Header} eventKey={index}>
                     <Row>
-                        <Col xs="auto"><Color>{r.score}</Color></Col>
-                        <Col>{r.name} (Edad: {r.age})</Col>
+                        <Col xs="auto">
+                            <Color>{r.score}</Color>
+                        </Col>
+                        <Col xs="auto">{r.name}</Col>
+                        <Col>(Edad: {r.age})</Col>
                         <Col xs="auto">{r.city}</Col>
                         <Col xs="auto">{r.citizenId}</Col>
                     </Row>
