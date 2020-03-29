@@ -7,6 +7,8 @@ import {
 
 import Reports from "./containers/Reports/Reports"
 import Login from "./containers/Login/Login"
+import Cases from "./containers/Cases/Cases";
+import CaseDetail from "./containers/CaseDetail/CaseDetail";
 
 function App() {
     return (
@@ -21,7 +23,12 @@ function App() {
                 <Route path={"/reports"} exact>
                     <Reports/>
                 </Route>
-
+                <Route path={"/cases"} exact>
+                    <Cases/>
+                </Route>
+                <Route path={"/cases/:id"} exact>
+                    <CaseDetail/>
+                </Route>
             </Router>
         </div>
 );

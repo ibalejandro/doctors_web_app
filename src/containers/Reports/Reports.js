@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import UserList from "../../components/UserList/UserList"
 import ReportsAPI from "../../services/ReportsAPI"
 
-const Reports = ({}) => {
+const Reports = () => {
 
     const [userReports, setUserReports] = useState([])
 
