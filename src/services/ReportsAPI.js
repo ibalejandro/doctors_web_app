@@ -16,7 +16,7 @@ class ReportsAPI {
                 name: "John Doe",
                 citizenId: "123456789",
                 city: "Medellín",
-                score: '5',
+                score: 20,
                 comorbidity: {
                     EPOC: true,
                 },
@@ -50,7 +50,7 @@ class ReportsAPI {
                 name: "Asdf Jkl",
                 citizenId: "98765432",
                 city: "Medellín",
-                score: '10',
+                score: 10,
                 comorbidity: {
                     EPOC: true,
                 },
