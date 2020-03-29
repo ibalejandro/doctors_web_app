@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import UserList from "../../components/UserList/UserList"
 import ReportsAPI from "../../services/ReportsAPI"
+import Container from 'react-bootstrap/Container';
 
 const Reports = () => {
 
@@ -16,9 +17,10 @@ const Reports = () => {
     },[])
 
     return (
-        <div>
+        <Container>
+            <h3>Reports</h3>
             <UserList reports={userReports}/>
-        </div>
+        </Container>
     )
 }
 
