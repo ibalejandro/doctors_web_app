@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'
 import UserList from "../../components/UserList/UserList"
 import ReportsAPI from "../../services/ReportsAPI"
 import Container from 'react-bootstrap/Container';
+import {useAuth0} from "../../shared/Auth";
 
 const Reports = () => {
+
+    const {loading} = useAuth0()
 
     const [userReports, setUserReports] = useState([])
 
@@ -15,6 +18,8 @@ const Reports = () => {
         }
         getUserReports()
     },[])
+
+    if(loading) return <div>Loading...</div>
 
     return (
         <Container>

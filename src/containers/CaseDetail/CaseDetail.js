@@ -8,6 +8,7 @@ import CasesAPI from "../../services/CasesAPI";
 import {useParams} from "react-router";
 import ReportsAPI from "../../services/ReportsAPI";
 import styled from "styled-components";
+import {useAuth0} from "../../shared/Auth";
 
 const CaseDetailContainer = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ const ReportSideContainer = styled.div`
 const CaseDetail = () => {
     //TODO: LOAD FROM HISTORY PROPS THE PATH to get the caseId
 
+    const { loading } = useAuth0()
     const {caseId} = useParams()
     const [caseState, setCaseState] = useState([])
     const [report, setReport] = useState({})
@@ -56,6 +58,8 @@ const CaseDetail = () => {
         }
         loadReportData()
     }, [caseId])
+
+    if(loading) return <div>Loading...</div>
 
     return (
         <CaseDetailContainer>

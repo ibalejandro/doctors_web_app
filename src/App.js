@@ -11,6 +11,7 @@ import CaseDetail from "./containers/CaseDetail/CaseDetail";
 import VideoCall from "./containers/VideoCall/VideoCall"
 import {useAuth0} from "./shared/Auth";
 import NavBar from "./components/NavBar/NavBar";
+import PrivateRoute from "./shared/PrivateRoute";
 
 
 function App() {
@@ -30,15 +31,15 @@ function App() {
                 <Route path={"/login"} exact>
                     <Login/>
                 </Route>
-                <Route path={"/reports"} exact>
+                <PrivateRoute path={"/reports"} exact>
                     <Reports/>
-                </Route>
-                <Route path={"/cases/:id"} exact>
+                </PrivateRoute>
+                <PrivateRoute path={"/cases/:id"} exact>
                     <CaseDetail/>
-                </Route>
-                <Route path={"/videocall"} exact>
+                </PrivateRoute>
+                <PrivateRoute path={"/videocall"} exact>
                     <VideoCall/>
-                </Route>
+                </PrivateRoute>
             </Router>
         </div>
     );
