@@ -24,17 +24,15 @@ function App() {
                 <Route path={"/reports"} exact>
                     <Reports/>
                 </Route>
-
                 <Route path={"/cases/:id"} exact>
                     <CaseDetail/>
-                    </Route>
-
+                </Route>
                 <Route path={"/videocall"} exact>
                     <VideoCall/>
                 </Route>
             </Router>
         </div>
-);
+    );
 }
 
 export default App;
