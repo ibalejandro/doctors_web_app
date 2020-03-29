@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import VoxImplantManager from "../../services/VoxImplantManager"
+import CallWidget from "../../components/CallWidget/CallWidget"
 
 VoxImplantManager.setUp()
-// VoxImplantManager.makeCall("+573163703362")
 
 const VideoCall = ({}) => {
 
@@ -18,9 +18,19 @@ const VideoCall = ({}) => {
         getUserReports()
     },[])
     */
+
+    function onCall(numberToCall) {
+        numberToCall = "+57" + numberToCall
+        VoxImplantManager.makeCall(numberToCall)
+    }
+
+    function onHangUp() {
+        VoxImplantManager.hangUp()
+    }
+
     return (
         <div>
-            <h1>Video Call</h1>
+            <CallWidget onCall={onCall} onHangUp={onHangUp} />
         </div>
     )
 }
