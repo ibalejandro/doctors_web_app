@@ -28,6 +28,9 @@ function App() {
                 <Route path={"/"}>
                     <NavBar/>
                 </Route>
+                <Route path={"/"} exact>
+                    <Reports/>
+                </Route>
                 <Route path={"/login"} exact>
                     <Login/>
                 </Route>

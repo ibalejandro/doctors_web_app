@@ -7,12 +7,12 @@ import Col from 'react-bootstrap/Col';
 import styled from 'styled-components';
 
 const Color = styled.div`
-    background-color: red;
     width: 25px;
     height: 25px;
     color: white;
     font-weight: bold;
     text-align: center;
+    background-color: ${props => props.score <= 15 ? "green" : (props.score <= 30 ? "yellow" : "red")};
 `;
 
 function UserList({reports}) {
@@ -23,7 +23,7 @@ function UserList({reports}) {
                 <Accordion.Toggle as={Card.Header} eventKey={index}>
                     <Row>
                         <Col xs="auto">
-                            <Color>{r.score}</Color>
+                            <Color score={r.score}>{r.score}</Color>
                         </Col>
                         <Col xs="auto">{r.name}</Col>
                         <Col>(Edad: {r.age})</Col>
