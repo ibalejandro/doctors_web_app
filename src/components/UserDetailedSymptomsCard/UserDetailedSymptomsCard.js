@@ -19,7 +19,7 @@ const UserDetailedSymptomsCard = ({score = "", age="",
                   ));
 
     return (
-        <Card className="flush" style={{width: '40rem'}}>
+        <Card className="flush">
             <Card.Header as="h5">Reporte</Card.Header>
             <Card.Body>
                 <Card.Title><strong>Puntaje: </strong>{score}</Card.Title>
