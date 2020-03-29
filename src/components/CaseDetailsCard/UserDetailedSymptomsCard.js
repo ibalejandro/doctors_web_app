@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { ListGroupItem, Button, ButtonToolbar } from "react-bootstrap";
 
-const UserDetailedSymptomsCard = ({name="", score="", age="",
+const UserDetailedSymptomsCard = ({score = "", age="",
                                    postalCode="", hasBeenTested="", testResult="",
                                    sex="", symptoms=["sim", 'sim2'], symptomStart= "",
                                    hasBeenInContactWithInfected="",
@@ -20,7 +20,7 @@ const UserDetailedSymptomsCard = ({name="", score="", age="",
 
     return (
         <Card className="flush" style={{width: '40rem'}}>
-            <Card.Header as="h5">Reporte: {name}</Card.Header>
+            <Card.Header as="h5">Reporte</Card.Header>
             <Card.Body>
                 <Card.Title><strong>Puntaje: </strong>{score}</Card.Title>
                    <Card.Text>
