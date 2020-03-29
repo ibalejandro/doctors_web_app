@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import VoxImplantManager from "../../services/VoxImplantManager"
 import CallWidget from "../../components/CallWidget/CallWidget"
+import VideoCallWidget from "../../components/VideoCallWidget/VideoCallWidget"
 
 VoxImplantManager.setUp()
 
@@ -28,9 +29,15 @@ const VideoCall = ({}) => {
         VoxImplantManager.hangUp()
     }
 
+    function onVideoCall(citizenId) {
+        window.open("https://talky.io/" + citizenId)
+    }
+
     return (
         <div>
             <CallWidget onCall={onCall} onHangUp={onHangUp} />
+            <br />
+            <VideoCallWidget onVideoCall={onVideoCall} />
         </div>
     )
 }

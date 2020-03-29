@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React, {useState} from 'react'
 
 function CallWidget({onCall, onHangUp}) {
 
@@ -7,10 +7,9 @@ function CallWidget({onCall, onHangUp}) {
     return (
         <div>
         	<br />
-        	<input type="text" onChange={(e) => {setNumberToCall(e.target.value)}} value={numberToCall}></input>
-			<button onClick={() => {onCall(numberToCall)}}>Llamar</button>
-			<br />
-			<br />
+            <h2>1. Llamada para confirmar videollamada</h2>
+        	<input type="text" onChange={(e) => {setNumberToCall(e.target.value)}} value={numberToCall} placeholder="Número de contacto"></input>
+			<button onClick={() => {onCall(numberToCall)}} style={{marginLeft: '0.2em', marginRight: '1em'}}>Llamar</button>
 			<button onClick={onHangUp}>Colgar</button>
         </div>
     );
