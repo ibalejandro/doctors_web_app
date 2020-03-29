@@ -23,9 +23,6 @@ function App() {
                 <Route path={"/reports"} exact>
                     <Reports/>
                 </Route>
-                <Route path={"/cases"} exact>
-                    <Cases/>
-                </Route>
                 <Route path={"/cases/:id"} exact>
                     <CaseDetail/>
                 </Route>

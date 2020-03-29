@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REPORTS_API_URL = 'http://34.215.55.134:7272'
+const REPORTS_API_URL = 'http://34.215.55.134'
 
 class ReportsAPI {
     static async getUserReports() {
