@@ -1,6 +1,6 @@
 const voximplant = window.VoxImplant.getInstance();
-const username = "cduser@covidiagnostico.covidiagnostico.voximplant.com";
-const password = "covidglobalhackathon";
+const username = "blablabla";
+const password = "blablabla";
 var voximplantAuthorized = false;
 var call = null;
 
