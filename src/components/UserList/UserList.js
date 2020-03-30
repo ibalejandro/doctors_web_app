@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col';
 import styled from 'styled-components';
 
 const Color = styled.div`
+    display: inline-block;
+    margin-right: 20px;
     width: 25px;
     height: 25px;
     color: white;
@@ -22,13 +24,13 @@ function UserList({reports}) {
             <Card key={r.citizenId}>
                 <Accordion.Toggle as={Card.Header} eventKey={index}>
                     <Row>
-                        <Col xs="auto">
+                        <Col xs={4} md={3} lg={2}>
                             <Color score={r.score}>{r.score}</Color>
+                            {r.name}
                         </Col>
-                        <Col xs="auto">{r.name}</Col>
                         <Col>(Edad: {r.age})</Col>
-                        <Col xs="auto">{r.city}</Col>
-                        <Col xs="auto">{r.citizenId}</Col>
+                        <Col xs={4} md={2}>{r.city}</Col>
+                        <Col xs={4} md={2}>{r.citizenId}</Col>
                     </Row>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey={index}>
