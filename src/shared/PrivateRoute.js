@@ -8,8 +8,8 @@ const PrivateRoute = ({component: Component, path, ...rest}) => {
 
     useEffect(() => {
         const redirection = async () => {
-            //loginWithRedirect()
-            return <Route path={path} render={render} {...rest} />
+            loginWithRedirect()
+            //return <Route path={path} render={render} {...rest} />
         }
         if (!loading && !isAuthenticated) {
             redirection()
