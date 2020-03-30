@@ -23,7 +23,6 @@ class CasesAPI {
     }
 
     static async getDiagnosisForCase(caseId) {
-
         return {
             caseId: "id",
             diagnosis: "No tiene nada"
