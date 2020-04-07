@@ -1,10 +1,8 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
 
 const DoctorUserCommunication = (props) => {
-    const NUMBERTOCALL = "+573163703362";
-
     const [enableCallState, setEnableCallState] = useState({
         enableCall: true
     });
@@ -17,7 +15,9 @@ const DoctorUserCommunication = (props) => {
         callEnvAuthorized: false
     });
 
-    const callRef = useRef(null);
+    const callRef = useRef({
+        call: null
+    });
 
     const callHandler = () => {
         let enableCall = enableCallState.enableCall;
@@ -51,21 +51,21 @@ const DoctorUserCommunication = (props) => {
     }, []);
 
     useEffect(() => {
-        const myCallback = (identifier) => {
-            console.log(identifier);
-            /*
-            setCallState({
-                call: callAndMessage.call
+        const reportCallEvent = (callMessage) => {
+            if (callMessage !== "Conectado") {
+                setEnableCallState({
+                    enableCall: true
+                });
+            }
+            setCallMessageState({
+                callMessage: callMessage
             });
-             */
         };
         if (callEnvAuthorizedState.callEnvAuthorized) {
-            if (!enableCallState.enableCall && !callRef.current) {
-                alert("Making call...");
-                CallAPI.makeCall(callRef.current, NUMBERTOCALL, myCallback);
-            }
-            else if (enableCallState.enableCall && callRef.current) {
-                alert("Hanging up call...");
+            if (!enableCallState.enableCall && callRef.current.call === null) {
+                CallAPI.makeCall(callRef.current, props.userContactNumber, reportCallEvent);
+            } else if (enableCallState.enableCall && callRef.current.call !== null) {
+                CallAPI.hangUp(callRef.current);
             }
         }
 

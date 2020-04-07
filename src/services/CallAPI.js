@@ -13,7 +13,7 @@ class CallAPI {
             });
             // SDK was initialized.
             console.log("SDK initialized.")
-            voximplant.addEventListener(window.VoxImplant.Events.ConnectionClosed, () => {
+            voximplant.on(window.VoxImplant.Events.ConnectionClosed, () => {
                 // Connection was closed.
                 console.log("Connection closed.")
             });
@@ -43,54 +43,46 @@ class CallAPI {
         return callEnvAuthorized;
     }
 
-    static makeCall(call, numberToCall, myCallback) {
-        let callAndMessage = {call: null, callMessage: null};
-        console.log(call);
-        myCallback("hola amigo");
-        /*
-        call = voximplant.call(numberToCall);
+    static makeCall(callRef, numberToCall, reportCallEvent) {
+        if (!numberToCall.startsWith("+57")) {
+            numberToCall = "+57" + numberToCall;
+        }
 
-        call.addEventListener(window.VoxImplant.CallEvents.Connected, event => {
-             // Call was connected successfully.
+        callRef.call = voximplant.call(numberToCall);
+
+        callRef.call.on(window.VoxImplant.CallEvents.Connected, event => {
+            // Call was connected successfully.
             console.log("Call connected.");
-            callAndMessage.call = call;
-            callAndMessage.callMessage = "Conectado";
-            return callAndMessage;
+            reportCallEvent("Conectado");
         });
-        call.on(window.VoxImplant.CallEvents.Disconnected, event => {
+        callRef.call.on(window.VoxImplant.CallEvents.Disconnected, event => {
             // Call was disconnected.
             console.log("Call disconnected.");
-            myCallback("disconnected");
+            callRef.call = null;
+            reportCallEvent("Llamada finalizada");
         });
-        call.addEventListener(window.VoxImplant.CallEvents.Failed, event => {
+        callRef.call.on(window.VoxImplant.CallEvents.Failed, event => {
             // Call failed.
-            call = null
             console.log("Call failed.");
-            callAndMessage.call = null;
-            callAndMessage.callMessage = "Llamada finalizada";
-            return callAndMessage;
+            callRef.call = null;
+            reportCallEvent("Llamada finalizada");
         });
-        call.addEventListener(window.VoxImplant.CallEvents.ProgressToneStart, event => {
+        callRef.call.on(window.VoxImplant.CallEvents.ProgressToneStart, event => {
             // Progress tone playback started.
             console.log("Call ProgressTone started.");
-            myCallback("progresstonestart");
         });
-        call.on(window.VoxImplant.CallEvents.ProgressToneStop, event => {
+        callRef.call.on(window.VoxImplant.CallEvents.ProgressToneStop, event => {
             // Progress tone playback stopped.
             console.log("Call ProgressTone stopped.");
         });
-         */
     }
 
-    /*
-    static hangUp() {
-        if (call != null) {
-            console.log("Hanging up the call.")
-            call.hangup()
-            call = null
+    static hangUp(callRef) {
+        if (callRef.call !== null) {
+            callRef.call.hangup();
+            console.log("Call hanged up.")
         }
     }
-    */
 }
 
 export default CallAPI;

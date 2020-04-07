@@ -47,7 +47,7 @@ function App() {
                     <VideoCall/>
                 </PrivateRoute>
                 <PrivateRoute path={"/communication"} exact>
-                    <DoctorUserCommunication/>
+                    <DoctorUserCommunication userContactNumber={"3163703362"}/>
                 </PrivateRoute>
             </Router>
         </div>
