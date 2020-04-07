@@ -46,9 +46,9 @@ function App() {
                 <PrivateRoute path={"/videocall"} exact>
                     <VideoCall/>
                 </PrivateRoute>
-                <Route path={"/communication"} exact>
+                <PrivateRoute path={"/communication"} exact>
                     <DoctorUserCommunication/>
-                </Route>
+                </PrivateRoute>
             </Router>
         </div>
     );

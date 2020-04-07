@@ -17,14 +17,17 @@ export const StyledCardSubDiv = styled.div`
 `;
 
 export const StyledCallButton = styled.button`
-    background-color: ${props => !props.callStyle ? "#33ffa5" : "#ec3636"};
+    background-color: ${props => props.callStyle ? "#33ffa5" : "#ec3636"};
     border: 1px solid #000000;
     padding: 8px;
     margin: 1px 15px 0 15px;
     cursor: pointer;
     border-radius: 10px;
     &:hover {
-        background-color: ${props => !props.callStyle ? "#33ffd7" : "#ffcccb"};
+        background-color: ${props => props.callStyle ? "#33ffd7" : "#ffcccb"};
+    }
+    &:focus {
+        outline: none;
     }
 `;
 
@@ -37,6 +40,9 @@ export const StyledVideoCallButton = styled.button`
     border-radius: 10px;
     &:hover {
         background-color: #36c0e6;
+    }
+    &:focus {
+        outline: none;
     }
 `;
 

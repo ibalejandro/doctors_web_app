@@ -1,35 +1,87 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
-// import {StyledTogglePersonsButton} from "../../AppStyled";
+import CallAPI from "../../services/CallAPI";
 
-const doctorUserCommunication = (props) => {
-    /*
-    const togglePersonsButtonRef = useRef(null);
-    const authCtx = useContext(authContext);
+const DoctorUserCommunication = (props) => {
+    const NUMBERTOCALL = "+573163703362";
 
-    console.log(authCtx.authenticated);
+    const [enableCallState, setEnableCallState] = useState({
+        enableCall: true
+    });
+
+    const [callMessageState, setCallMessageState] = useState({
+        callMessage: null
+    });
+
+    const [callEnvAuthorizedState, setCallEnvAuthorizedState] = useState({
+        callEnvAuthorized: false
+    });
+
+    const callRef = useRef(null);
+
+    const callHandler = () => {
+        let enableCall = enableCallState.enableCall;
+        let callMessage = callMessageState.callMessage;
+        enableCall = !enableCall;
+        if (!enableCall) {
+            callMessage = "Llamando...";
+        } else {
+            callMessage = "Llamada finalizada";
+        }
+        setEnableCallState({
+            enableCall: enableCall
+        });
+        setCallMessageState({
+            callMessage: callMessage
+        });
+    };
 
     useEffect(() => {
-        console.log("[Cockpit.js] useEffect.");
-        // HTTP request.
+        const setUp = async () => {
+            const callEnvAuthorized = await CallAPI.setUp();
+            setCallEnvAuthorizedState({
+                callEnvAuthorized: callEnvAuthorized
+            });
+        };
+        setUp();
 
-        setTimeout(() => {
-            alert("Save data to cloud!");
-        }, 1000);
-
-        togglePersonsButtonRef.current.click();
         return (() => {
             // Clean up function.
-            console.log("[Cockpit.js] clean up work in useEffect.");
         });
     }, []);
-    */
+
+    useEffect(() => {
+        const myCallback = (identifier) => {
+            console.log(identifier);
+            /*
+            setCallState({
+                call: callAndMessage.call
+            });
+             */
+        };
+        if (callEnvAuthorizedState.callEnvAuthorized) {
+            if (!enableCallState.enableCall && !callRef.current) {
+                alert("Making call...");
+                CallAPI.makeCall(callRef.current, NUMBERTOCALL, myCallback);
+            }
+            else if (enableCallState.enableCall && callRef.current) {
+                alert("Hanging up call...");
+            }
+        }
+
+        return (() => {
+            // Clean up function.
+        });
+    }, [enableCallState]);
 
     return (
         <div>
-            <CommunicationCard/>
+            <CommunicationCard
+                enableCall={enableCallState.enableCall}
+                callMessage={callMessageState.callMessage}
+                callHandler={callHandler}/>
         </div>
     );
 };
 
-export default doctorUserCommunication;
+export default DoctorUserCommunication;

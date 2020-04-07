@@ -14,13 +14,16 @@ const communicationCard = (props) => {
         <StyledCardDiv>
             <h3>Comunicación</h3>
             <StyledCardSubDiv>
-                <StyledCallButton>
+                <StyledCallButton
+                    callStyle={props.enableCall}
+                    onClick={props.callHandler}>
                     <StyledCallIcon src={callIcon} alt="Llamada"/>
                 </StyledCallButton>
                 <StyledVideoCallButton>
                     <StyledCallIcon src={videoCallIcon} alt="Videollamada"/>
                 </StyledVideoCallButton>
             </StyledCardSubDiv>
+            <p>{props.callMessage}</p>
         </StyledCardDiv>
     );
 };
