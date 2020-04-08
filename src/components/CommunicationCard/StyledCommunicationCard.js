@@ -49,3 +49,11 @@ export const StyledVideoCallButton = styled.button`
 export const StyledCallIcon = styled.img`
     width: 50px;
 `;
+
+export const StyledVideoCallLink = styled.a`
+    visibility: ${props => props.videoCallCode === null ? "hidden" : "visible"};
+`;
+
+export const StyledVideoCallCodeSpan = styled.span`
+    font-weight: bold;
+`;

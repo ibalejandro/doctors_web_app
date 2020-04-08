@@ -19,6 +19,11 @@ const DoctorUserCommunication = (props) => {
         call: null
     });
 
+    const [videoCallCodeState, setVideoCallCodeState] = useState({
+        videoCallCode: null,
+        videoCallLink: '#'
+    });
+
     const callHandler = () => {
         let enableCall = enableCallState.enableCall;
         let callMessage = callMessageState.callMessage;
@@ -34,6 +39,14 @@ const DoctorUserCommunication = (props) => {
         setCallMessageState({
             callMessage: callMessage
         });
+    };
+
+    const videoCallHandler = () => {
+        const videoCallCode = Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15);
+        setVideoCallCodeState({
+            videoCallCode: videoCallCode,
+            videoCallLink: "https://talky.io/" + videoCallCode
+        })
     };
 
     useEffect(() => {
@@ -79,7 +92,10 @@ const DoctorUserCommunication = (props) => {
             <CommunicationCard
                 enableCall={enableCallState.enableCall}
                 callMessage={callMessageState.callMessage}
-                callHandler={callHandler}/>
+                videoCallCode={videoCallCodeState.videoCallCode}
+                videoCallLink={videoCallCodeState.videoCallLink}
+                callHandler={callHandler}
+                videoCallHandler={videoCallHandler}/>
         </div>
     );
 };
