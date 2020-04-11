@@ -23,7 +23,7 @@ const Reports = () => {
 
     return (
         <Container>
-            <h3>Reports</h3>
+            <h3 className="mb-3">Reports</h3>
             <UserList reports={userReports}/>
         </Container>
     )
