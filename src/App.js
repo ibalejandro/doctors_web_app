@@ -6,7 +6,6 @@ import {
 } from "react-router-dom"
 
 import Reports from "./containers/Reports/Reports"
-import Login from "./containers/Login/Login"
 import CaseDetail from "./containers/CaseDetail/CaseDetail";
 import {useAuth0} from "./shared/Auth";
 import NavBar from "./components/NavBar/NavBar";
@@ -24,15 +23,9 @@ function App() {
     return (
         <div>
             <Router>
-                <Route path={"/"}>
+                <PrivateRoute path={"/"}>
                     <NavBar/>
-                </Route>
-                <Route path={"/"} exact>
-                    <Reports/>
-                </Route>
-                <Route path={"/login"} exact>
-                    <Login/>
-                </Route>
+                </PrivateRoute>
                 <PrivateRoute path={"/reports"} exact>
                     <Reports/>
                 </PrivateRoute>
