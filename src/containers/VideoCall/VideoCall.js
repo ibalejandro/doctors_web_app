@@ -4,7 +4,7 @@ import VoxImplantManager from "../../services/VoxImplantManager"
 import CallWidget from "../../components/CallWidget/CallWidget"
 import VideoCallWidget from "../../components/VideoCallWidget/VideoCallWidget"
 
-VoxImplantManager.setUp()
+// VoxImplantManager.setUp()
 
 const VideoCall = ({}) => {
 
