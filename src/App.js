@@ -8,7 +8,6 @@ import {
 import Reports from "./containers/Reports/Reports"
 import Login from "./containers/Login/Login"
 import CaseDetail from "./containers/CaseDetail/CaseDetail";
-import DoctorUserCommunication from "./containers/DoctorUserCommunication/DoctorUserCommunication"
 import {useAuth0} from "./shared/Auth";
 import NavBar from "./components/NavBar/NavBar";
 import PrivateRoute from "./shared/PrivateRoute";
@@ -39,9 +38,6 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute path={"/cases/:id"} exact>
                     <CaseDetail/>
-                </PrivateRoute>
-                <PrivateRoute path={"/communication"} exact>
-                    <DoctorUserCommunication userContactNumber={"3163703362"}/>
                 </PrivateRoute>
             </Router>
         </div>
