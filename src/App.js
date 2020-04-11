@@ -8,7 +8,6 @@ import {
 import Reports from "./containers/Reports/Reports"
 import Login from "./containers/Login/Login"
 import CaseDetail from "./containers/CaseDetail/CaseDetail";
-import VideoCall from "./containers/VideoCall/VideoCall"
 import DoctorUserCommunication from "./containers/DoctorUserCommunication/DoctorUserCommunication"
 import {useAuth0} from "./shared/Auth";
 import NavBar from "./components/NavBar/NavBar";
@@ -19,11 +18,9 @@ function App() {
 
     const {loading} = useAuth0()
 
-    /*
-    if(loading) {
+    if (loading) {
         return <div>Loading...</div>
     }
-     */
 
     return (
         <div>
@@ -42,9 +39,6 @@ function App() {
                 </PrivateRoute>
                 <PrivateRoute path={"/cases/:id"} exact>
                     <CaseDetail/>
-                </PrivateRoute>
-                <PrivateRoute path={"/videocall"} exact>
-                    <VideoCall/>
                 </PrivateRoute>
                 <PrivateRoute path={"/communication"} exact>
                     <DoctorUserCommunication userContactNumber={"3163703362"}/>
