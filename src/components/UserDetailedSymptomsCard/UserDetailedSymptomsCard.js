@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
-import { ListGroupItem, Button, ButtonToolbar } from "react-bootstrap";
+import { ListGroupItem } from "react-bootstrap";
 
 const UserDetailedSymptomsCard = ({score = "", age="",
                                    postalCode="", hasBeenTested="", testResult="",
@@ -15,12 +15,12 @@ const UserDetailedSymptomsCard = ({score = "", age="",
                                    oxygen_saturation=""}) => {
     //debugger;
     const list_symp = symptoms.map((symp, idx) => (
-                    <ListGroupItem>Sintoma {idx}: {symp}</ListGroupItem>
+                    <ListGroupItem key={idx}>Sintoma {idx}: {symp}</ListGroupItem>
                   ));
 
     return (
-        <Card className="flush">
-            <Card.Header as="h5">Reporte</Card.Header>
+        <Card className="flush mb-4">
+            <Card.Header><strong>Reporte</strong></Card.Header>
             <Card.Body>
                 <Card.Title><strong>Puntaje: </strong>{score}</Card.Title>
                    <Card.Text>

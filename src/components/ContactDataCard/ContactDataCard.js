@@ -6,11 +6,11 @@ import './ContactDataCard.css'
 
 const ContactDataCard = ({phone="+57-310-333-3333"}) => {
     return (
-        <Card className="text-center">
-          <Card.Header><strong>Datos de Contacto</strong></Card.Header>
+        <Card>
+          <Card.Header><strong>Datos de contacto</strong></Card.Header>
           <Card.Body>
-            <Card.Title>Telefono de Contacto: {phone}</Card.Title>
-            <div class="center-comp">
+            <Card.Title className="text-center">Teléfono de contacto: {phone}</Card.Title>
+            <div className="center-comp">
               <ListGroup horizontal>
                 <ListGroup.Item variant="dark"><img src={require("./img/whatsapp.png")} width="50" alt="Wazap"/></ListGroup.Item>
                 <ListGroup.Item variant="success"><img src={require("./img/gmail.png")} width="50" alt="Gmail"/></ListGroup.Item>
@@ -23,7 +23,7 @@ const ContactDataCard = ({phone="+57-310-333-3333"}) => {
 };
 
 ContactDataCard.propTypes = {
-
+  phone: PropTypes.string
 };
 
 export default ContactDataCard;
