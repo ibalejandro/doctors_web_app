@@ -1,24 +1,31 @@
 import React from 'react';
-import Card from "react-bootstrap/Card";
-import Accordion from 'react-bootstrap/Accordion';
+import PropTypes from 'prop-types';
+import { Card } from "react-bootstrap";
+import UserBasicData from '../UserBasicData/UserBasicData';
 
-const NameAgeCard = ({name="Juan Sebastian Jaramillo", age="", id_num="", className}) => {
+const NameAgeCard = ({ name="Juan Sebastian Jaramillo", age="", citizenId="", city="", score=0 }) => {
     return (
-        <Accordion defaultActiveKey="0" className={`mb-4 ${className || ''}`}>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              {name} (Edad: {age} años)
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>Numero de Identificacion: {id_num}</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+      <Card className="mb-4">
+        <Card.Header className="border-bottom-0">
+          <UserBasicData
+            citizenId={citizenId}
+            age={age}
+            name={name}
+            city={city}
+            score={score}
+            showButton={false}
+          />
+        </Card.Header>
+      </Card>
     );
 };
 
 NameAgeCard.propTypes = {
-
+  citizenId: PropTypes.string,
+  name: PropTypes.string,
+  age: PropTypes.string,
+  city: PropTypes.string,
+  score: PropTypes.number
 };
 
 export default NameAgeCard;
