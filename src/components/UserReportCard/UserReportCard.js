@@ -16,7 +16,7 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
                     age={age}
                     name={name}
                     city={city}
-                    score={score}
+                    score={score.covidScore}
                     showButton={true}
                     onClickButton={onClickButton}
                 />
