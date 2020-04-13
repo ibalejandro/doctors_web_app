@@ -3,7 +3,7 @@ import { useAuth0 } from "../../shared/Auth";
 import { NavDropdown, Navbar, Container } from "react-bootstrap";
 
 const NavBar = () => {
-    const { isAuthenticated, logout } = useAuth0();
+    const { isAuthenticated, logout, user } = useAuth0();
 
     if (!isAuthenticated) {
         return <div>Loading...</div>
@@ -12,7 +12,7 @@ const NavBar = () => {
     return (
         <Navbar>
             <Container className="justify-content-end">
-                <NavDropdown title="Doctor Name" id="nav-dropdown" alignRight>
+                <NavDropdown title={user.nickname} id="nav-dropdown" alignRight>
                     {isAuthenticated && (
                         <NavDropdown.Item onClick={() => logout({})}>Log out</NavDropdown.Item>
                     )}

@@ -22,7 +22,7 @@ const SmallText = styled.p`
     margin-bottom: 0;
 `;
 
-const UserBasicData = ({ citizenId, age, name, city, score, showButton = true, onClickButton }) => {
+const UserBasicData = ({ id, age, name, city, score, showButton = true, onClickButton }) => {
     return (
         <Row>
             <Col xs={4} md={3}>
@@ -38,7 +38,7 @@ const UserBasicData = ({ citizenId, age, name, city, score, showButton = true, o
                 </div>
             </Col>
             <Col>{age} años</Col>
-            <Col md={3} lg={2} className="d-none d-md-block">C.C. {citizenId}</Col>
+            <Col md={3} lg={2} className="d-none d-md-block">id {id}</Col>
             {showButton && (
                 <Col xs="auto">
                     <Button onClick={onClickButton}>
@@ -51,7 +51,7 @@ const UserBasicData = ({ citizenId, age, name, city, score, showButton = true, o
 };
 
 UserBasicData.propTypes = {
-    citizenId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     age: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
 
-const UserReportCard = ({ citizenId, age, name, city, score, comorbidity, symptoms, index }) => {
+const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
     const onClickButton = (e) => {
         e.stopPropagation();
     };
@@ -12,7 +12,7 @@ const UserReportCard = ({ citizenId, age, name, city, score, comorbidity, sympto
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey={index}>
                 <UserBasicData
-                    citizenId={citizenId}
+                    id={id}
                     age={age}
                     name={name}
                     city={city}
@@ -53,7 +53,7 @@ const UserReportCard = ({ citizenId, age, name, city, score, comorbidity, sympto
 };
 
 UserReportCard.propTypes = {
-    citizenId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     age: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,

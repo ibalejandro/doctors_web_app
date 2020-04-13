@@ -7,19 +7,22 @@ import {useAuth0} from "../../shared/Auth";
 
 const Reports = () => {
 
-    const {loading} = useAuth0()
+    const {loading, isAuthenticated, token} = useAuth0()
 
     const [userReports, setUserReports] = useState([])
 
     useEffect(() => {
         const getUserReports = async () => {
-            const reportsFromApi = await ReportsAPI.getUserReports()
+            const reportsFromApi = await ReportsAPI.getUserReports(token)
             setUserReports(reportsFromApi)
         }
-        getUserReports()
-    },[])
 
-    if(loading) return <div>Loading...</div>
+        if (isAuthenticated && token) {
+            getUserReports()
+        }
+    }, [])
+
+    if (loading) return <div>Loading...</div>
 
     return (
         <Container>
@@ -29,8 +32,6 @@ const Reports = () => {
     )
 }
 
-Reports.propTypes = {
-
-}
+Reports.propTypes = {}
 
 export default Reports

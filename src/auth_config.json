@@ -1,4 +1,5 @@
 {
   "domain": "5vid-dev.auth0.com",
-  "clientId": "of3IJ6Umxxb5py4QAM0fT18vsb1EnKOU"
+  "clientId": "of3IJ6Umxxb5py4QAM0fT18vsb1EnKOU",
+  "audience": "api-dev.5vid.co"
 }

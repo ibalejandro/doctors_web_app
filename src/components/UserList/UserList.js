@@ -4,9 +4,9 @@ import { Accordion, FormControl, InputGroup } from 'react-bootstrap';
 import { MdSearch } from "react-icons/md";
 
 function UserList({reports}) {
+
     const userReport = reports.map((report, index) => {
-        const r = report[0];
-    	return <UserReportCard {...r} index={index} key={r.citizenId} />;
+    	return <UserReportCard {...report} index={index} key={report.id} />;
     });
 
     return (
@@ -23,7 +23,7 @@ function UserList({reports}) {
                 {userReport}
             </Accordion>
         </React.Fragment>
-        
+
     );
 }
 
