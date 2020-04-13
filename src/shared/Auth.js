@@ -1,5 +1,5 @@
 // src/react-auth0-spa.js
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -17,15 +17,21 @@ export const Auth0Provider = ({
     const [auth0Client, setAuth0] = useState();
     const [loading, setLoading] = useState(true);
     const [popupOpen, setPopupOpen] = useState(false);
+    const [token, setToken] = useState()
 
     useEffect(() => {
         const initAuth0 = async () => {
-            const auth0FromHook = await createAuth0Client(initOptions);
+            const auth0FromHook = await createAuth0Client({
+                domain: initOptions.domain,
+                client_id: initOptions.client_id,
+                redirect_uri: initOptions.redirect_uri,
+                audience: initOptions.audience
+            });
             setAuth0(auth0FromHook);
 
             if (window.location.search.includes("code=") &&
                 window.location.search.includes("state=")) {
-                const { appState } = await auth0FromHook.handleRedirectCallback();
+                const {appState} = await auth0FromHook.handleRedirectCallback();
                 onRedirectCallback(appState);
             }
 
@@ -35,7 +41,11 @@ export const Auth0Provider = ({
 
             if (isAuthenticated) {
                 const user = await auth0FromHook.getUser();
+                const token = await auth0FromHook.getTokenSilently({
+                    audience: initOptions.audience
+                })
                 setUser(user);
+                setToken(token)
             } else {
                 auth0FromHook.loginWithRedirect()
             }
@@ -75,6 +85,7 @@ export const Auth0Provider = ({
                 user,
                 loading,
                 popupOpen,
+                token,
                 loginWithPopup,
                 handleRedirectCallback,
                 getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
