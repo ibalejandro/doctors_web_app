@@ -4,6 +4,9 @@ import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
 
 const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
+
+    const covidScore = score && score.covidScore ? score.covidScore : 0
+
     const onClickButton = (e) => {
         e.stopPropagation();
     };
@@ -16,7 +19,7 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
                     age={age}
                     name={name}
                     city={city}
-                    score={score.covidScore}
+                    score={covidScore}
                     showButton={true}
                     onClickButton={onClickButton}
                 />
