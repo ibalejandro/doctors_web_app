@@ -38,7 +38,6 @@ const UserBasicData = ({ id, age, name, city, score, showButton = true, onClickB
                 </div>
             </Col>
             <Col>{age} años</Col>
-            <Col md={3} lg={2} className="d-none d-md-block">id {id}</Col>
             {showButton && (
                 <Col xs="auto">
                     <Button onClick={onClickButton}>

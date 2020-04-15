@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from "react-bootstrap";
 import UserBasicData from '../UserBasicData/UserBasicData';
 
-const NameAgeCard = ({ name="Juan Sebastian Jaramillo", age="", citizenId="", city="", score=0 }) => {
+const NameAgeCard = ({ name="", age="", citizenId="", city="", score=0 }) => {
     return (
       <Card className="mb-4">
         <Card.Header className="border-bottom-0">

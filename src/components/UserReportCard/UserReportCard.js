@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
 
@@ -7,8 +8,11 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
 
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
-    const onClickButton = (e) => {
-        e.stopPropagation();
+    let history = useHistory();
+    const onClickButton = (id) => {
+        const newPath = "/reports/" + id.id;
+        history.push(newPath);
+        //e.stopPropagation();
     };
 
     return (
@@ -21,7 +25,7 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
                     city={city}
                     score={covidScore}
                     showButton={true}
-                    onClickButton={onClickButton}
+                    onClickButton={() => {onClickButton({id})}}
                 />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={index}>

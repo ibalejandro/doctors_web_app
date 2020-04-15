@@ -26,10 +26,21 @@ class ReportsAPI {
         }
     }
 
-    static async getReportForUser(userId) {
+    static async getReportForUser(reportId, token) {
         try {
-            const response = await axios.get(REPORTS_API_URL + '/reports/' + userId)
-            return response.data
+            const response = await axios({
+                url: REPORTS_API_URL + '/reports/' + reportId,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const report = response.data;
+            return {
+                ...report,
+                comorbidity: report.diagnosedWith,
+                city: report.postalCode
+            }
         } catch (error) {
             console.error(error)
             return []

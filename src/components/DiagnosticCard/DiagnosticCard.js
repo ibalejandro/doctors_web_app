@@ -4,7 +4,7 @@ import { Card, Form } from 'react-bootstrap';
 
 const DiagnosticCard = ({onDiagnosisChange}) => {
     return (
-      <Card className="mb-4">
+      <Card className="mb-4 mt-4">
         <Card.Header><strong>Diagnóstico</strong></Card.Header>
         <Card.Body>
           <Form>
