@@ -34,6 +34,13 @@ class CasesAPI {
         }
     }
 
+    static async getLastConductForCase(caseId, token) {
+        return {
+            caseId: "id",
+            lastConduct: "Se le indica al paciente permanecer en su casa durante los próximos 14 días."
+        }
+    }
+
     static async updateCaseState(caseId, index, token) {
         let newTimeLineItems = [...timeLineItems];
         if (newTimeLineItems[index].active) {

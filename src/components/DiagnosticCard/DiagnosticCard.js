@@ -9,7 +9,7 @@ const DiagnosticCard = ({onDiagnosisChange}) => {
         <Card.Body>
           <Form>
             <Form.Group controlId="exampleForm.ControlTextarea1">
-              <Form.Control as="textarea" rows="3" onChange={onDiagnosisChange}/>
+              <Form.Control className="text-body" as="textarea" rows="9" onChange={onDiagnosisChange}/>
             </Form.Group>
           </Form>
         </Card.Body>

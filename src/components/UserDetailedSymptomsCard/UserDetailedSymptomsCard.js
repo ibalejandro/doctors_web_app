@@ -3,55 +3,77 @@ import PropTypes from 'prop-types';
 import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { ListGroupItem } from "react-bootstrap";
+import ReportsAPI from "../../services/ReportsAPI";
 
-const UserDetailedSymptomsCard = ({score = "", age="",
-                                   postalCode="", hasBeenTested="", testResult="",
-                                   sex="", symptoms=["sim", 'sim2'], symptomStart= "",
-                                   hasBeenInContactWithInfected="",
-                                   bodyTemperature="", smokingHabit="",
-                                   isolationStatus="", diagnosedWithOtherConditions="",
-                                   submissionTimestamp=464964,
-                                   phone=453553534, freq_card="", freq_resp="",
-                                   oxygen_saturation=""}) => {
-    //debugger;
-    const list_symp = symptoms.map((symp, idx) => (
-                    <ListGroupItem key={idx}>Sintoma {idx}: {symp}</ListGroupItem>
-                  ));
+const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
+
+    if (Object.keys(report).length === 0) {
+        return null;
+    }
+
+    report = ReportsAPI.getResultsToDisplay(report);
+    let symptomsList = null;
+    let comorbiditiesList = null;
+    if (report !== undefined) {
+        symptomsList = report.symptoms.map((symp, idx) => (
+            <ListGroupItem key={idx}>{symp}</ListGroupItem>
+        ));
+        comorbiditiesList = report.diagnosedWith.map((comorb, idx) => (
+            <ListGroupItem key={idx}>{comorb}</ListGroupItem>
+        ));
+    }
 
     return (
         <Card className="flush mb-4">
             <Card.Header><strong>Reporte</strong></Card.Header>
             <Card.Body>
-                <Card.Title><strong>Puntaje: </strong>{score}</Card.Title>
-                   <Card.Text>
-                    Las siguientes son las respuestas del paciente.
-                  </Card.Text>
-                  <ListGroup className="list-group-flush">
-                    <ListGroupItem>Edad: {age}</ListGroupItem>
-                    <ListGroupItem>Codigo Postal: {postalCode}</ListGroupItem>
-                    <ListGroupItem>Ha sido testeado?: {hasBeenTested}</ListGroupItem>
-                    <ListGroupItem>Resutado del Examen: {testResult}</ListGroupItem>
-                    <ListGroupItem>Genero: {sex}</ListGroupItem>
-                    <ListGroupItem><strong>Sintomas:</strong></ListGroupItem>
-                    {list_symp}
-                    <ListGroupItem>Fecha de inicio de Sintomas: {symptomStart}</ListGroupItem>
-                    <ListGroupItem>Ha estado en contacto con alguien infectado?: {hasBeenInContactWithInfected}</ListGroupItem>
-                    <ListGroupItem>Temperatura Corporal: {bodyTemperature}</ListGroupItem>
-                    <ListGroupItem>Fuma?: {smokingHabit}</ListGroupItem>
-                    <ListGroupItem>Estado de Isolación: {isolationStatus}</ListGroupItem>
-                    <ListGroupItem>Tiene comorbilidades?: {diagnosedWithOtherConditions}</ListGroupItem>
-                    <ListGroupItem>Fecha de Envio: {submissionTimestamp}</ListGroupItem>
-                    <ListGroupItem>Telefono: {phone}</ListGroupItem>
-                  </ListGroup>
+                <Card.Title>
+                    <strong>Información general</strong>
+                </Card.Title>
+                <ListGroup bg="primary" className="flush">
+                    <ListGroupItem><strong>Sexo:</strong> {report.sex}</ListGroupItem>
+                    <ListGroupItem><strong>Está en embarazo:</strong> {report.isPregnant}</ListGroupItem>
+                    <ListGroupItem><strong>Contacto estrecho con alguien infectado o sospechoso:</strong> {report.hasBeenInContactWithInfected}</ListGroupItem>
+                    <ListGroupItem><strong>Sometido a prueba de COVID-19:</strong> {report.hasBeenTested}</ListGroupItem>
+                    <ListGroupItem><strong>Resultado de la prueba de COVID-19:</strong> {report.testResult}</ListGroupItem>
+                </ListGroup>
             </Card.Body>
             <Card.Body>
-                <Card.Text>
-                  Los siguientes son los signos vitales del paciente: 
-                </Card.Text>
+                <Card.Title>
+                    <strong>Síntomas</strong>
+                </Card.Title>
                 <ListGroup bg="primary" className="flush">
-                    <ListGroupItem>Frecuencia Cardiaca: {freq_card}</ListGroupItem>
-                    <ListGroupItem>Frecuencia Respiratoria: {freq_resp}</ListGroupItem>  
-                    <ListGroupItem>Saturación de Oxigeno: {oxygen_saturation}</ListGroupItem>                
+                    {symptomsList}
+                    <ListGroupItem><strong>Fecha de inicio de síntomas:</strong> {report.symptomStart}</ListGroupItem>
+                    <ListGroupItem><strong>Temperatura corporal:</strong> {report.bodyTemperature}</ListGroupItem>
+              </ListGroup>
+            </Card.Body>
+            <Card.Body>
+                <Card.Title>
+                    <strong>Comorbilidades</strong>
+                </Card.Title>
+                <ListGroup bg="primary" className="flush">
+                    {comorbiditiesList}
+                </ListGroup>
+            </Card.Body>
+            <Card.Body>
+                <Card.Title>
+                    <strong>Información adicional</strong>
+                </Card.Title>
+                <ListGroup bg="primary" className="flush">
+                    <ListGroupItem><strong>Fuma:</strong> {report.smokingHabit}</ListGroupItem>
+                    <ListGroupItem><strong>Motivo de aislamiento:</strong> {report.isolationStatus}</ListGroupItem>
+                    <ListGroupItem><strong>Fecha de diligenciamiento:</strong> {report.submissionTimestamp}</ListGroupItem>
+                </ListGroup>
+            </Card.Body>
+            <Card.Body>
+                <Card.Title>
+                    <strong>Signos vitales</strong>
+                </Card.Title>
+                <ListGroup bg="primary" className="flush">
+                    <ListGroupItem><strong>Frecuencia cardíaca:</strong> {vitalSigns.heartRate}</ListGroupItem>
+                    <ListGroupItem><strong>Frecuencia respiratoria:</strong> {vitalSigns.breathingFrequency}</ListGroupItem>
+                    <ListGroupItem><strong>Saturación de oxígeno:</strong> {vitalSigns.oxygenSaturation}</ListGroupItem>
                 </ListGroup>
             </Card.Body>
         </Card>
