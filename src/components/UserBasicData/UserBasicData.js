@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Row, Col, Button } from 'react-bootstrap';
-import { MdArrowForward, MdPlace,  } from "react-icons/md";
+import {Row, Col, Button} from 'react-bootstrap';
+import {MdArrowForward, MdPlace,} from "react-icons/md";
 
 const Color = styled.div`
     border-radius: 50%;
@@ -13,7 +13,8 @@ const Color = styled.div`
     color: white;
     font-weight: bold;
     text-align: center;
-    background-color: ${props => props.score <= 15 ? "green" : (props.score <= 30 ? "yellow" : "red")};
+    color: ${props => props.score <= 4 ? "#63ab6e" : (props.score <= 10 ? "#aca566" : "#ac566d")};
+    background-color: ${props => props.score <= 4 ? "#99FFA7" : (props.score <= 10 ? "#FFF896" : "#FF8AA9")};
 `;
 
 const SmallText = styled.p`
@@ -22,7 +23,17 @@ const SmallText = styled.p`
     margin-bottom: 0;
 `;
 
-const UserBasicData = ({ id, age, name, city, score, showButton = true, onClickButton }) => {
+const OpenReportButton = styled.button`
+  border:none;
+  background-color: transparent;
+  height: 100%;
+  &:hover {
+    transform: scale(1.2)
+  }
+`
+
+
+const UserBasicData = ({id, age, name, city, score, showButton = true, onClickButton}) => {
     return (
         <Row>
             <Col xs={4} md={3}>
@@ -31,7 +42,7 @@ const UserBasicData = ({ id, age, name, city, score, showButton = true, onClickB
                     <div>
                         <p className="mb-1"><strong>{name}</strong></p>
                         <SmallText>
-                            <MdPlace />
+                            <MdPlace/>
                             {city}
                         </SmallText>
                     </div>
@@ -41,9 +52,9 @@ const UserBasicData = ({ id, age, name, city, score, showButton = true, onClickB
             <Col md={3} lg={2} className="d-none d-md-block">id {id}</Col>
             {showButton && (
                 <Col xs="auto">
-                    <Button onClick={onClickButton}>
-                        <MdArrowForward />
-                    </Button>
+                    <OpenReportButton onClick={onClickButton}>
+                        <MdArrowForward color={"#8c6380"}/>
+                    </OpenReportButton>
                 </Col>
             )}
         </Row>

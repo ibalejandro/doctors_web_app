@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
+import styled from "styled-components";
+
+const CardHeader = styled.div`
+  background-color: #fbf8f6;
+`
 
 const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
 

@@ -1,23 +1,50 @@
 import React from 'react'
 import UserReportCard from "../UserReportCard/UserReportCard";
-import { Accordion, FormControl, InputGroup } from 'react-bootstrap';
-import { MdSearch } from "react-icons/md";
+import {Accordion, FormControl, InputGroup} from 'react-bootstrap';
+import {FiSearch} from "react-icons/fi";
+
+import styled from "styled-components";
+
+const SearchContainer = styled.div`
+  width: 100%;
+  position: relative;
+  border: none;
+  background-color: #F4EBF4;
+  display: flex;
+  border-radius: 5px;
+  padding: 10px;
+`
+
+const SearchInput = styled.input`
+  width: 100%;
+  border: none;
+  color: #8c6380;
+  background-color: #F4EBF4;
+  &::placeholder {
+    color: #8c6380;
+  }
+  &:focus {
+    outline: none;
+  }
+`
+
+const SearchIconContainer = styled.div`
+  padding: 0 10px 0 5px;
+`
 
 function UserList({reports}) {
 
     const userReport = reports.map((report, index) => {
-    	return <UserReportCard {...report} index={index} key={report.id} />;
+        return <UserReportCard {...report} index={index} key={report.id}/>;
     });
 
     return (
         <React.Fragment>
             <InputGroup className="mb-4">
-                <InputGroup.Prepend>
-                    <InputGroup.Text>
-                        <MdSearch />
-                    </InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl />
+                <SearchContainer>
+                    <SearchIconContainer><FiSearch size={25} color={"#8c6380"}/></SearchIconContainer>
+                    <SearchInput placeholder={"Buscar reporte"}/>
+                </SearchContainer>
             </InputGroup>
             <Accordion defaultActiveKey="0">
                 {userReport}
