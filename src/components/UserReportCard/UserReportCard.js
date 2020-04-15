@@ -5,7 +5,7 @@ import UserBasicData from '../UserBasicData/UserBasicData';
 import styled from "styled-components";
 
 const CardHeader = styled.div`
-  background-color: #fbf8f6;
+  background-color: #f9f9f9;
 `
 
 const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
