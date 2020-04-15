@@ -25,17 +25,24 @@ const SmallText = styled.p`
 
 const OpenReportButton = styled.button`
   border:none;
-  background-color: transparent;
+  background-color: #e2bed8;
   height: 100%;
   &:hover {
     transform: scale(1.2)
   }
 `
 
+const CardRow = styled.div`
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
 
 const UserBasicData = ({id, age, name, city, score, showButton = true, onClickButton}) => {
     return (
-        <Row>
+        <CardRow>
             <Col xs={4} md={3}>
                 <div className="d-flex">
                     <Color score={score}>{score}</Color>
@@ -51,13 +58,11 @@ const UserBasicData = ({id, age, name, city, score, showButton = true, onClickBu
             <Col>{age} años</Col>
             <Col md={3} lg={2} className="d-none d-md-block">id {id}</Col>
             {showButton && (
-                <Col xs="auto">
-                    <OpenReportButton onClick={onClickButton}>
-                        <MdArrowForward color={"#8c6380"}/>
-                    </OpenReportButton>
-                </Col>
+                <OpenReportButton xs="auto">
+                    <MdArrowForward color={"#8c6380"}/>
+                </OpenReportButton>
             )}
-        </Row>
+        </CardRow>
     );
 };
 

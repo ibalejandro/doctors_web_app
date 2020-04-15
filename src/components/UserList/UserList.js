@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import UserReportCard from "../UserReportCard/UserReportCard";
 import {Accordion, FormControl, InputGroup} from 'react-bootstrap';
 import {FiSearch} from "react-icons/fi";
@@ -34,16 +34,23 @@ const SearchIconContainer = styled.div`
 
 function UserList({reports}) {
 
-    const userReport = reports.map((report, index) => {
-        return <UserReportCard {...report} index={index} key={report.id}/>;
-    });
+    const [filter, setFilter] = useState("")
+
+    const filterNorm = filter.trim().toLowerCase()
+
+    const userReport = reports
+        .filter((report) => filterNorm.length > 0 ? report.name.trim().toLowerCase().includes(filterNorm) : true)
+        .map((report, index) => {
+            return <UserReportCard {...report} index={index} key={report.id}/>;
+        });
 
     return (
         <React.Fragment>
             <InputGroup className="mb-4">
                 <SearchContainer>
                     <SearchIconContainer><FiSearch size={25} color={"#8c6380"}/></SearchIconContainer>
-                    <SearchInput placeholder={"Buscar reporte"}/>
+                    <SearchInput placeholder={"Buscar reporte"} onChange={(e) => setFilter(e.target.value)}
+                                 value={filter}/>
                 </SearchContainer>
             </InputGroup>
             <Accordion defaultActiveKey="0">

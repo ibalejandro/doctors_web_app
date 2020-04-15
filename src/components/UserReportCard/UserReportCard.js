@@ -17,8 +17,8 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
     };
 
     return (
-        <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={index}>
+        <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
+            <Accordion.Toggle as={CardHeader} eventKey={index}>
                 <UserBasicData
                     id={id}
                     age={age}
