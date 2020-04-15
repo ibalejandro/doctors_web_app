@@ -42,27 +42,30 @@ const CardRow = styled.div`
 
 const UserBasicData = ({id, age, name, city, score, showButton = true, onClickButton}) => {
     return (
-        <CardRow>
-            <Col xs={4} md={3}>
-                <div className="d-flex">
-                    <Color score={score}>{score}</Color>
-                    <div>
-                        <p className="mb-1"><strong>{name}</strong></p>
-                        <SmallText>
-                            <MdPlace/>
-                            {city}
-                        </SmallText>
+        <>
+            <CardRow>
+                <Col xs={4} md={3}>
+                    <div className="d-flex">
+                        <Color score={score}>{score}</Color>
+                        <div>
+                            <p className="mb-1"><strong>{name}</strong></p>
+                            <SmallText>
+                                <MdPlace/>
+                                {city}
+                            </SmallText>
+                        </div>
                     </div>
-                </div>
-            </Col>
-            <Col>{age} años</Col>
-            <Col md={3} lg={2} className="d-none d-md-block">id {id}</Col>
-            {showButton && (
-                <OpenReportButton xs="auto">
-                    <MdArrowForward color={"#8c6380"}/>
-                </OpenReportButton>
-            )}
-        </CardRow>
+                </Col>
+                <Col style={{color: "gray"}}>{age} años</Col>
+                <Col style={{color: "gray"}} md={3} lg={2}
+                     className="d-none d-md-block">id.{id.substr(id.length - 5, 4)}</Col>
+                {showButton && (
+                    <OpenReportButton xs="auto">
+                        <MdArrowForward color={"#8c6380"}/>
+                    </OpenReportButton>
+                )}
+            </CardRow>
+        </>
     );
 };
 

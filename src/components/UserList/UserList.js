@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import UserReportCard from "../UserReportCard/UserReportCard";
-import {Accordion, FormControl, InputGroup} from 'react-bootstrap';
+import {Accordion, Col, FormControl, InputGroup, Row} from 'react-bootstrap';
 import {FiSearch} from "react-icons/fi";
 
 import styled from "styled-components";
@@ -46,13 +46,18 @@ function UserList({reports}) {
 
     return (
         <React.Fragment>
-            <InputGroup className="mb-4">
+            <InputGroup className="mb-4 mt-5">
                 <SearchContainer>
                     <SearchIconContainer><FiSearch size={25} color={"#8c6380"}/></SearchIconContainer>
                     <SearchInput placeholder={"Buscar reporte"} onChange={(e) => setFilter(e.target.value)}
                                  value={filter}/>
                 </SearchContainer>
             </InputGroup>
+            <Row className="mb-3" style={{color:"#634357"}}>
+                <Col xs={4} md={3}>Nombre</Col>
+                <Col>Edad</Col>
+                <Col>Id</Col>
+            </Row>
             <Accordion defaultActiveKey="0">
                 {userReport}
             </Accordion>
