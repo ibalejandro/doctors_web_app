@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Row, Col, Button} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 import {MdArrowForward, MdPlace,} from "react-icons/md";
 
 const Color = styled.div`
@@ -60,7 +60,7 @@ const UserBasicData = ({id, age, name, city, score, showButton = true, onClickBu
                 <Col style={{color: "gray"}} md={3} lg={2}
                      className="d-none d-md-block">id.{id.substr(id.length - 5, 4)}</Col>
                 {showButton && (
-                    <OpenReportButton xs="auto">
+                    <OpenReportButton xs="auto" onClick={onClickButton}>
                         <MdArrowForward color={"#8c6380"}/>
                     </OpenReportButton>
                 )}

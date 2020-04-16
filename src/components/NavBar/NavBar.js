@@ -34,7 +34,7 @@ const NavBar = () => {
     const {isAuthenticated, logout, user} = useAuth0();
 
     if (!isAuthenticated) {
-        return <div>Loading...</div>
+        return <div>Cargando...</div>
     }
 
     const userImage = user && user.picture

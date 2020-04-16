@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import {
-    BrowserRouter as Router, Route
+    BrowserRouter as Router
 } from "react-router-dom"
 
 import Reports from "./containers/Reports/Reports"
@@ -17,7 +17,7 @@ function App() {
     const {loading} = useAuth0()
 
     if (loading) {
-        return <div>Loading...</div>
+        return <div>Cargando...</div>
     }
 
     return (
@@ -29,7 +29,7 @@ function App() {
                 <PrivateRoute path={"/reports"} exact>
                     <Reports/>
                 </PrivateRoute>
-                <PrivateRoute path={"/cases/:id"} exact>
+                <PrivateRoute path={"/reports/:id"} exact>
                     <CaseDetail/>
                 </PrivateRoute>
             </Router>

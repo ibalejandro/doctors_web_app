@@ -7,18 +7,22 @@ const TimelineContainer = styled.div`
 	
 `
 
-const Timeline = ({items = []}) => {
+const Timeline = ({items = [], onClickState}) => {
 
 	const totalItems = items.length;
 	const numberOfActiveItems = items.filter(item => item.active).length;
-	const progressBarWidth = totalItems > 1 ? (numberOfActiveItems - 1) / (totalItems - 1) * 100 : 0;
+	const progressBarWidth
+		= Math.max(totalItems > 1 ? (numberOfActiveItems - 1) / (totalItems - 1) * 100 : 0, 0);
 
 	return (
 		<TimelineContainer className="timeline">
 			<div className="timeline-progress" style={{ width: `${progressBarWidth}%`}}></div>
 			<div className="timeline-items">
 				{items.map((item, i) => (
-					<div key={i} className={"timeline-item" + (item.active ? ' active' : '')}>
+					<div
+						key={i}
+						className={"timeline-item" + (item.active ? ' active' : '')}
+						onClick={() => {onClickState(i)}}>
 						<div className="timeline-content">
 							{item.name}
 						</div>

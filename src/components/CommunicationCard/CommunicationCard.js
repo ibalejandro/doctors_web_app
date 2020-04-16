@@ -1,32 +1,35 @@
 import React from 'react';
 import {
-    StyledCallButton,
-    StyledCallIcon,
+    CommunicationButton,
     StyledCardDiv,
     StyledCardSubDiv,
-    StyledVideoCallButton,
     StyledVideoCallCodeSpan,
     StyledVideoCallLink
 } from './StyledCommunicationCard'
-import callIcon from './assets/call.png'
-import videoCallIcon from './assets/video-call.png'
+
+import {ReactComponent as CallIcon} from './assets/phone.svg'
+import {ReactComponent as VideoIcon} from './assets/video-cameras.svg'
 
 const communicationCard = (props) => {
     return (
         <StyledCardDiv>
             <h3>Comunicación</h3>
             <StyledCardSubDiv>
-                <StyledCallButton
+                <CommunicationButton
                     callStyle={props.enableCall}
                     onClick={props.callHandler}>
-                    <StyledCallIcon src={callIcon} alt="Llamada"/>
-                </StyledCallButton>
-                <StyledVideoCallButton
+                    <CallIcon/>
+                    {
+                        !props.callMessage ? <span>Llamar al usuario</span> : <span>{props.callMessage}</span>
+                    }
+                </CommunicationButton>
+                <CommunicationButton
+                    callStyle={true}
                     onClick={props.videoCallHandler}>
-                    <StyledCallIcon src={videoCallIcon} alt="Videollamada"/>
-                </StyledVideoCallButton>
+                    <VideoIcon/>
+                    <span>Generar código de videollamada</span>
+                </CommunicationButton>
             </StyledCardSubDiv>
-            <p>{props.callMessage}</p>
             <StyledVideoCallLink
                 videoCallCode={props.videoCallCode}
                 href={props.videoCallLink}

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import UserReportCard from "../UserReportCard/UserReportCard";
-import {Accordion, Col, FormControl, InputGroup, Row} from 'react-bootstrap';
+import {Accordion, Col, InputGroup, Row} from 'react-bootstrap';
 import {FiSearch} from "react-icons/fi";
 
 import styled from "styled-components";
@@ -53,7 +53,7 @@ function UserList({reports}) {
                                  value={filter}/>
                 </SearchContainer>
             </InputGroup>
-            <Row className="mb-3" style={{color:"#634357"}}>
+            <Row className="mb-3" style={{color: "#634357"}}>
                 <Col xs={4} md={3}>Nombre</Col>
                 <Col>Edad</Col>
                 <Col>Id</Col>
