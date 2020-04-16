@@ -116,7 +116,12 @@ const CaseDetail = () => {
     return (
         <Container>
             <Timeline items={caseState} onClickState={caseStateHandler}/>
-            <NameAgeCard name={report.name} city={report.city} age={report.age} id_num={report.userId}/>
+            <NameAgeCard
+                id={id}
+                name={report.name}
+                city={report.city}
+                age={report.age}
+                score={report.score !== undefined ? report.score.covidScore : 0}/>
             <Row>
                 <Col>
                     <UserDetailedSymptomsCard report={report} vitalSigns={vitalSigns}/>
