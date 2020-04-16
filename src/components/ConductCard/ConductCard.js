@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Card, Col, Form} from 'react-bootstrap';
+import {Card, Form} from 'react-bootstrap';
 
-const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled}) =>
-{
+const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled}) => {
     const conductChangeHandler = (event) => {
         onConductChange(event.target.value);
     };
@@ -13,7 +12,7 @@ const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveBu
             <Card.Header><strong>{cardHeader}</strong></Card.Header>
             <Card.Body>
                 <Form>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Group controlId="conduct-text-area-container">
                         <Form.Control
                             className="text-body"
                             as="textarea"

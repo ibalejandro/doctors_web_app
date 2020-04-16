@@ -11,40 +11,41 @@ export const StyledCardDiv = styled.div`
 
 export const StyledCardSubDiv = styled.div`
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
-export const StyledCallButton = styled.button`
-    background-color: ${props => props.callStyle ? "#33ffa5" : "#ec3636"};
-    border: 1px solid #000000;
+export const CommunicationButton = styled.button`
+    text-align: start;
+    width: 300px;
+    margin-bottom: 10px;
+    background-color: ${props => props.callStyle ? "#99FFA7" : "#FF8AA9"};
+    color: ${props => props.callStyle ? "#46784d" : "white"};
     padding: 8px;
-    margin: 1px 15px 0 15px;
+    border: none;
     cursor: pointer;
     border-radius: 10px;
+    
     &:hover {
-        background-color: ${props => props.callStyle ? "#33ffd7" : "#ffcccb"};
+        background-color: ${props => props.callStyle ? "#99FFA7" : "#FF8AA9"};
     }
+    
     &:focus {
         outline: none;
     }
-`;
-
-export const StyledVideoCallButton = styled.button`
-    background-color: #338aff;
-    border: 1px solid #000000;
-    padding: 8px;
-    margin: 1px 15px 0 15px;
-    cursor: pointer;
-    border-radius: 10px;
-    &:hover {
-        background-color: #36c0e6;
+    
+    svg {
+      width: 25px;
+      height: auto;
+      fill: ${props => props.callStyle ? "#46784d" : "white"};
+      justify-content: flex-start;
     }
-    &:focus {
-        outline: none;
+    
+    span {
+      margin-left: 10px;
     }
-`;
-
-export const StyledCallIcon = styled.img`
-    width: 50px;
+    
 `;
 
 export const StyledVideoCallLink = styled.a`

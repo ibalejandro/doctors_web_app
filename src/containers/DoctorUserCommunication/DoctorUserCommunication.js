@@ -58,11 +58,16 @@ const DoctorUserCommunication = (props) => {
             });
         };
         setUp();
-
-        return (() => {
-            // Clean up function.
-        });
     }, []);
+
+    useEffect(() => {
+        if(callMessageState.callMessage === "Llamada finalizada") {
+            const timerAfterCallHangsUp = setTimeout(() => {
+                setCallMessageState({callMessage: null})
+            }, 2000)
+            return () => clearTimeout(timerAfterCallHangsUp)
+        }
+    }, [callMessageState.callMessage])
 
     useEffect(() => {
         const reportCallEvent = (callMessage) => {
@@ -82,11 +87,7 @@ const DoctorUserCommunication = (props) => {
                 CallAPI.hangUp(callRef.current);
             }
         }
-
-        return (() => {
-            // Clean up function.
-        });
-    }, [enableCallState]);
+    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, props.userContactNumber]);
 
     return (
         <div>

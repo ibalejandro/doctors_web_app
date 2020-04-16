@@ -5,7 +5,7 @@ import UserBasicData from '../UserBasicData/UserBasicData';
 
 const NameAgeCard = ({ id="", name="", age="", citizenId="", city="", score=0 }) => {
     return (
-      <Card className="mb-4">
+      <Card style={{border: "none"}} className="mb-3">
         <Card.Header className="border-bottom-0">
           <UserBasicData
             id={id}

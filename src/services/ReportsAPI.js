@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from "react";
 
 const REPORTS_API_URL = process.env.REACT_APP_REPORTS_API_URL;
 const SYMPTOMS_MAP = {
@@ -138,7 +137,7 @@ class ReportsAPI {
 
     static getSymptoms(report) {
         const symptoms = {...report.symptoms};
-        let symptomsList = new Array();
+        let symptomsList = []
         for (let symp in symptoms) {
             if (symptoms[symp]) {
                 symptomsList.push(SYMPTOMS_MAP[symp]);
@@ -151,10 +150,9 @@ class ReportsAPI {
     }
 
     static getComorbidities(report) {
-        const diagnosedWith = {...report.diagnosedWith};
-        let comorbiditiesList = new Array();
-        for (let comorb in diagnosedWith) {
-            if (diagnosedWith[comorb]) {
+        let comorbiditiesList = []
+        for (let comorb in report.diagnosedWith) {
+            if (report.diagnosedWith[comorb]) {
                 comorbiditiesList.push(COMORBIDITIES_MAP[comorb]);
             }
         }

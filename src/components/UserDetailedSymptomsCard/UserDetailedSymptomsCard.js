@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
-import { ListGroupItem } from "react-bootstrap";
+import {ListGroupItem} from "react-bootstrap";
 import ReportsAPI from "../../services/ReportsAPI";
 
 const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
@@ -33,9 +32,12 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
                 <ListGroup bg="primary" className="flush">
                     <ListGroupItem><strong>Sexo:</strong> {report.sex}</ListGroupItem>
                     <ListGroupItem><strong>Está en embarazo:</strong> {report.isPregnant}</ListGroupItem>
-                    <ListGroupItem><strong>Contacto estrecho con alguien infectado o sospechoso:</strong> {report.hasBeenInContactWithInfected}</ListGroupItem>
-                    <ListGroupItem><strong>Sometido a prueba de COVID-19:</strong> {report.hasBeenTested}</ListGroupItem>
-                    <ListGroupItem><strong>Resultado de la prueba de COVID-19:</strong> {report.testResult}</ListGroupItem>
+                    <ListGroupItem><strong>Contacto estrecho con alguien infectado o
+                        sospechoso:</strong> {report.hasBeenInContactWithInfected}</ListGroupItem>
+                    <ListGroupItem><strong>Sometido a prueba de COVID-19:</strong> {report.hasBeenTested}
+                    </ListGroupItem>
+                    <ListGroupItem><strong>Resultado de la prueba de COVID-19:</strong> {report.testResult}
+                    </ListGroupItem>
                 </ListGroup>
             </Card.Body>
             <Card.Body>
@@ -46,7 +48,7 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
                     {symptomsList}
                     <ListGroupItem><strong>Fecha de inicio de síntomas:</strong> {report.symptomStart}</ListGroupItem>
                     <ListGroupItem><strong>Temperatura corporal:</strong> {report.bodyTemperature}</ListGroupItem>
-              </ListGroup>
+                </ListGroup>
             </Card.Body>
             <Card.Body>
                 <Card.Title>
@@ -63,7 +65,8 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
                 <ListGroup bg="primary" className="flush">
                     <ListGroupItem><strong>Fuma:</strong> {report.smokingHabit}</ListGroupItem>
                     <ListGroupItem><strong>Motivo de aislamiento:</strong> {report.isolationStatus}</ListGroupItem>
-                    <ListGroupItem><strong>Fecha de diligenciamiento:</strong> {report.submissionTimestamp}</ListGroupItem>
+                    <ListGroupItem><strong>Fecha de diligenciamiento:</strong> {report.submissionTimestamp}
+                    </ListGroupItem>
                 </ListGroup>
             </Card.Body>
             <Card.Body>
@@ -72,7 +75,8 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
                 </Card.Title>
                 <ListGroup bg="primary" className="flush">
                     <ListGroupItem><strong>Frecuencia cardíaca:</strong> {vitalSigns.heartRate}</ListGroupItem>
-                    <ListGroupItem><strong>Frecuencia respiratoria:</strong> {vitalSigns.breathingFrequency}</ListGroupItem>
+                    <ListGroupItem><strong>Frecuencia respiratoria:</strong> {vitalSigns.breathingFrequency}
+                    </ListGroupItem>
                     <ListGroupItem><strong>Saturación de oxígeno:</strong> {vitalSigns.oxygenSaturation}</ListGroupItem>
                 </ListGroup>
             </Card.Body>
@@ -80,8 +84,6 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
     );
 };
 
-UserDetailedSymptomsCard.propTypes = {
-
-};
+UserDetailedSymptomsCard.propTypes = {};
 
 export default UserDetailedSymptomsCard;

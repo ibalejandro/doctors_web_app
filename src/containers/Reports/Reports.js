@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import PropTypes from 'prop-types'
 import UserList from "../../components/UserList/UserList"
 import ReportsAPI from "../../services/ReportsAPI"
 import Container from 'react-bootstrap/Container';
@@ -20,7 +19,7 @@ const Reports = () => {
         if (isAuthenticated && token) {
             getUserReports()
         }
-    }, [])
+    }, [isAuthenticated, token])
 
     if (loading) return <div>Cargando...</div>
 

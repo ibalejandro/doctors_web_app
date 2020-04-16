@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import ContactDataCard from "../../components/ContactDataCard/ContactDataCard";
 import DiagnosticCard from "../../components/DiagnosticCard/DiagnosticCard";
 import NameAgeCard from "../../components/NameAgeCard/NameAgeCard";
 import Timeline from "../../components/TimelineComponent/TimelineComponent";
@@ -12,13 +11,11 @@ import TelemetricAPI from "../../services/TelemetricAPI";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import styled from "styled-components";
 import {useAuth0} from "../../shared/Auth";
 import DoctorUserCommunication from "../DoctorUserCommunication/DoctorUserCommunication";
 import ConductCard from "../../components/ConductCard/ConductCard";
 
 const CaseDetail = () => {
-    //TODO: LOAD FROM HISTORY PROPS THE PATH to get the caseId
 
     const {loading, isAuthenticated, token, user} = useAuth0()
     const {id} = useParams()
@@ -35,42 +32,45 @@ const CaseDetail = () => {
             const states = await CasesAPI.getStatesForCase(id, token)
             setCaseState(states)
         }
-        loadCaseState(id, token)
-    }, [id])
+        if (isAuthenticated && token)
+            loadCaseState(id, token)
+    }, [id, isAuthenticated, token])
 
     useEffect(() => {
         const loadReportData = async (id, token) => {
             const userReport = await ReportsAPI.getReportForUser(id, token)
-            console.log(userReport);
             setReport(userReport)
         }
-        loadReportData(id, token)
-    }, [id])
+        if (isAuthenticated && token)
+            loadReportData(id, token)
+    }, [id, isAuthenticated, token])
 
     useEffect(() => {
         const loadVitalSignsData = async (id, token) => {
             const userVitalSigns = await TelemetricAPI.getVitalSignsForUser(id, token);
-            console.log(userVitalSigns);
             setVitalSigns(userVitalSigns)
         };
-        loadVitalSignsData(id, token);
-    }, [id]);
+        if (isAuthenticated && token)
+            loadVitalSignsData(id, token);
+    }, [id, isAuthenticated, token])
 
     useEffect(() => {
         const loadLastConduct = async (id, token) => {
             const lastConduct = await CasesAPI.getLastConductForCase(id, token);
             setLastConduct(lastConduct.lastConduct);
         };
-        loadLastConduct(id, token);
-    }, [id]);
+        if (isAuthenticated && token)
+            loadLastConduct(id, token);
+    }, [id, isAuthenticated, token])
 
     useEffect(() => {
         const loadDiagnosisAndConduct = async (id, token) => {
             const diagnosisAndConduct = await CasesAPI.getDiagnosisAndConductForCase(id, token);
             setDiagnosisAndConduct(diagnosisAndConduct);
         };
-        loadDiagnosisAndConduct(id, token);
-    }, [id]);
+        if (isAuthenticated && token)
+            loadDiagnosisAndConduct(id, token);
+    }, [id, isAuthenticated, token])
 
     const caseStateHandler = async (index) => {
         const states = await CasesAPI.updateCaseState(id, index, token);
@@ -83,8 +83,7 @@ const CaseDetail = () => {
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.diagnosis.trim() !== '') {
             setDiagnosisSaveDisabled(false);
-        }
-        else {
+        } else {
             setDiagnosisSaveDisabled(true);
         }
     };
@@ -100,8 +99,7 @@ const CaseDetail = () => {
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.conduct.trim() !== '') {
             setConductSaveDisabled(false);
-        }
-        else {
+        } else {
             setConductSaveDisabled(true);
         }
     };

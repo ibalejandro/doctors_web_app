@@ -17,7 +17,6 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
     const onClickButton = (id) => {
         const newPath = "/reports/" + id.id;
         history.push(newPath);
-        //e.stopPropagation();
     };
 
     return (
@@ -69,7 +68,7 @@ UserReportCard.propTypes = {
     age: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
+    score: PropTypes.object.isRequired,
     comorbidity: PropTypes.object,
     symptoms: PropTypes.object,
     index: PropTypes.number.isRequired

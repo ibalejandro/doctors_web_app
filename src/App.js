@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import {
-    BrowserRouter as Router, Route
+    BrowserRouter as Router
 } from "react-router-dom"
 
 import Reports from "./containers/Reports/Reports"
