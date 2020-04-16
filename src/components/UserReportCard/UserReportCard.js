@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
+import styled from "styled-components";
+
+const CardHeader = styled.div`
+  background-color: #f9f9f9;
+`
 
 const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
 
@@ -16,8 +21,8 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
     };
 
     return (
-        <Card>
-            <Accordion.Toggle as={Card.Header} eventKey={index}>
+        <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
+            <Accordion.Toggle as={CardHeader} eventKey={index}>
                 <UserBasicData
                     id={id}
                     age={age}
