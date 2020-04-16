@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
+import CasesAPI from "../../services/CasesAPI";
 
 const DoctorUserCommunication = (props) => {
     const [enableCallState, setEnableCallState] = useState({
@@ -41,12 +42,12 @@ const DoctorUserCommunication = (props) => {
         });
     };
 
-    const videoCallHandler = () => {
-        const videoCallCode = Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15);
+    const videoCallHandler = async () => {
+        const videoCallCode = await CasesAPI.createVideoCallCode(props.doctorId, props.userContactNumber);
         setVideoCallCodeState({
             videoCallCode: videoCallCode,
             videoCallLink: "https://talky.io/" + videoCallCode
-        })
+        });
     };
 
     useEffect(() => {

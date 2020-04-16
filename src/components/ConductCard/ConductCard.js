@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Form } from 'react-bootstrap';
+import {Button, Card, Col, Form} from 'react-bootstrap';
 
-const ConductCard = ({onConductChange, readOnly, cardHeader, lastConduct}) => {
+const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled}) =>
+{
+    const conductChangeHandler = (event) => {
+        onConductChange(event.target.value);
+    };
+
     return (
         <Card className={readOnly ? "mb-4" : "mb-4 mt-4"}>
             <Card.Header><strong>{cardHeader}</strong></Card.Header>
@@ -13,9 +18,19 @@ const ConductCard = ({onConductChange, readOnly, cardHeader, lastConduct}) => {
                             className="text-body"
                             as="textarea"
                             rows="3"
-                            onChange={onConductChange}
+                            onChange={conductChangeHandler}
                             readOnly={readOnly}
-                            value={lastConduct}/>
+                            value={conduct}/>
+                        {showSaveButton && (
+                            <div className="float-right">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary mt-4"
+                                    onClick={onConductSaved}
+                                    disabled={saveDisabled}>Guardar
+                                </button>
+                            </div>
+                        )}
                     </Form.Group>
                 </Form>
             </Card.Body>

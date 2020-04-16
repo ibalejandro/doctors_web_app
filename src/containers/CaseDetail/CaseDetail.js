@@ -1,4 +1,4 @@
-import  React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ContactDataCard from "../../components/ContactDataCard/ContactDataCard";
 import DiagnosticCard from "../../components/DiagnosticCard/DiagnosticCard";
 import NameAgeCard from "../../components/NameAgeCard/NameAgeCard";
@@ -20,12 +20,15 @@ import ConductCard from "../../components/ConductCard/ConductCard";
 const CaseDetail = () => {
     //TODO: LOAD FROM HISTORY PROPS THE PATH to get the caseId
 
-    const {loading, isAuthenticated, token} = useAuth0()
+    const {loading, isAuthenticated, token, user} = useAuth0()
     const {id} = useParams()
     const [caseState, setCaseState] = useState([])
     const [report, setReport] = useState({})
     const [vitalSigns, setVitalSigns] = useState({});
     const [lastConduct, setLastConduct] = useState('');
+    const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({});
+    const [diagnosisSaveDisabled, setDiagnosisSaveDisabled] = useState(true);
+    const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -49,7 +52,7 @@ const CaseDetail = () => {
             const userVitalSigns = await TelemetricAPI.getVitalSignsForUser(id, token);
             console.log(userVitalSigns);
             setVitalSigns(userVitalSigns)
-        }
+        };
         loadVitalSignsData(id, token);
     }, [id]);
 
@@ -57,13 +60,55 @@ const CaseDetail = () => {
         const loadLastConduct = async (id, token) => {
             const lastConduct = await CasesAPI.getLastConductForCase(id, token);
             setLastConduct(lastConduct.lastConduct);
-        }
+        };
         loadLastConduct(id, token);
+    }, [id]);
+
+    useEffect(() => {
+        const loadDiagnosisAndConduct = async (id, token) => {
+            const diagnosisAndConduct = await CasesAPI.getDiagnosisAndConductForCase(id, token);
+            setDiagnosisAndConduct(diagnosisAndConduct);
+        };
+        loadDiagnosisAndConduct(id, token);
     }, [id]);
 
     const caseStateHandler = async (index) => {
         const states = await CasesAPI.updateCaseState(id, index, token);
         setCaseState(states);
+    };
+
+    const onDiagnosisChange = (diagnosis) => {
+        let newDiagnosisAndConduct = {...diagnosisAndConduct};
+        newDiagnosisAndConduct["diagnosis"] = diagnosis;
+        setDiagnosisAndConduct(newDiagnosisAndConduct);
+        if (newDiagnosisAndConduct.diagnosis.trim() !== '') {
+            setDiagnosisSaveDisabled(false);
+        }
+        else {
+            setDiagnosisSaveDisabled(true);
+        }
+    };
+
+    const onDiagnosisSaved = async () => {
+        await CasesAPI
+            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+    };
+
+    const onConductChange = (conduct) => {
+        let newDiagnosisAndConduct = {...diagnosisAndConduct};
+        newDiagnosisAndConduct["conduct"] = conduct;
+        setDiagnosisAndConduct(newDiagnosisAndConduct);
+        if (newDiagnosisAndConduct.conduct.trim() !== '') {
+            setConductSaveDisabled(false);
+        }
+        else {
+            setConductSaveDisabled(true);
+        }
+    };
+
+    const onConductSaved = async () => {
+        await CasesAPI
+            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
     };
 
     if (loading) return <div>Cargando...</div>
@@ -78,19 +123,27 @@ const CaseDetail = () => {
                 </Col>
                 <Col>
                     <ConductCard
-                        style={{gridAre:"lastConduct"}}
+                        style={{gridAre: "lastConduct"}}
                         cardHeader="Última conducta"
                         readOnly={true}
-                        lastConduct={lastConduct}/>
-                    <DoctorUserCommunication userContactNumber={report.phone}/>
+                        conduct={lastConduct}
+                        showSaveButton={false}/>
+                    <DoctorUserCommunication userContactNumber={report.phone} doctorId={user.sub}/>
                     <DiagnosticCard
-                        style={{gridAre:"diagnosis"}}
-                        onDiagnosisChange={(diagnosis) => console.log(diagnosis.target.value)}/>
+                        style={{gridAre: "diagnosis"}}
+                        onDiagnosisChange={onDiagnosisChange}
+                        diagnosis={diagnosisAndConduct.diagnosis}
+                        onDiagnosisSaved={onDiagnosisSaved}
+                        saveDisabled={diagnosisSaveDisabled}/>
                     <ConductCard
-                        style={{gridAre:"conduct"}}
-                        onConductChange={(conduct) => console.log(conduct.target.value)}
+                        style={{gridAre: "conduct"}}
+                        onConductChange={onConductChange}
                         cardHeader="Conducta"
-                        readOnly={false}/>
+                        readOnly={false}
+                        conduct={diagnosisAndConduct.conduct}
+                        showSaveButton={true}
+                        onConductSaved={onConductSaved}
+                        saveDisabled={conductSaveDisabled}/>
                 </Col>
             </Row>
         </Container>

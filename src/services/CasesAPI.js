@@ -29,8 +29,8 @@ class CasesAPI {
     static async getDiagnosisAndConductForCase(caseId, token) {
         return {
             caseId: "id",
-            diagnosis: "No tiene nada",
-            conduct: "No hacer nada"
+            diagnosis: "No presenta diagnóstico crítico.",
+            conduct: "Se le indica al paciente seguir las recomendaciones de autocuidado."
         }
     }
 
@@ -64,6 +64,12 @@ class CasesAPI {
             diagnosis: diagnosis,
             conduct: conduct
         }
+    }
+
+    static async createVideoCallCode(doctorId, patientId) {
+        console.log(doctorId, patientId);
+        const videoCallCode = Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15);
+        return videoCallCode;
     }
 }
 
