@@ -30,10 +30,30 @@ class CasesAPI {
     }
 
     static async getDiagnosisAndConductForCase(caseId, token) {
-        return {
-            caseId: "id",
-            diagnosis: "No presenta diagnóstico crítico.",
-            conduct: "Se le indica al paciente seguir las recomendaciones de autocuidado."
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/diagnostic/',
+                params: {
+                    "report_id": caseId,
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const userCase = response.data;
+            return {
+                diagnosis: userCase.message.diagnose,
+                conduct: userCase.message.conduct,
+                date: this.getDiagnosisDate(userCase.message._diagnostic_date)
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                diagnosis: '',
+                conduct: '',
+                date: ''
+            };
         }
     }
 
@@ -53,14 +73,14 @@ class CasesAPI {
             const userCase = response.data;
             return {
                 conduct: userCase.message.conduct,
-                date: this.getLastConductDate(userCase.message._diagnostic_date)
+                date: this.getDiagnosisDate(userCase.message._diagnostic_date)
             };
         } catch (error) {
             console.error(error);
             return {
                 conduct: '',
                 date: ''
-            }
+            };
         }
     }
 
@@ -81,11 +101,30 @@ class CasesAPI {
         return newTimeLineItems;
     }
 
-    static async updateDiagnosisAndConductForCase(caseId, diagnosis, conduct, token) {
-        return {
-            caseId: "id",
-            diagnosis: diagnosis,
-            conduct: conduct
+    static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, token) {
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/diagnostic',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    "doctor_id": doctorId,
+                    "patient_id": patientId,
+                    "report_id": caseId,
+                    "diagnose": diagnosis,
+                    "conduct": conduct
+                },
+                method: 'post'
+            });
+            return {
+                updateMessage: "Guardado"
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                updateMessage: "Error"
+            };
         }
     }
 
@@ -111,18 +150,18 @@ class CasesAPI {
             return {
                 videoCallCode: null
                 // videoCallCode: Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15)
-            }
+            };
         }
     }
 
-    static getLastConductDate(date) {
-        const lastConductTimestamp = new Date(Date.parse(date));
-        let lastConductMonth = (lastConductTimestamp.getMonth() + 1).toString();
-        lastConductMonth = lastConductMonth.length > 1 ? lastConductMonth : '0' + lastConductMonth;
-        let lastConductDay = (lastConductTimestamp.getDate()).toString();
-        lastConductDay = lastConductDay.length > 1 ? lastConductDay : '0' + lastConductDay;
-        const lastConductDate = [lastConductTimestamp.getFullYear(), lastConductMonth, lastConductDay].join('-');
-        return lastConductDate;
+    static getDiagnosisDate(date) {
+        const diagnosisTimestamp = new Date(Date.parse(date));
+        let diagnosisMonth = (diagnosisTimestamp.getMonth() + 1).toString();
+        diagnosisMonth = diagnosisMonth.length > 1 ? diagnosisMonth : '0' + diagnosisMonth;
+        let diagnosisDay = (diagnosisTimestamp.getDate()).toString();
+        diagnosisDay = diagnosisDay.length > 1 ? diagnosisDay : '0' + diagnosisDay;
+        const diagnosisDate = [diagnosisTimestamp.getFullYear(), diagnosisMonth, diagnosisDay].join('-');
+        return diagnosisDate;
     }
 }
 

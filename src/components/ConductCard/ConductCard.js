@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Card, Form} from 'react-bootstrap';
 
 const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled,
-                         date}) => {
+                         date, savingResultMessage}) => {
     const conductChangeHandler = (event) => {
         onConductChange(event.target.value);
     };
@@ -31,6 +31,7 @@ const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveBu
                                     onClick={onConductSaved}
                                     disabled={saveDisabled}>Guardar
                                 </button>
+                                <p className="text-center">{savingResultMessage}</p>
                             </div>
                         )}
                     </Form.Group>

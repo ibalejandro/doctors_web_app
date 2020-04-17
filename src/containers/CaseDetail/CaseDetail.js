@@ -26,9 +26,15 @@ const CaseDetail = () => {
         conduct: '',
         date: ''
     });
-    const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({});
+    const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({
+        diagnosis: '',
+        conduct: '',
+        date: ''
+    });
     const [diagnosisSaveDisabled, setDiagnosisSaveDisabled] = useState(true);
     const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
+    const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
+    const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -82,7 +88,7 @@ const CaseDetail = () => {
 
     const onDiagnosisChange = (diagnosis) => {
         let newDiagnosisAndConduct = {...diagnosisAndConduct};
-        newDiagnosisAndConduct["diagnosis"] = diagnosis;
+        newDiagnosisAndConduct.diagnosis = diagnosis;
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.diagnosis.trim() !== '') {
             setDiagnosisSaveDisabled(false);
@@ -92,13 +98,14 @@ const CaseDetail = () => {
     };
 
     const onDiagnosisSaved = async () => {
-        await CasesAPI
-            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        setDiagnosisSavingResultMessage(response.updateMessage);
     };
 
     const onConductChange = (conduct) => {
         let newDiagnosisAndConduct = {...diagnosisAndConduct};
-        newDiagnosisAndConduct["conduct"] = conduct;
+        newDiagnosisAndConduct.conduct = conduct;
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.conduct.trim() !== '') {
             setConductSaveDisabled(false);
@@ -108,8 +115,9 @@ const CaseDetail = () => {
     };
 
     const onConductSaved = async () => {
-        await CasesAPI
-            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        setConductSavingResultMessage(response.updateMessage);
     };
 
     if (loading) return <div>Cargando...</div>
@@ -144,17 +152,21 @@ const CaseDetail = () => {
                         style={{gridAre: "diagnosis"}}
                         onDiagnosisChange={onDiagnosisChange}
                         diagnosis={diagnosisAndConduct.diagnosis}
+                        date={diagnosisAndConduct.date}
                         onDiagnosisSaved={onDiagnosisSaved}
-                        saveDisabled={diagnosisSaveDisabled}/>
+                        saveDisabled={diagnosisSaveDisabled}
+                        savingResultMessage={diagnosisSavingResultMessage}/>
                     <ConductCard
                         style={{gridAre: "conduct"}}
                         onConductChange={onConductChange}
                         cardHeader="Conducta"
                         readOnly={false}
                         conduct={diagnosisAndConduct.conduct}
+                        date={diagnosisAndConduct.date}
                         showSaveButton={true}
                         onConductSaved={onConductSaved}
-                        saveDisabled={conductSaveDisabled}/>
+                        saveDisabled={conductSaveDisabled}
+                        savingResultMessage={conductSavingResultMessage}/>
                 </Col>
             </Row>
         </Container>
