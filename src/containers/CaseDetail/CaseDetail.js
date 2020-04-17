@@ -22,7 +22,10 @@ const CaseDetail = () => {
     const [caseState, setCaseState] = useState([])
     const [report, setReport] = useState({})
     const [vitalSigns, setVitalSigns] = useState({});
-    const [lastConduct, setLastConduct] = useState('');
+    const [lastConduct, setLastConduct] = useState({
+        conduct: '',
+        date: ''
+    });
     const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({});
     const [diagnosisSaveDisabled, setDiagnosisSaveDisabled] = useState(true);
     const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
@@ -55,13 +58,13 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     useEffect(() => {
-        const loadLastConduct = async (id, token) => {
-            const lastConduct = await CasesAPI.getLastConductForCase(id, token);
-            setLastConduct(lastConduct.lastConduct);
+        const loadLastConduct = async (patientId, token) => {
+            const lastConduct = await CasesAPI.getLastConductForCase(patientId, token);
+            setLastConduct(lastConduct);
         };
-        if (isAuthenticated && token)
-            loadLastConduct(id, token);
-    }, [id, isAuthenticated, token])
+        if (isAuthenticated && token && Object.keys(report).length !== 0)
+            loadLastConduct(report.patientId, token);
+    }, [id, isAuthenticated, token, report])
 
     useEffect(() => {
         const loadDiagnosisAndConduct = async (id, token) => {
@@ -129,9 +132,14 @@ const CaseDetail = () => {
                         style={{gridAre: "lastConduct"}}
                         cardHeader="Última conducta"
                         readOnly={true}
-                        conduct={lastConduct}
+                        conduct={lastConduct.conduct}
+                        date={lastConduct.date}
                         showSaveButton={false}/>
-                    <DoctorUserCommunication userContactNumber={report.phone} doctorId={user.sub}/>
+                    <DoctorUserCommunication
+                        userContactNumber={report.phone}
+                        doctorId={user.sub}
+                        patientId={report.patientId}
+                        token={token}/>
                     <DiagnosticCard
                         style={{gridAre: "diagnosis"}}
                         onDiagnosisChange={onDiagnosisChange}

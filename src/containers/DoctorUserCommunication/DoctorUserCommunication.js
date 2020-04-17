@@ -25,6 +25,10 @@ const DoctorUserCommunication = (props) => {
         videoCallLink: '#'
     });
 
+    const [videoCallMessageState, setVideoCallMessageState] = useState({
+        videoCallMessage: null
+    });
+
     const callHandler = () => {
         let enableCall = enableCallState.enableCall;
         let callMessage = callMessageState.callMessage;
@@ -43,11 +47,20 @@ const DoctorUserCommunication = (props) => {
     };
 
     const videoCallHandler = async () => {
-        const videoCallCode = await CasesAPI.createVideoCallCode(props.doctorId, props.userContactNumber);
-        setVideoCallCodeState({
-            videoCallCode: videoCallCode,
-            videoCallLink: "https://talky.io/" + videoCallCode
+        let videoCallMessage = videoCallMessageState.videoCallMessage;
+        videoCallMessage = "Generando...";
+        setVideoCallMessageState({
+            videoCallMessage: videoCallMessage
         });
+        const appointment = await CasesAPI.createVideoCallCode(props.doctorId, props.patientId, props.token);
+        setVideoCallCodeState({
+            videoCallCode: appointment.videoCallCode,
+            videoCallLink: "https://talky.io/" + appointment.videoCallCode
+        });
+        const timerAfterVideoCallCodeIsGenerated = setTimeout(() => {
+            setVideoCallMessageState({videoCallMessage: null})
+        }, 1000)
+        return () => clearTimeout(timerAfterVideoCallCodeIsGenerated);
     };
 
     useEffect(() => {
@@ -94,6 +107,7 @@ const DoctorUserCommunication = (props) => {
             <CommunicationCard
                 enableCall={enableCallState.enableCall}
                 callMessage={callMessageState.callMessage}
+                videoCallMessage={videoCallMessageState.videoCallMessage}
                 videoCallCode={videoCallCodeState.videoCallCode}
                 videoCallLink={videoCallCodeState.videoCallLink}
                 callHandler={callHandler}

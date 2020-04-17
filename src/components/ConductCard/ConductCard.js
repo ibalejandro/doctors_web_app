@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Card, Form} from 'react-bootstrap';
 
-const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled}) => {
+const ConductCard = ({onConductChange, readOnly, cardHeader, conduct, showSaveButton, onConductSaved, saveDisabled,
+                         date}) => {
     const conductChangeHandler = (event) => {
         onConductChange(event.target.value);
     };
 
+   date = date !== '' ? '(' + date + ')' : date;
+
     return (
         <Card className={readOnly ? "mb-4" : "mb-4 mt-4"}>
-            <Card.Header><strong>{cardHeader}</strong></Card.Header>
+            <Card.Header><strong>{cardHeader}</strong> {date}</Card.Header>
             <Card.Body>
                 <Form>
                     <Form.Group controlId="conduct-text-area-container">

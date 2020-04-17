@@ -1,3 +1,6 @@
+import axios from "axios";
+
+const DOCTORS_API_URL = process.env.REACT_APP_DOCTORS_API_URL;
 let timeLineItems = [
     {
         name: 'Reporte revisado',
@@ -34,10 +37,30 @@ class CasesAPI {
         }
     }
 
-    static async getLastConductForCase(caseId, token) {
-        return {
-            caseId: "id",
-            lastConduct: "Se le indica al paciente permanecer en su casa durante los próximos 14 días."
+    static async getLastConductForCase(patientId, token) {
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/diagnostic/',
+                params: {
+                    "patient_id": patientId,
+                    "last_conduct": true
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const userCase = response.data;
+            return {
+                conduct: userCase.message.conduct,
+                date: this.getLastConductDate(userCase.message._diagnostic_date)
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                conduct: '',
+                date: ''
+            }
         }
     }
 
@@ -66,10 +89,40 @@ class CasesAPI {
         }
     }
 
-    static async createVideoCallCode(doctorId, patientId) {
-        console.log(doctorId, patientId);
-        const videoCallCode = Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15);
-        return videoCallCode;
+    static async createVideoCallCode(doctorId, patientId, token) {
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/appointment',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    "doctor_id": doctorId,
+                    "patient_id": patientId
+                },
+                method: 'post'
+            });
+            const appointment = response.data;
+            return {
+                videoCallCode: appointment.message.videocall_code
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                videoCallCode: null
+                // videoCallCode: Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15)
+            }
+        }
+    }
+
+    static getLastConductDate(date) {
+        const lastConductTimestamp = new Date(Date.parse(date));
+        let lastConductMonth = (lastConductTimestamp.getMonth() + 1).toString();
+        lastConductMonth = lastConductMonth.length > 1 ? lastConductMonth : '0' + lastConductMonth;
+        let lastConductDay = (lastConductTimestamp.getDate()).toString();
+        lastConductDay = lastConductDay.length > 1 ? lastConductDay : '0' + lastConductDay;
+        const lastConductDate = [lastConductTimestamp.getFullYear(), lastConductMonth, lastConductDay].join('-');
+        return lastConductDate;
     }
 }
 
