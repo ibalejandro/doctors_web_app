@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const REPORTS_API_URL = process.env.REACT_APP_REPORTS_API_URL;
+
 const SYMPTOMS_MAP = {
     DRY_COUGH: "TOS SECA",
     SLIME_COUGH: "TOS CON FLEMA",
@@ -17,6 +18,7 @@ const SYMPTOMS_MAP = {
     RUNNY_NOSE: "CONGESTIÓN O GOTEO NASAL",
     NAUSEA_OR_VOMITING: "NÁUSEAS O VÓMITOS"
 };
+
 const COMORBIDITIES_MAP = {
     DIABETES: "DIABETES",
     HYPERTENSIONARTERIAL: "HIPERTENSIÓN ARTERIAL",
@@ -45,7 +47,6 @@ class ReportsAPI {
             return response.data.reports.map((report) => {
                 return {
                     ...report,
-                    comorbidity: report.diagnosedWith,
                     city: report.postalCode
                 }
             })
@@ -67,7 +68,6 @@ class ReportsAPI {
             const report = response.data;
             return {
                 ...report,
-                comorbidity: report.diagnosedWith,
                 city: report.postalCode
             }
         } catch (error) {
