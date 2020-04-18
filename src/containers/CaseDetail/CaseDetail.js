@@ -144,7 +144,6 @@ const CaseDetail = () => {
                         date={lastConduct.date}
                         showSaveButton={false}/>
                     <DoctorUserCommunication
-                        userContactNumber={report.phone}
                         doctorId={user.sub}
                         patientId={report.patientId}
                         token={token}/>

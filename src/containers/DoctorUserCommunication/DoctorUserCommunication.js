@@ -2,8 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
 import CasesAPI from "../../services/CasesAPI";
+import ReportsAPI from "../../services/ReportsAPI";
 
 const DoctorUserCommunication = (props) => {
+    const [userContactNumberState, setUserContactNumberState] = useState({
+        userContactNumber: null
+    });
+
     const [enableCallState, setEnableCallState] = useState({
         enableCall: true
     });
@@ -29,7 +34,7 @@ const DoctorUserCommunication = (props) => {
         videoCallMessage: null
     });
 
-    const callHandler = () => {
+    const callHandler = async () => {
         let enableCall = enableCallState.enableCall;
         let callMessage = callMessageState.callMessage;
         enableCall = !enableCall;
@@ -44,6 +49,12 @@ const DoctorUserCommunication = (props) => {
         setCallMessageState({
             callMessage: callMessage
         });
+        if (userContactNumberState.userContactNumber === null) {
+            const userPii = await ReportsAPI.getUserContactNumber(props.patientId, props.token);
+            setUserContactNumberState({
+                userContactNumber: userPii.userContactNumber
+            });
+        }
     };
 
     const videoCallHandler = async () => {
@@ -94,13 +105,15 @@ const DoctorUserCommunication = (props) => {
             });
         };
         if (callEnvAuthorizedState.callEnvAuthorized) {
-            if (!enableCallState.enableCall && callRef.current.call === null) {
-                CallAPI.makeCall(callRef.current, props.userContactNumber, reportCallEvent);
-            } else if (enableCallState.enableCall && callRef.current.call !== null) {
-                CallAPI.hangUp(callRef.current);
+            if (userContactNumberState.userContactNumber !== null) {
+                if (!enableCallState.enableCall && callRef.current.call === null) {
+                    CallAPI.makeCall(callRef.current, userContactNumberState.userContactNumber, reportCallEvent);
+                } else if (enableCallState.enableCall && callRef.current.call !== null) {
+                    CallAPI.hangUp(callRef.current);
+                }
             }
         }
-    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, props.userContactNumber]);
+    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, userContactNumberState.userContactNumber]);
 
     return (
         <div>

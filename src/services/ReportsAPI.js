@@ -191,6 +191,31 @@ class ReportsAPI {
         const submissionDate = [submissionTimestamp.getFullYear(), submissionMonth, submissionDay].join('-');
         return submissionDate;
     }
+
+    static async getUserContactNumber(patientId, token) {
+        try {
+            const response = await axios({
+                url: REPORTS_API_URL + '/piis/',
+                params: {
+                    "patient_id": patientId,
+                    "phone": true
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const userPii = response.data;
+            return {
+                userContactNumber: userPii.phone
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                userContactNumber: null
+            };
+        }
+    }
 }
 
 export default ReportsAPI
