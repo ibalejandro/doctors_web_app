@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Card from "react-bootstrap/Card";
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -6,12 +6,17 @@ import {ListGroupItem} from "react-bootstrap";
 import ReportsAPI from "../../services/ReportsAPI";
 
 const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
+    const [reportData, setReportData] = useState([]);
+
+    useEffect(() => {
+        const data = ReportsAPI.getResultsToDisplay(report);
+        setReportData(data);
+    }, [report]);
 
     if (Object.keys(report).length === 0) {
         return null;
     }
 
-    const reportData = ReportsAPI.getResultsToDisplay(report);
     let symptomsList = null;
     let comorbiditiesList = null;
     if (reportData) {

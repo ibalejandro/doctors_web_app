@@ -117,7 +117,8 @@ const CaseDetail = () => {
                 name={report.name}
                 city={report.city}
                 age={report.age}
-                score={report.score ? report.score.covidScore : 0}/>
+                score={report.score ? report.score.covidScore : 0}
+            />
             <Row>
                 <Col>
                     <UserDetailedSymptomsCard report={report} vitalSigns={vitalSigns}/>
