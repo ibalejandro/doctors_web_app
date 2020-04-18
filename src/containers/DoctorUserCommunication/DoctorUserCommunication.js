@@ -1,9 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
 import CasesAPI from "../../services/CasesAPI";
 
-const DoctorUserCommunication = (props) => {
+const DoctorUserCommunication = ({userContactNumber, doctorId}) => {
     const [enableCallState, setEnableCallState] = useState({
         enableCall: true
     });
@@ -43,7 +44,7 @@ const DoctorUserCommunication = (props) => {
     };
 
     const videoCallHandler = async () => {
-        const videoCallCode = await CasesAPI.createVideoCallCode(props.doctorId, props.userContactNumber);
+        const videoCallCode = await CasesAPI.createVideoCallCode(doctorId, userContactNumber);
         setVideoCallCodeState({
             videoCallCode: videoCallCode,
             videoCallLink: "https://talky.io/" + videoCallCode
@@ -82,12 +83,12 @@ const DoctorUserCommunication = (props) => {
         };
         if (callEnvAuthorizedState.callEnvAuthorized) {
             if (!enableCallState.enableCall && callRef.current.call === null) {
-                CallAPI.makeCall(callRef.current, props.userContactNumber, reportCallEvent);
+                CallAPI.makeCall(callRef.current, userContactNumber, reportCallEvent);
             } else if (enableCallState.enableCall && callRef.current.call !== null) {
                 CallAPI.hangUp(callRef.current);
             }
         }
-    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, props.userContactNumber]);
+    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, userContactNumber]);
 
     return (
         <div>
@@ -100,6 +101,11 @@ const DoctorUserCommunication = (props) => {
                 videoCallHandler={videoCallHandler}/>
         </div>
     );
+};
+
+DoctorUserCommunication.propTypes = {
+    userContactNumber: PropTypes.string,
+    doctorId: PropTypes.string
 };
 
 export default DoctorUserCommunication;

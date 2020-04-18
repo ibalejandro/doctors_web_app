@@ -86,13 +86,13 @@ const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
 };
 
 UserDetailedSymptomsCard.propTypes = {
-    reports: PropTypes.shape({
+    report: PropTypes.shape({
         symptoms: PropTypes.object,
         diagnosedWith: PropTypes.object,
         sex: PropTypes.string,
-        isPregnant: PropTypes.string,
-        hasBeenInContactWithInfected: PropTypes.string,
-        hasBeenTested: PropTypes.string,
+        isPregnant: PropTypes.bool,
+        hasBeenInContactWithInfected: PropTypes.bool,
+        hasBeenTested: PropTypes.bool,
         testResult: PropTypes.string,
         symptomStart: PropTypes.string,
         bodyTemperature: PropTypes.string,

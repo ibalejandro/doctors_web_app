@@ -78,8 +78,7 @@ const CaseDetail = () => {
     };
 
     const onDiagnosisChange = (diagnosis) => {
-        let newDiagnosisAndConduct = {...diagnosisAndConduct};
-        newDiagnosisAndConduct["diagnosis"] = diagnosis;
+        let newDiagnosisAndConduct = {...diagnosisAndConduct, diagnosis};
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.diagnosis.trim() !== '') {
             setDiagnosisSaveDisabled(false);
@@ -94,8 +93,7 @@ const CaseDetail = () => {
     };
 
     const onConductChange = (conduct) => {
-        let newDiagnosisAndConduct = {...diagnosisAndConduct};
-        newDiagnosisAndConduct["conduct"] = conduct;
+        let newDiagnosisAndConduct = {...diagnosisAndConduct, conduct};
         setDiagnosisAndConduct(newDiagnosisAndConduct);
         if (newDiagnosisAndConduct.conduct.trim() !== '') {
             setConductSaveDisabled(false);
@@ -119,7 +117,7 @@ const CaseDetail = () => {
                 name={report.name}
                 city={report.city}
                 age={report.age}
-                score={report.score !== undefined ? report.score.covidScore : 0}/>
+                score={report.score ? report.score.covidScore : 0}/>
             <Row>
                 <Col>
                     <UserDetailedSymptomsCard report={report} vitalSigns={vitalSigns}/>
