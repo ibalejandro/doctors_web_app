@@ -10,7 +10,7 @@ const CardHeader = styled.div`
   background-color: #f9f9f9;
 `
 
-const UserReportCard = ({id, age, name, city, score, diagnosedWith, symptoms, index }) => {
+const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, index }) => {
 
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
@@ -24,11 +24,11 @@ const UserReportCard = ({id, age, name, city, score, diagnosedWith, symptoms, in
     const [diagnosedList, setDiagnosedList] = useState([]);
 
     useEffect(() => {
-        setSymptomsList(ReportsAPI.getSymptoms({symptoms}));
+        setSymptomsList(ReportsAPI.getSymptoms(symptoms));
     }, [symptoms]);
 
     useEffect(() => {
-        setDiagnosedList(ReportsAPI.getComorbidities({diagnosedWith}));
+        setDiagnosedList(ReportsAPI.getComorbidities(diagnosedWith));
     }, [diagnosedWith]);
 
     return (
