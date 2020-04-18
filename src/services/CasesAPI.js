@@ -32,7 +32,7 @@ class CasesAPI {
     static async getDiagnosisAndConductForCase(caseId, token) {
         try {
             const response = await axios({
-                url: DOCTORS_API_URL + '/diagnostic/',
+                url: DOCTORS_API_URL + '/diagnostic',
                 params: {
                     "report_id": caseId,
                 },
@@ -58,12 +58,15 @@ class CasesAPI {
     }
 
     static async getLastConductForCase(patientId, token) {
+        patientId = "4321";
+        console.log(patientId);
+        console.log(token);
         try {
             const response = await axios({
-                url: DOCTORS_API_URL + '/diagnostic/',
+                url: DOCTORS_API_URL + '/diagnostic',
                 params: {
-                    "patient_id": patientId,
-                    "last_conduct": true
+                    "patient_id": patientId
+                    //"last_conduct": true
                 },
                 headers: {
                     'Authorization': `Bearer ${token}`
