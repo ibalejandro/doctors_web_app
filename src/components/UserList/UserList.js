@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import PropTypes from 'prop-types';
 import UserReportCard from "../UserReportCard/UserReportCard";
 import {Accordion, Col, InputGroup, Row} from 'react-bootstrap';
 import {FiSearch} from "react-icons/fi";
@@ -65,5 +66,17 @@ function UserList({reports}) {
 
     );
 }
+
+UserList.propTypes = {
+  reports: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    age: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    city: PropTypes.string.isRequired,
+    score: PropTypes.object.isRequired,
+    diagnosedWith: PropTypes.object,
+    symptoms: PropTypes.object,
+  }))
+};
 
 export default UserList;

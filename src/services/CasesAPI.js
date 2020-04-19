@@ -1,4 +1,4 @@
-let timeLineItems = [
+const timeLineItems = [
     {
         name: 'Reporte revisado',
         active: false,
