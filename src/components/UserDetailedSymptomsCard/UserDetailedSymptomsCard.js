@@ -6,7 +6,7 @@ import {ListGroupItem} from "react-bootstrap";
 import ReportsAPI from "../../services/ReportsAPI";
 
 const UserDetailedSymptomsCard = ({report, vitalSigns}) => {
-    const [reportData, setReportData] = useState([]);
+    const [reportData, setReportData] = useState({});
 
     useEffect(() => {
         const data = ReportsAPI.getResultsToDisplay(report);
