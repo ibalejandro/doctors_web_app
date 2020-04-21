@@ -91,6 +91,8 @@ class ReportsAPI {
 
         resultsToDisplay.symptoms = this.getSymptoms(report);
 
+        resultsToDisplay.symptomStart = report.symptomStart ? report.symptomStart : "N/A";
+
         resultsToDisplay.bodyTemperature = report.bodyTemperature !== '' ? report.bodyTemperature + " ºC" : "N/A";
 
         resultsToDisplay.diagnosedWith = this.getComorbidities(report);
@@ -198,7 +200,7 @@ class ReportsAPI {
                 url: REPORTS_API_URL + '/piis',
                 params: {
                     "patient_id": patientId,
-                    "phone": true
+                    "phone": 1
                 },
                 headers: {
                     'Authorization': `Bearer ${token}`

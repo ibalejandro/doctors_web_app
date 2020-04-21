@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const DOCTORS_API_URL = process.env.REACT_APP_DOCTORS_API_URL;
-let timeLineItems = [
+const timeLineItems = [
     {
         name: 'Reporte revisado',
         active: false,
@@ -43,9 +43,9 @@ class CasesAPI {
             });
             const userCase = response.data;
             return {
-                diagnosis: userCase.message.diagnose,
-                conduct: userCase.message.conduct,
-                date: this.getDiagnosisDate(userCase.message._diagnostic_date)
+                diagnosis: userCase.message[0].diagnose,
+                conduct: userCase.message[0].conduct,
+                date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date)
             };
         } catch (error) {
             console.error(error);
@@ -58,15 +58,13 @@ class CasesAPI {
     }
 
     static async getLastConductForCase(patientId, token) {
-        patientId = "4321";
-        console.log(patientId);
-        console.log(token);
+        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
                 params: {
-                    "patient_id": patientId
-                    //"last_conduct": true
+                    "patient_id": patientId,
+                    "last_conduct": true
                 },
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -75,8 +73,8 @@ class CasesAPI {
             });
             const userCase = response.data;
             return {
-                conduct: userCase.message.conduct,
-                date: this.getDiagnosisDate(userCase.message._diagnostic_date)
+                conduct: userCase.message[0].conduct,
+                date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date)
             };
         } catch (error) {
             console.error(error);
@@ -105,6 +103,7 @@ class CasesAPI {
     }
 
     static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, token) {
+        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
@@ -118,7 +117,7 @@ class CasesAPI {
                     "diagnose": diagnosis,
                     "conduct": conduct
                 },
-                method: 'post'
+                method: 'put'
             });
             return {
                 updateMessage: "Guardado"
@@ -132,6 +131,7 @@ class CasesAPI {
     }
 
     static async createVideoCallCode(doctorId, patientId, token) {
+        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/appointment',
