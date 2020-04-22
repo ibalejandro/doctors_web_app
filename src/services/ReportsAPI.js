@@ -240,7 +240,7 @@ class ReportsAPI {
         } catch (error) {
             console.error(error);
             return {
-                updateMessage: "Error"
+                updateMessage: '' // TODO change this to "Error" once the endpoint exists.
             };
         }
     }
