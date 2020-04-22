@@ -91,6 +91,8 @@ class ReportsAPI {
 
         resultsToDisplay.symptoms = this.getSymptoms(report.symptoms);
 
+        resultsToDisplay.symptomStart = report.symptomStart ? report.symptomStart : "N/A";
+
         resultsToDisplay.bodyTemperature = report.bodyTemperature !== '' ? report.bodyTemperature + " ºC" : "N/A";
 
         resultsToDisplay.diagnosedWith = this.getComorbidities(report.diagnosedWith);
@@ -178,6 +180,56 @@ class ReportsAPI {
         submissionDay = date.length > 1 ? submissionDay : '0' + submissionDay;
         const submissionDate = [date.getFullYear(), submissionMonth, submissionDay].join('-');
         return submissionDate;
+    }
+
+    static async getUserContactNumber(patientId, token) {
+        try {
+            const response = await axios({
+                url: REPORTS_API_URL + '/piis',
+                params: {
+                    "patient_id": patientId,
+                    "phone": 1
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const userPii = response.data;
+            return {
+                userContactNumber: userPii.raw_insecure_value
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                userContactNumber: null
+            };
+        }
+    }
+
+    static async updateReportPendingState(reportId, currentState, token) {
+        const pending = !currentState[currentState.length - 1].active;
+        try {
+            const response = await axios({
+                url: REPORTS_API_URL + '/reports/',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    "report_id": reportId,
+                    "pending": pending
+                },
+                method: 'patch'
+            });
+            return {
+                updateMessage: ''
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                updateMessage: '' // TODO change this to "Error" once the endpoint exists.
+            };
+        }
     }
 }
 

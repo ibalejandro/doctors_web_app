@@ -11,6 +11,11 @@ import {ReactComponent as CallIcon} from './assets/phone.svg'
 import {ReactComponent as VideoIcon} from './assets/video-cameras.svg'
 
 const communicationCard = (props) => {
+    let videoCallMessage = "Generar código de videollamada";
+    if (props.videoCallMessage) {
+        videoCallMessage = props.videoCallMessage;
+    }
+
     return (
         <StyledCardDiv>
             <h3>Comunicación</h3>
@@ -27,7 +32,9 @@ const communicationCard = (props) => {
                     callStyle={true}
                     onClick={props.videoCallHandler}>
                     <VideoIcon/>
-                    <span>Generar código de videollamada</span>
+                    {
+                        <span>{videoCallMessage}</span>
+                    }
                 </CommunicationButton>
             </StyledCardSubDiv>
             <StyledVideoCallLink

@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
 import CasesAPI from "../../services/CasesAPI";
+import ReportsAPI from "../../services/ReportsAPI";
 
-const DoctorUserCommunication = ({userContactNumber, doctorId}) => {
+const DoctorUserCommunication = ({doctorId, patientId, token}) => {
+    const [userContactNumberState, setUserContactNumberState] = useState({
+        userContactNumber: null
+    });
+
     const [enableCallState, setEnableCallState] = useState({
         enableCall: true
     });
@@ -26,7 +31,11 @@ const DoctorUserCommunication = ({userContactNumber, doctorId}) => {
         videoCallLink: '#'
     });
 
-    const callHandler = () => {
+    const [videoCallMessageState, setVideoCallMessageState] = useState({
+        videoCallMessage: null
+    });
+
+    const callHandler = async () => {
         let enableCall = enableCallState.enableCall;
         let callMessage = callMessageState.callMessage;
         enableCall = !enableCall;
@@ -41,14 +50,29 @@ const DoctorUserCommunication = ({userContactNumber, doctorId}) => {
         setCallMessageState({
             callMessage: callMessage
         });
+        if (userContactNumberState.userContactNumber === null) {
+            const userPii = await ReportsAPI.getUserContactNumber(patientId, token);
+            setUserContactNumberState({
+                userContactNumber: userPii.userContactNumber
+            });
+        }
     };
 
     const videoCallHandler = async () => {
-        const videoCallCode = await CasesAPI.createVideoCallCode(doctorId, userContactNumber);
-        setVideoCallCodeState({
-            videoCallCode: videoCallCode,
-            videoCallLink: "https://talky.io/" + videoCallCode
+        let videoCallMessage = videoCallMessageState.videoCallMessage;
+        videoCallMessage = "Generando...";
+        setVideoCallMessageState({
+            videoCallMessage: videoCallMessage
         });
+        const appointment = await CasesAPI.createVideoCallCode(doctorId, patientId, token);
+        setVideoCallCodeState({
+            videoCallCode: appointment.videoCallCode,
+            videoCallLink: "https://talky.io/" + appointment.videoCallCode
+        });
+        const timerAfterVideoCallCodeIsGenerated = setTimeout(() => {
+            setVideoCallMessageState({videoCallMessage: null})
+        }, 1000)
+        return () => clearTimeout(timerAfterVideoCallCodeIsGenerated);
     };
 
     useEffect(() => {
@@ -82,19 +106,22 @@ const DoctorUserCommunication = ({userContactNumber, doctorId}) => {
             });
         };
         if (callEnvAuthorizedState.callEnvAuthorized) {
-            if (!enableCallState.enableCall && callRef.current.call === null) {
-                CallAPI.makeCall(callRef.current, userContactNumber, reportCallEvent);
-            } else if (enableCallState.enableCall && callRef.current.call !== null) {
-                CallAPI.hangUp(callRef.current);
+            if (userContactNumberState.userContactNumber !== null) {
+                if (!enableCallState.enableCall && callRef.current.call === null) {
+                    CallAPI.makeCall(callRef.current, userContactNumberState.userContactNumber, reportCallEvent);
+                } else if (enableCallState.enableCall && callRef.current.call !== null) {
+                    CallAPI.hangUp(callRef.current);
+                }
             }
         }
-    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, userContactNumber]);
+    }, [enableCallState, callEnvAuthorizedState.callEnvAuthorized, userContactNumberState.userContactNumber]);
 
     return (
         <div>
             <CommunicationCard
                 enableCall={enableCallState.enableCall}
                 callMessage={callMessageState.callMessage}
+                videoCallMessage={videoCallMessageState.videoCallMessage}
                 videoCallCode={videoCallCodeState.videoCallCode}
                 videoCallLink={videoCallCodeState.videoCallLink}
                 callHandler={callHandler}

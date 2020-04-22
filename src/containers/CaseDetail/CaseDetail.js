@@ -19,13 +19,25 @@ const CaseDetail = () => {
 
     const {loading, isAuthenticated, token, user} = useAuth0()
     const {id} = useParams()
-    const [caseState, setCaseState] = useState([])
+    const [caseState, setCaseState] = useState({
+       state: []
+    });
     const [report, setReport] = useState({})
     const [vitalSigns, setVitalSigns] = useState({});
-    const [lastConduct, setLastConduct] = useState('');
-    const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({});
+    const [lastConduct, setLastConduct] = useState({
+        conduct: '',
+        date: ''
+    });
+    const [diagnosisAndConduct, setDiagnosisAndConduct] = useState({
+        diagnosis: '',
+        conduct: '',
+        date: ''
+    });
     const [diagnosisSaveDisabled, setDiagnosisSaveDisabled] = useState(true);
     const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
+    const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
+    const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
+    const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -55,13 +67,13 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     useEffect(() => {
-        const loadLastConduct = async (id, token) => {
-            const lastConduct = await CasesAPI.getLastConductForCase(id, token);
-            setLastConduct(lastConduct.lastConduct);
+        const loadLastConduct = async (patientId, token) => {
+            const lastConduct = await CasesAPI.getLastConductForCase(patientId, token);
+            setLastConduct(lastConduct);
         };
-        if (isAuthenticated && token)
-            loadLastConduct(id, token);
-    }, [id, isAuthenticated, token])
+        if (isAuthenticated && token && Object.keys(report).length !== 0)
+            loadLastConduct(report.patientId, token);
+    }, [id, isAuthenticated, token, report])
 
     useEffect(() => {
         const loadDiagnosisAndConduct = async (id, token) => {
@@ -73,8 +85,22 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     const caseStateHandler = async (index) => {
-        const states = await CasesAPI.updateCaseState(id, index, token);
-        setCaseState(states);
+        const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
+        if (states.updateMessage === '') {
+            const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
+            if (reportPendingStateUpdate.updateMessage === '') {
+                setCaseState({
+                    state: states.state
+                });
+                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+            }
+            else {
+                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+            }
+        }
+        else {
+            setCaseStateUpdatingResultMessage(states.updateMessage);
+        }
     };
 
     const onDiagnosisChange = (diagnosis) => {
@@ -88,8 +114,9 @@ const CaseDetail = () => {
     };
 
     const onDiagnosisSaved = async () => {
-        await CasesAPI
-            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        setDiagnosisSavingResultMessage(response.updateMessage);
     };
 
     const onConductChange = (conduct) => {
@@ -103,15 +130,19 @@ const CaseDetail = () => {
     };
 
     const onConductSaved = async () => {
-        await CasesAPI
-            .updateDiagnosisAndConductForCase(id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+        setConductSavingResultMessage(response.updateMessage);
     };
 
     if (loading) return <div>Cargando...</div>
 
     return (
         <Container>
-            <Timeline items={caseState} onClickState={caseStateHandler}/>
+            <Timeline
+                items={caseState.state}
+                onClickState={caseStateHandler}
+                updatingResultMessage={caseStateUpdatingResultMessage}/>
             <NameAgeCard
                 id={id}
                 name={report.name}
@@ -128,24 +159,32 @@ const CaseDetail = () => {
                         style={{gridAre: "lastConduct"}}
                         cardHeader="Última conducta"
                         readOnly={true}
-                        conduct={lastConduct}
+                        conduct={lastConduct.conduct}
+                        date={lastConduct.date}
                         showSaveButton={false}/>
-                    <DoctorUserCommunication userContactNumber={report.phone} doctorId={user.sub}/>
+                    <DoctorUserCommunication
+                        doctorId={user.sub}
+                        patientId={report.patientId}
+                        token={token}/>
                     <DiagnosticCard
                         style={{gridAre: "diagnosis"}}
                         onDiagnosisChange={onDiagnosisChange}
                         diagnosis={diagnosisAndConduct.diagnosis}
+                        date={diagnosisAndConduct.date}
                         onDiagnosisSaved={onDiagnosisSaved}
-                        saveDisabled={diagnosisSaveDisabled}/>
+                        saveDisabled={diagnosisSaveDisabled}
+                        savingResultMessage={diagnosisSavingResultMessage}/>
                     <ConductCard
                         style={{gridAre: "conduct"}}
                         onConductChange={onConductChange}
                         cardHeader="Conducta"
                         readOnly={false}
                         conduct={diagnosisAndConduct.conduct}
+                        date={diagnosisAndConduct.date}
                         showSaveButton={true}
                         onConductSaved={onConductSaved}
-                        saveDisabled={conductSaveDisabled}/>
+                        saveDisabled={conductSaveDisabled}
+                        savingResultMessage={conductSavingResultMessage}/>
                 </Col>
             </Row>
         </Container>
