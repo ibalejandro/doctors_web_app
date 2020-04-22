@@ -58,7 +58,6 @@ class CasesAPI {
     }
 
     static async getLastConductForCase(patientId, token) {
-        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
@@ -103,7 +102,6 @@ class CasesAPI {
     }
 
     static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, token) {
-        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
@@ -131,7 +129,6 @@ class CasesAPI {
     }
 
     static async createVideoCallCode(doctorId, patientId, token) {
-        patientId = "4321";  // TODO remove
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/appointment',
