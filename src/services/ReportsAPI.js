@@ -209,7 +209,7 @@ class ReportsAPI {
             });
             const userPii = response.data;
             return {
-                userContactNumber: userPii.phone
+                userContactNumber: userPii.raw_insecure_value
             };
         } catch (error) {
             console.error(error);
