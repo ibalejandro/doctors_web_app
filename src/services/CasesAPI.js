@@ -26,7 +26,27 @@ const timeLineItems = [
 
 class CasesAPI {
     static async getStatesForCase(caseId, token) {
-        return timeLineItems;
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/report',
+                params: {
+                    "report_id": caseId,
+                },
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'get'
+            });
+            const userCaseState = response.data;
+            return {
+                state: userCaseState.message.statuses
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                state: timeLineItems
+            };
+        }
     }
 
     static async getDiagnosisAndConductForCase(caseId, token) {
@@ -84,21 +104,31 @@ class CasesAPI {
         }
     }
 
-    static async updateCaseState(caseId, index, token) {
-        let newTimeLineItems = [...timeLineItems];
-        if (newTimeLineItems[index].active) {
-            // Change state to inactive.
-            for (let i = index; i < newTimeLineItems.length; i++) {
-                newTimeLineItems[i].active = false;
-            }
+    static async updateCaseState(caseId, currentState, index, token) {
+        const newTimeLineItems = this.getNewTimeLineItems(currentState, index);
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/report',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    "report_id": caseId,
+                    "statuses": newTimeLineItems
+                },
+                method: 'put'
+            });
+            return {
+                state: newTimeLineItems,
+                updateMessage: ''
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                state: currentState,
+                updateMessage: "Error"
+            };
         }
-        else {
-            // Change state to active.
-            for (let i = 0; i <= index; i++) {
-                newTimeLineItems[i].active = true;
-            }
-        }
-        return newTimeLineItems;
     }
 
     static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, token) {
@@ -149,7 +179,6 @@ class CasesAPI {
             console.error(error);
             return {
                 videoCallCode: null
-                // videoCallCode: Math.random().toString().substring(2, 5) + Math.random().toString().substring(12, 15)
             };
         }
     }
@@ -162,6 +191,23 @@ class CasesAPI {
         diagnosisDay = diagnosisDay.length > 1 ? diagnosisDay : '0' + diagnosisDay;
         const diagnosisDate = [diagnosisTimestamp.getFullYear(), diagnosisMonth, diagnosisDay].join('-');
         return diagnosisDate;
+    }
+
+    static getNewTimeLineItems(currentState, index) {
+        // Deep copy of currentState object.
+        let newTimeLineItems = JSON.parse(JSON.stringify(currentState))
+        if (newTimeLineItems[index].active) {
+            // Change state to inactive.
+            for (let i = index; i < newTimeLineItems.length; i++) {
+                newTimeLineItems[i].active = false;
+            }
+        } else {
+            // Change state to active.
+            for (let i = 0; i <= index; i++) {
+                newTimeLineItems[i].active = true;
+            }
+        }
+        return newTimeLineItems;
     }
 }
 

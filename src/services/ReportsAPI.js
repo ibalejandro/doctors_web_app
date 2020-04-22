@@ -218,6 +218,32 @@ class ReportsAPI {
             };
         }
     }
+
+    static async updateReportPendingState(reportId, currentState, token) {
+        const pending = !currentState[currentState.length - 1].active;
+        console.log(pending);
+        try {
+            const response = await axios({
+                url: REPORTS_API_URL + '/reports/',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: {
+                    "report_id": reportId,
+                    "pending": pending
+                },
+                method: 'patch'
+            });
+            return {
+                updateMessage: ''
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                updateMessage: "Error"
+            };
+        }
+    }
 }
 
 export default ReportsAPI

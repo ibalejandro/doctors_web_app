@@ -19,7 +19,9 @@ const CaseDetail = () => {
 
     const {loading, isAuthenticated, token, user} = useAuth0()
     const {id} = useParams()
-    const [caseState, setCaseState] = useState([])
+    const [caseState, setCaseState] = useState({
+       state: []
+    });
     const [report, setReport] = useState({})
     const [vitalSigns, setVitalSigns] = useState({});
     const [lastConduct, setLastConduct] = useState({
@@ -35,6 +37,7 @@ const CaseDetail = () => {
     const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
     const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
     const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
+    const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -82,8 +85,22 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     const caseStateHandler = async (index) => {
-        const states = await CasesAPI.updateCaseState(id, index, token);
-        setCaseState(states);
+        const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
+        if (states.updateMessage === '') {
+            const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
+            if (reportPendingStateUpdate.updateMessage === '') {
+                setCaseState({
+                    state: states.state
+                });
+                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+            }
+            else {
+                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+            }
+        }
+        else {
+            setCaseStateUpdatingResultMessage(states.updateMessage);
+        }
     };
 
     const onDiagnosisChange = (diagnosis) => {
@@ -124,7 +141,10 @@ const CaseDetail = () => {
 
     return (
         <Container>
-            <Timeline items={caseState} onClickState={caseStateHandler}/>
+            <Timeline
+                items={caseState.state}
+                onClickState={caseStateHandler}
+                updatingResultMessage={caseStateUpdatingResultMessage}/>
             <NameAgeCard
                 id={id}
                 name={report.name}
