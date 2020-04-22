@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Accordion, Card, Row, Col } from 'react-bootstrap';
 import UserBasicData from '../UserBasicData/UserBasicData';
 import styled from "styled-components";
+import ReportsAPI from '../../services/ReportsAPI';
 
 const CardHeader = styled.div`
   background-color: #f9f9f9;
 `
 
-const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, index }) => {
+const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, index }) => {
 
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
@@ -18,6 +19,17 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
         const newPath = "/reports/" + id.id;
         history.push(newPath);
     };
+
+    const [symptomsList, setSymptomsList] = useState([]);
+    const [diagnosedList, setDiagnosedList] = useState([]);
+
+    useEffect(() => {
+        setSymptomsList(ReportsAPI.getSymptoms(symptoms));
+    }, [symptoms]);
+
+    useEffect(() => {
+        setDiagnosedList(ReportsAPI.getComorbidities(diagnosedWith));
+    }, [diagnosedWith]);
 
     return (
         <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
@@ -37,24 +49,14 @@ const UserReportCard = ({id, age, name, city, score, comorbidity, symptoms, inde
                     <Row>
                         <Col>
                             <h5>Comorbilidades</h5>
-                            {Object.keys(comorbidity).reduce((acc, curr, index) => {
-                                if(comorbidity[curr]) {
-                                    acc.push(<p key={`com-${index}`}>{curr}</p>);
-                                }
-                                return acc;
-                            }, [])}
+                            {diagnosedList.map((curr, index) => <p key={`com-${index}`}>{curr}</p>)}
                         </Col>
                         <Col>
                             <h5>Epidemiología</h5>
                         </Col>
                         <Col>
                             <h5>Síntomas</h5>
-                            {Object.keys(symptoms).reduce((acc, curr, index) => {
-                                if(symptoms[curr]) {
-                                    acc.push(<p key={`sym-${index}`}>{curr}</p>);
-                                }
-                                return acc;
-                            }, [])}
+                            {symptomsList.map((curr, index) => <p key={`sym-${index}`}>{curr}</p>)}
                         </Col>
                     </Row>
                 </Card.Body>
@@ -69,7 +71,7 @@ UserReportCard.propTypes = {
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     score: PropTypes.object.isRequired,
-    comorbidity: PropTypes.object,
+    diagnosedWith: PropTypes.object,
     symptoms: PropTypes.object,
     index: PropTypes.number.isRequired
 };

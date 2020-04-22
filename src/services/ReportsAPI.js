@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const REPORTS_API_URL = process.env.REACT_APP_REPORTS_API_URL;
+
 const SYMPTOMS_MAP = {
     DRY_COUGH: "TOS SECA",
     SLIME_COUGH: "TOS CON FLEMA",
@@ -17,6 +18,7 @@ const SYMPTOMS_MAP = {
     RUNNY_NOSE: "CONGESTIÓN O GOTEO NASAL",
     NAUSEA_OR_VOMITING: "NÁUSEAS O VÓMITOS"
 };
+
 const COMORBIDITIES_MAP = {
     DIABETES: "DIABETES",
     HYPERTENSIONARTERIAL: "HIPERTENSIÓN ARTERIAL",
@@ -45,7 +47,6 @@ class ReportsAPI {
             return response.data.reports.map((report) => {
                 return {
                     ...report,
-                    comorbidity: report.diagnosedWith,
                     city: report.postalCode
                 }
             })
@@ -67,7 +68,6 @@ class ReportsAPI {
             const report = response.data;
             return {
                 ...report,
-                comorbidity: report.diagnosedWith,
                 city: report.postalCode
             }
         } catch (error) {
@@ -79,7 +79,7 @@ class ReportsAPI {
     static getResultsToDisplay(report) {
         let resultsToDisplay = {...report};
 
-        resultsToDisplay.sex = this.getSex(report);
+        resultsToDisplay.sex = this.getSex(report.sex);
 
         resultsToDisplay.isPregnant = report.isPregnant ? "SÍ" : "NO";
 
@@ -87,58 +87,50 @@ class ReportsAPI {
 
         resultsToDisplay.hasBeenTested = report.hasBeenTested ? "SÍ" : "NO";
 
-        resultsToDisplay.testResult = this.getTestResult(report);
+        resultsToDisplay.testResult = this.getTestResult(report.testResult);
 
-        resultsToDisplay.symptoms = this.getSymptoms(report);
+        resultsToDisplay.symptoms = this.getSymptoms(report.symptoms);
 
         resultsToDisplay.symptomStart = report.symptomStart ? report.symptomStart : "N/A";
 
         resultsToDisplay.bodyTemperature = report.bodyTemperature !== '' ? report.bodyTemperature + " ºC" : "N/A";
 
-        resultsToDisplay.diagnosedWith = this.getComorbidities(report);
+        resultsToDisplay.diagnosedWith = this.getComorbidities(report.diagnosedWith);
 
         resultsToDisplay.smokingHabit = report.smokingHabit === "CURRENTLY" ? "SÍ" : "NO";
 
-        resultsToDisplay.isolationStatus = this.getIsolationReason(report);
+        resultsToDisplay.isolationStatus = this.getIsolationReason(report.isolationStatus);
 
-        resultsToDisplay.submissionTimestamp = this.getSubmissionDate(report);
+        resultsToDisplay.submissionTimestamp = this.getSubmissionDate(report.submissionTimestamp);
 
         return resultsToDisplay;
     }
 
-    static getSex(report) {
-        let sex = null;
-        if (report.sex === "MALE") {
-            sex = "MASCULINO";
+    static getSex(sex) {
+        switch(sex) {
+            case "MALE":
+                return "MASCULINO"
+            case "FEMALE":
+                return "FEMENINO";
+            default:
+                return "OTRO";
         }
-        else if (report.sex === "FEMALE") {
-            sex = "FEMENINO";
-        }
-        else {
-            sex = "OTRO";
-        }
-        return sex;
     }
 
-    static getTestResult(report) {
-        let testResult = null;
-        if (report.testResult === null) {
-            testResult = "N/A";
+    static getTestResult(testResult) {
+        switch(testResult) {
+            case "POSITIVE":
+                return "POSITIVO";
+            case "NEGATIVE":
+                return "NEGATIVO";
+            case "PENDING":
+                return "PENDIENTE";
+            default:
+                return "N/A";
         }
-        else if (report.testResult === "POSITIVE") {
-            testResult = "POSITIVO";
-        }
-        else if (report.testResult === "NEGATIVE") {
-            testResult = "NEGATIVO";
-        }
-        else {
-           testResult = "PENDIENTE";
-        }
-        return testResult;
     }
 
-    static getSymptoms(report) {
-        const symptoms = {...report.symptoms};
+    static getSymptoms(symptoms) {
         let symptomsList = []
         for (let symp in symptoms) {
             if (symptoms[symp]) {
@@ -151,10 +143,10 @@ class ReportsAPI {
         return symptomsList;
     }
 
-    static getComorbidities(report) {
+    static getComorbidities(diagnosedWith) {
         let comorbiditiesList = []
-        for (let comorb in report.diagnosedWith) {
-            if (report.diagnosedWith[comorb]) {
+        for (let comorb in diagnosedWith) {
+            if (diagnosedWith[comorb]) {
                 comorbiditiesList.push(COMORBIDITIES_MAP[comorb]);
             }
         }
@@ -164,33 +156,29 @@ class ReportsAPI {
         return comorbiditiesList;
     }
 
-    static getIsolationReason(report) {
-        let isolationReason = null;
-        if (report.isolationStatus === "NOT_IN_ISOLATION") {
-            isolationReason = "NO ESTÁ EN AISLAMIENTO";
+    static getIsolationReason(isolationStatus) {
+        switch(isolationStatus) {
+            case "NOT_IN_ISOLATION":
+                return "NO ESTÁ EN AISLAMIENTO";
+            case "ISOLATION_DUE_TO_TRAVEL":
+                return "VIAJE INTERNACIONAL RECIENTE";
+            case "ISOLATION_DUE_TO_CONTACT":
+                return "CONTACTO CON SOSPECHOSO PARA COVID-19";
+            case "ISOLATION_DUE_TO_COVID_19":
+                return "CONTAGIO DE COVID-19";
+            default:
+                return "POR ORDEN DEL GOBIERNO";
+
         }
-        else if (report.isolationStatus === "ISOLATION_DUE_TO_TRAVEL") {
-            isolationReason = "VIAJE INTERNACIONAL RECIENTE";
-        }
-        else if (report.isolationStatus === "ISOLATION_DUE_TO_CONTACT") {
-            isolationReason = "CONTACTO CON SOSPECHOSO PARA COVID-19";
-        }
-        else if (report.isolationStatus === "ISOLATION_DUE_TO_COVID_19") {
-            isolationReason = "CONTAGIO DE COVID-19";
-        }
-        else {
-            isolationReason = "POR ORDEN DEL GOBIERNO";
-        }
-        return isolationReason;
     }
 
-    static getSubmissionDate(report) {
-        const submissionTimestamp = new Date(parseInt(report.submissionTimestamp));
-        let submissionMonth = (submissionTimestamp.getMonth() + 1).toString();
-        submissionMonth = submissionMonth.length > 1 ? submissionMonth : '0' + submissionMonth;
-        let submissionDay = (submissionTimestamp.getDate()).toString();
-        submissionDay = submissionDay.length > 1 ? submissionDay : '0' + submissionDay;
-        const submissionDate = [submissionTimestamp.getFullYear(), submissionMonth, submissionDay].join('-');
+    static getSubmissionDate(submissionTimestamp) {
+        const date = new Date(parseInt(submissionTimestamp));
+        let submissionMonth = (date.getMonth() + 1).toString();
+        submissionMonth = date.length > 1 ? submissionMonth : '0' + submissionMonth;
+        let submissionDay = date.getDate().toString();
+        submissionDay = date.length > 1 ? submissionDay : '0' + submissionDay;
+        const submissionDate = [date.getFullYear(), submissionMonth, submissionDay].join('-');
         return submissionDate;
     }
 
@@ -221,7 +209,6 @@ class ReportsAPI {
 
     static async updateReportPendingState(reportId, currentState, token) {
         const pending = !currentState[currentState.length - 1].active;
-        console.log(pending);
         try {
             const response = await axios({
                 url: REPORTS_API_URL + '/reports/',

@@ -1,10 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 import CommunicationCard from "../../components/CommunicationCard/CommunicationCard";
 import CallAPI from "../../services/CallAPI";
 import CasesAPI from "../../services/CasesAPI";
 import ReportsAPI from "../../services/ReportsAPI";
 
-const DoctorUserCommunication = (props) => {
+const DoctorUserCommunication = ({doctorId, patientId, token}) => {
     const [userContactNumberState, setUserContactNumberState] = useState({
         userContactNumber: null
     });
@@ -50,7 +51,7 @@ const DoctorUserCommunication = (props) => {
             callMessage: callMessage
         });
         if (userContactNumberState.userContactNumber === null) {
-            const userPii = await ReportsAPI.getUserContactNumber(props.patientId, props.token);
+            const userPii = await ReportsAPI.getUserContactNumber(patientId, token);
             setUserContactNumberState({
                 userContactNumber: userPii.userContactNumber
             });
@@ -63,7 +64,7 @@ const DoctorUserCommunication = (props) => {
         setVideoCallMessageState({
             videoCallMessage: videoCallMessage
         });
-        const appointment = await CasesAPI.createVideoCallCode(props.doctorId, props.patientId, props.token);
+        const appointment = await CasesAPI.createVideoCallCode(doctorId, patientId, token);
         setVideoCallCodeState({
             videoCallCode: appointment.videoCallCode,
             videoCallLink: "https://talky.io/" + appointment.videoCallCode
@@ -127,6 +128,11 @@ const DoctorUserCommunication = (props) => {
                 videoCallHandler={videoCallHandler}/>
         </div>
     );
+};
+
+DoctorUserCommunication.propTypes = {
+    userContactNumber: PropTypes.string,
+    doctorId: PropTypes.string
 };
 
 export default DoctorUserCommunication;

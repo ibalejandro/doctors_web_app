@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import PropTypes from 'prop-types'
 import VoxImplantManager from "../../services/VoxImplantManager"
 import CallWidget from "../../components/CallWidget/CallWidget"
 import VideoCallWidget from "../../components/VideoCallWidget/VideoCallWidget"
 
 // VoxImplantManager.setUp()
 
-const VideoCall = ({}) => {
+const VideoCall = () => {
 
     /*
     const [userReports, setUserReports] = useState([])
@@ -42,8 +41,6 @@ const VideoCall = ({}) => {
     )
 }
 
-VideoCall.propTypes = {
-
-}
+VideoCall.propTypes = {}
 
 export default VideoCall
