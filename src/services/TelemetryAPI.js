@@ -31,8 +31,7 @@ class TelemetryAPI {
 
     static async getBreathingFrequency(audioUrl, token) {
         let breathingFrequency = {"breathingFrequency": "N/A"};
-        audioUrl = "s3://5vid-form-audios/r-normal_16.wav";  // TODO remove once audioUrl is included in the report.
-        if (audioUrl !== '') {
+        if (audioUrl !== '' && audioUrl !== undefined) {
             try {
                 const response = await axios({
                     url: TELEMETRY_API_URL + '/telemetry-reports',
