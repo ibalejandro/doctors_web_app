@@ -10,7 +10,8 @@ const CardHeader = styled.div`
   background-color: #f9f9f9;
 `
 
-const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, index }) => {
+const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, index, hasBeenInContactWithInfected }) =>
+{
 
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
@@ -20,8 +21,13 @@ const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, i
         history.push(newPath);
     };
 
+    const [epidemiologicalLink, setEpidemiologicalLink] = useState('');
     const [symptomsList, setSymptomsList] = useState([]);
     const [diagnosedList, setDiagnosedList] = useState([]);
+
+    useEffect(() => {
+        setEpidemiologicalLink(ReportsAPI.getHasBeenInContactWithInfected(hasBeenInContactWithInfected));
+    }, [hasBeenInContactWithInfected]);
 
     useEffect(() => {
         setSymptomsList(ReportsAPI.getSymptoms(symptoms));
@@ -48,15 +54,16 @@ const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, i
                 <Card.Body>
                     <Row>
                         <Col>
-                            <h5>Comorbilidades</h5>
-                            {diagnosedList.map((curr, index) => <p key={`com-${index}`}>{curr}</p>)}
-                        </Col>
-                        <Col>
-                            <h5>Epidemiología</h5>
+                            <h5>Nexo epidemiológico</h5>
+                            <p>{epidemiologicalLink}</p>
                         </Col>
                         <Col>
                             <h5>Síntomas</h5>
                             {symptomsList.map((curr, index) => <p key={`sym-${index}`}>{curr}</p>)}
+                        </Col>
+                        <Col>
+                            <h5>Comorbilidades</h5>
+                            {diagnosedList.map((curr, index) => <p key={`com-${index}`}>{curr}</p>)}
                         </Col>
                     </Row>
                 </Card.Body>

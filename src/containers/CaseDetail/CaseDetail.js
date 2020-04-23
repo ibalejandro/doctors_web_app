@@ -6,7 +6,7 @@ import UserDetailedSymptomsCard from "../../components/UserDetailedSymptomsCard/
 import CasesAPI from "../../services/CasesAPI";
 import {useParams} from "react-router";
 import ReportsAPI from "../../services/ReportsAPI";
-import TelemetricAPI from "../../services/TelemetricAPI";
+import TelemetryAPI from "../../services/TelemetryAPI";
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -52,6 +52,7 @@ const CaseDetail = () => {
         const loadReportData = async (id, token) => {
             const userReport = await ReportsAPI.getReportForUser(id, token)
             setReport(userReport)
+            // console.log(userReport);
         }
         if (isAuthenticated && token)
             loadReportData(id, token)
@@ -59,12 +60,18 @@ const CaseDetail = () => {
 
     useEffect(() => {
         const loadVitalSignsData = async (id, token) => {
-            const userVitalSigns = await TelemetricAPI.getVitalSignsForUser(id, token);
-            setVitalSigns(userVitalSigns)
+            let newVitalSigns = {...vitalSigns};
+            const heartRateAndOxygenSaturation
+                = await TelemetryAPI.getHeartRateAndOxygenSaturation(report.videoUrl, token);
+            const breathingFrequency = await TelemetryAPI.getBreathingFrequency(report.audioUrl, token);
+            newVitalSigns.heartRate = heartRateAndOxygenSaturation.heartRate;
+            newVitalSigns.oxygenSaturation = heartRateAndOxygenSaturation.oxygenSaturation;
+            newVitalSigns.breathingFrequency = breathingFrequency.breathingFrequency;
+            setVitalSigns(newVitalSigns);
         };
-        if (isAuthenticated && token)
+        if (isAuthenticated && token && Object.keys(report).length !== 0)
             loadVitalSignsData(id, token);
-    }, [id, isAuthenticated, token])
+    }, [id, isAuthenticated, token, report]);
 
     useEffect(() => {
         const loadLastConduct = async (patientId, token) => {
