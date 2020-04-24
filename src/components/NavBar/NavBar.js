@@ -1,8 +1,10 @@
 import React from "react";
 import {useAuth0} from "../../shared/Auth";
-import {NavDropdown, Navbar, Container} from "react-bootstrap";
+import {NavDropdown, Navbar, Container, Nav} from "react-bootstrap";
 import styled from "styled-components";
 import {FiChevronDown} from "react-icons/all";
+import {withRouter} from "react-router";
+import {Link} from "react-router-dom";
 
 const UserImageContainer = styled.div`
   display: flex;
@@ -30,8 +32,8 @@ const DropDownButton = styled.div`
     }
 `
 
-const NavBar = () => {
-    const {isAuthenticated, logout, user} = useAuth0();
+const NavBar = ({history}) => {
+    const {isAuthenticated, user} = useAuth0();
 
     if (!isAuthenticated) {
         return <div>Cargando...</div>
@@ -43,6 +45,9 @@ const NavBar = () => {
     return (
         <Navbar className="pt-5">
             <Container className="justify-content-end">
+                <Nav className="mr-auto">
+                    <Link to={"/reports"}>Reportes</Link>
+                </Nav>
                 <UserImageContainer>
                     <UserImage src={userImage} alt={user.nickname}/>
                 </UserImageContainer>
@@ -52,7 +57,9 @@ const NavBar = () => {
                                  alignRight>
                         {
                             isAuthenticated && (
-                                <NavDropdown.Item onClick={() => logout({})}>Log out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => {
+                                    history.push('/logout')
+                                }}>Cerrar sesión</NavDropdown.Item>
                             )
                         }
                     </NavDropdown>
@@ -62,4 +69,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
