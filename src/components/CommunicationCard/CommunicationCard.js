@@ -23,7 +23,9 @@ const communicationCard = (props) => {
                 <CommunicationButton
                     callStyle={props.enableCall}
                     onClick={props.callHandler}
-                    communicationType="call">
+                    communicationType="call"
+                    className={"communication-button-phone"}
+                >
                     <CallIcon/>
                     {
                         !props.callMessage ? <span>Llamar al usuario</span> : <span>{props.callMessage}</span>
@@ -32,7 +34,9 @@ const communicationCard = (props) => {
                 <CommunicationButton
                     callStyle={true}
                     onClick={props.videoCallHandler}
-                    communicationType="videocall">
+                    communicationType="videocall"
+                    className={"communication-button-call"}
+                >
                     <VideoIcon/>
                     {
                         <span>{videoCallMessage}</span>
