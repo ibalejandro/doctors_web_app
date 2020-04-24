@@ -6,7 +6,7 @@ import UserDetailedSymptomsCard from "../../components/UserDetailedSymptomsCard/
 import CasesAPI from "../../services/CasesAPI";
 import {useParams} from "react-router";
 import ReportsAPI from "../../services/ReportsAPI";
-import TelemetricAPI from "../../services/TelemetricAPI";
+import TelemetryAPI from "../../services/TelemetryAPI";
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -38,6 +38,7 @@ const CaseDetail = () => {
     const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
     const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
     const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
+    const [caseStateChangeLoading, setCaseStateChangeLoading] = useState(false);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -52,6 +53,7 @@ const CaseDetail = () => {
         const loadReportData = async (id, token) => {
             const userReport = await ReportsAPI.getReportForUser(id, token)
             setReport(userReport)
+            // console.log(userReport);
         }
         if (isAuthenticated && token)
             loadReportData(id, token)
@@ -59,12 +61,18 @@ const CaseDetail = () => {
 
     useEffect(() => {
         const loadVitalSignsData = async (id, token) => {
-            const userVitalSigns = await TelemetricAPI.getVitalSignsForUser(id, token);
-            setVitalSigns(userVitalSigns)
+            let newVitalSigns = {...vitalSigns};
+            const heartRateAndOxygenSaturation
+                = await TelemetryAPI.getHeartRateAndOxygenSaturation(report.videoUrl, token);
+            const breathingFrequency = await TelemetryAPI.getBreathingFrequency(report.audioUrl, token);
+            newVitalSigns.heartRate = heartRateAndOxygenSaturation.heartRate;
+            newVitalSigns.oxygenSaturation = heartRateAndOxygenSaturation.oxygenSaturation;
+            newVitalSigns.breathingFrequency = breathingFrequency.breathingFrequency;
+            setVitalSigns(newVitalSigns);
         };
-        if (isAuthenticated && token)
+        if (isAuthenticated && token && Object.keys(report).length !== 0)
             loadVitalSignsData(id, token);
-    }, [id, isAuthenticated, token])
+    }, [id, isAuthenticated, token, report]);
 
     useEffect(() => {
         const loadLastConduct = async (patientId, token) => {
@@ -85,21 +93,25 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     const caseStateHandler = async (index) => {
-        const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
-        if (states.updateMessage === '') {
-            const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
-            if (reportPendingStateUpdate.updateMessage === '') {
-                setCaseState({
-                    state: states.state
-                });
-                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+        if (!caseStateChangeLoading) {
+            setCaseStateChangeLoading(true);
+            const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
+            if (states.updateMessage === '') {
+                const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
+                if (reportPendingStateUpdate.updateMessage === '') {
+                    setCaseState({
+                        state: states.state
+                    });
+                    setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                }
+                else {
+                    setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                }
             }
             else {
-                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                setCaseStateUpdatingResultMessage(states.updateMessage);
             }
-        }
-        else {
-            setCaseStateUpdatingResultMessage(states.updateMessage);
+            setCaseStateChangeLoading(false);
         }
     };
 
@@ -142,7 +154,8 @@ const CaseDetail = () => {
             <Timeline
                 items={caseState.state}
                 onClickState={caseStateHandler}
-                updatingResultMessage={caseStateUpdatingResultMessage}/>
+                updatingResultMessage={caseStateUpdatingResultMessage}
+                caseStateChangeLoading={caseStateChangeLoading}/>
             <NameAgeCard
                 id={id}
                 name={report.name}
