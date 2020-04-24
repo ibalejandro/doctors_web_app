@@ -83,7 +83,8 @@ class ReportsAPI {
 
         resultsToDisplay.isPregnant = report.isPregnant ? "SÍ" : "NO";
 
-        resultsToDisplay.hasBeenInContactWithInfected = report.hasBeenInContactWithInfected ? "SÍ" : "NO";
+        resultsToDisplay.hasBeenInContactWithInfected
+            = this.getHasBeenInContactWithInfected(report.hasBeenInContactWithInfected);
 
         resultsToDisplay.hasBeenTested = report.hasBeenTested ? "SÍ" : "NO";
 
@@ -115,6 +116,10 @@ class ReportsAPI {
             default:
                 return "OTRO";
         }
+    }
+
+    static getHasBeenInContactWithInfected(hasBeenInContactWithInfected) {
+        return hasBeenInContactWithInfected ? "SÍ" : "NO";
     }
 
     static getTestResult(testResult) {
