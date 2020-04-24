@@ -20,15 +20,19 @@ export const CommunicationButton = styled.button`
     text-align: start;
     width: 300px;
     margin-bottom: 10px;
-    background-color: ${props => props.callStyle ? "#99FFA7" : "#FF8AA9"};
-    color: ${props => props.callStyle ? "#46784d" : "white"};
+    background-color: ${props => props.communicationType === "call" ? 
+        (props.callStyle ? "#99FFA7" : "#FF8AA9") 
+        : "#9B70FF"};
+    color: ${props => props.communicationType === "call" ? (props.callStyle ? "#46784d" : "white") : "#761EC4"};
     padding: 8px;
     border: none;
     cursor: pointer;
     border-radius: 10px;
     
     &:hover {
-        background-color: ${props => props.callStyle ? "#99FFA7" : "#FF8AA9"};
+        background-color: ${props => props.communicationType === "call" ?
+            (props.callStyle ? "#99FFA7" : "#FF8AA9")
+            : "#9B70FF"};
     }
     
     &:focus {
@@ -38,7 +42,7 @@ export const CommunicationButton = styled.button`
     svg {
       width: 25px;
       height: auto;
-      fill: ${props => props.callStyle ? "#46784d" : "white"};
+      fill: ${props => props.communicationType === "call" ? (props.callStyle ? "#46784d" : "white") : "#761EC4"};
       justify-content: flex-start;
     }
     
