@@ -22,7 +22,10 @@ const communicationCard = (props) => {
             <StyledCardSubDiv>
                 <CommunicationButton
                     callStyle={props.enableCall}
-                    onClick={props.callHandler}>
+                    onClick={props.callHandler}
+                    communicationType="call"
+                    className={"communication-button-phone"}
+                >
                     <CallIcon/>
                     {
                         !props.callMessage ? <span>Llamar al usuario</span> : <span>{props.callMessage}</span>
@@ -30,7 +33,10 @@ const communicationCard = (props) => {
                 </CommunicationButton>
                 <CommunicationButton
                     callStyle={true}
-                    onClick={props.videoCallHandler}>
+                    onClick={props.videoCallHandler}
+                    communicationType="videocall"
+                    className={"communication-button-call"}
+                >
                     <VideoIcon/>
                     {
                         <span>{videoCallMessage}</span>

@@ -38,6 +38,7 @@ const CaseDetail = () => {
     const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
     const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
     const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
+    const [caseStateChangeLoading, setCaseStateChangeLoading] = useState(false);
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -92,21 +93,25 @@ const CaseDetail = () => {
     }, [id, isAuthenticated, token])
 
     const caseStateHandler = async (index) => {
-        const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
-        if (states.updateMessage === '') {
-            const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
-            if (reportPendingStateUpdate.updateMessage === '') {
-                setCaseState({
-                    state: states.state
-                });
-                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+        if (!caseStateChangeLoading) {
+            setCaseStateChangeLoading(true);
+            const states = await CasesAPI.updateCaseState(id, caseState.state, index, token);
+            if (states.updateMessage === '') {
+                const reportPendingStateUpdate = await ReportsAPI.updateReportPendingState(id, states.state, token);
+                if (reportPendingStateUpdate.updateMessage === '') {
+                    setCaseState({
+                        state: states.state
+                    });
+                    setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                }
+                else {
+                    setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                }
             }
             else {
-                setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
+                setCaseStateUpdatingResultMessage(states.updateMessage);
             }
-        }
-        else {
-            setCaseStateUpdatingResultMessage(states.updateMessage);
+            setCaseStateChangeLoading(false);
         }
     };
 
@@ -149,7 +154,8 @@ const CaseDetail = () => {
             <Timeline
                 items={caseState.state}
                 onClickState={caseStateHandler}
-                updatingResultMessage={caseStateUpdatingResultMessage}/>
+                updatingResultMessage={caseStateUpdatingResultMessage}
+                caseStateChangeLoading={caseStateChangeLoading}/>
             <NameAgeCard
                 id={id}
                 name={report.name}
