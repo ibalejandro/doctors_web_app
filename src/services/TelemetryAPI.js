@@ -31,7 +31,7 @@ class TelemetryAPI {
 
     static async getBreathingFrequency(audioUrl, token) {
         let breathingFrequency = {"breathingFrequency": "N/A"};
-        if (audioUrl !== '' && audioUrl !== undefined) {
+        if (audioUrl) {
             try {
                 const response = await axios({
                     url: TELEMETRY_API_URL + '/telemetry-reports',
