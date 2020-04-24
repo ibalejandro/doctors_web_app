@@ -18,10 +18,14 @@ class TelemetryAPI {
                     method: 'get'
                 });
                 const telemetryResult = response.data;
-                heartRateAndOxygenSaturation.heartRate =
-                    telemetryResult.telemetry_report.bpm.toFixed(2) + " ppm";
-                heartRateAndOxygenSaturation.oxygenSaturation =
-                    telemetryResult.telemetry_report.spo2.toFixed(2) + " %";
+                if (telemetryResult.telemetry_report.bpm) {
+                    heartRateAndOxygenSaturation.heartRate =
+                        telemetryResult.telemetry_report.bpm.toFixed(2) + " ppm";
+                }
+                if (telemetryResult.telemetry_report.spo2) {
+                    heartRateAndOxygenSaturation.oxygenSaturation =
+                        telemetryResult.telemetry_report.spo2.toFixed(2) + " %";
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -44,8 +48,10 @@ class TelemetryAPI {
                     method: 'get'
                 });
                 const telemetryResult = response.data;
-                breathingFrequency.breathingFrequency =
-                    telemetryResult.telemetry_report.breathing_frequency.toFixed(2) + " rpm";
+                if (telemetryResult.telemetry_report.breathing_frequency) {
+                    breathingFrequency.breathingFrequency =
+                        telemetryResult.telemetry_report.breathing_frequency.toFixed(2) + " rpm";
+                }
             } catch (error) {
                 console.error(error);
             }
