@@ -10,6 +10,12 @@ const DoctorRegistration = () => {
     const [email, setEmail] = useState('');
     const [personalId, setPersonalId] = useState('');
     const [professionalId, setProfessionalId] = useState('');
+    const [nameError, setNameError] = useState(null);
+    const [lastNameError, setLastNameError] = useState(null);
+    const [phoneNumberError, setPhoneNumberError] = useState(null);
+    const [emailError, setEmailError] = useState(null);
+    const [personalIdError, setPersonalIdError] = useState(null);
+    const [professionalIdError, setProfessionalIdError] = useState(null);
     const inputNameRef = useRef(null);
     const inputLastNameRef = useRef(null);
     const inputPhoneNumberRef = useRef(null);
@@ -106,9 +112,11 @@ const DoctorRegistration = () => {
 
     const validateName = () => {
         if (name) {
+            setNameError(null);
             return true;
         }
         else {
+            setNameError("Por favor, ingrese su nombre.");
             inputNameRef.current.focus();
             return false;
         }
@@ -116,9 +124,11 @@ const DoctorRegistration = () => {
 
     const validateLastName = () => {
         if (lastName) {
+            setLastNameError(null);
             return true;
         }
         else {
+            setLastNameError("Por favor, ingrese sus apellidos.");
             inputLastNameRef.current.focus();
             return false;
         }
@@ -126,9 +136,11 @@ const DoctorRegistration = () => {
 
     const validatePhoneNumber = () => {
         if (phoneNumber.length === 10) {
+            setPhoneNumberError(null);
             return true;
         }
         else {
+            setPhoneNumberError("Por favor, verifique que su número de celular tenga 10 dígitos.");
             inputPhoneNumberRef.current.focus();
             return false;
         }
@@ -136,9 +148,11 @@ const DoctorRegistration = () => {
 
     const validateEmail = () => {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            setEmailError(null);
             return true;
         }
         else {
+            setEmailError("Por favor, verifique que su correo electrónico sea válido.");
             inputEmailRef.current.focus();
             return false;
         }
@@ -146,9 +160,11 @@ const DoctorRegistration = () => {
 
     const validatePersonalId = () => {
         if (personalId) {
+            setPersonalIdError(null);
             return true;
         }
         else {
+            setPersonalIdError("Por favor, adjunte su Cédula de Ciudadanía/Extranjería.");
             inputPersonalIdRef.current.focus();
             return false;
         }
@@ -156,9 +172,11 @@ const DoctorRegistration = () => {
 
     const validateProfessionalId = () => {
         if (professionalId) {
+            setProfessionalIdError(null);
             return true;
         }
         else {
+            setProfessionalIdError("Por favor, adjunte su Tarjeta Profesional.");
             inputProfessionalIdRef.current.focus();
             return false;
         }
@@ -185,14 +203,20 @@ const DoctorRegistration = () => {
       <div>
           <RegistrationCard
               name={name}
+              nameError={nameError}
               inputNameRef={inputNameRef}
               lastName={lastName}
+              lastNameError={lastNameError}
               inputLastNameRef={inputLastNameRef}
               phoneNumber={phoneNumber}
+              phoneNumberError={phoneNumberError}
               inputPhoneNumberRef={inputPhoneNumberRef}
               email={email}
+              emailError={emailError}
               inputEmailRef={inputEmailRef}
+              personalIdError={personalIdError}
               inputPersonalIdRef={inputPersonalIdRef}
+              professionalIdError={professionalIdError}
               inputProfessionalIdRef={inputProfessionalIdRef}
               onNameChanged={nameChangeHandler}
               onLastNameChanged={lastNameChangeHandler}

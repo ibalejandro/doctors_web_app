@@ -12,6 +12,7 @@ export const StyledInputLabel = styled.label`
     font-weight: bold;
     margin: 0 10px 0 0;
     color: #2DD1E7;
+    width: 100%;
 `;
 
 export const StyledInput = styled.input`
