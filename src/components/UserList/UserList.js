@@ -33,7 +33,7 @@ const SearchIconContainer = styled.div`
   padding: 0 10px 0 5px;
 `
 
-function UserList({reports}) {
+function UserList({reports, reportViewers, onViewReport}) {
 
     const [filter, setFilter] = useState("")
 
@@ -42,7 +42,18 @@ function UserList({reports}) {
     const userReport = reports
         .filter((report) => filterNorm.length > 0 ? report.name.trim().toLowerCase().includes(filterNorm) : true)
         .map((report, index) => {
-            return <UserReportCard {...report} index={index} key={report.id}/>;
+            let isViewing = false;
+            for(const key in reportViewers) {
+              if(reportViewers[key].reportId === report.id) isViewing = true;
+            }
+
+            return <UserReportCard
+              {...report}
+              index={index}
+              key={report.id}
+              onViewReport={onViewReport}
+              disabled={isViewing}
+            />;
         });
 
     return (
@@ -76,7 +87,9 @@ UserList.propTypes = {
     score: PropTypes.object.isRequired,
     diagnosedWith: PropTypes.object,
     symptoms: PropTypes.object,
-  }))
+  })),
+  reportViewers: PropTypes.object,
+  onViewReport: PropTypes.func
 };
 
 export default UserList;
