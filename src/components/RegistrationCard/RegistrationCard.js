@@ -4,14 +4,15 @@ import {
     StyledInputLabel,
     StyledInput,
     StyledEmailInput,
-    StyledFileInput, StyledCardTitle, StyledRegisterButton
+    StyledFileInput, StyledCardTitle, StyledRegisterButton, StyledRegisteringLoader
 } from "./StyledRegistrationCard";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const registrationCard = ({name, nameError, inputNameRef, lastName, lastNameError, inputLastNameRef, phoneNumber,
                            phoneNumberError, inputPhoneNumberRef, email, emailError, inputEmailRef, personalIdError,
-                           inputPersonalIdRef, professionalIdError, inputProfessionalIdRef, onNameChanged,
-                           onLastNameChanged, onPhoneNumberChanged, onEmailChanged, onPersonalIdChanged,
-                           onProfessionalIdChanged, onRegisterClicked}) => {
+                           inputPersonalIdRef, professionalIdError, inputProfessionalIdRef, disableRegister,
+                           registerLoading, onNameChanged, onLastNameChanged, onPhoneNumberChanged, onEmailChanged,
+                           onPersonalIdChanged, onProfessionalIdChanged, onRegisterClicked}) => {
 
     return (
         <StyledCardDiv>
@@ -56,7 +57,10 @@ const registrationCard = ({name, nameError, inputNameRef, lastName, lastNameErro
                 type="file"
                 ref={inputProfessionalIdRef}
                 onChange={(event) => {onProfessionalIdChanged(event.target.value)}}/>
-            <StyledRegisterButton onClick={onRegisterClicked}>Enviar</StyledRegisterButton>
+            <StyledRegisterButton disabled={disableRegister} onClick={onRegisterClicked}>Enviar</StyledRegisterButton>
+            <StyledRegisteringLoader>
+                <MoonLoader size={30} color={"#9B70FF"} loading={registerLoading} />
+            </StyledRegisteringLoader>
         </StyledCardDiv>
     );
 };

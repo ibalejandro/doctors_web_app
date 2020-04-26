@@ -209,6 +209,32 @@ class CasesAPI {
         }
         return newTimeLineItems;
     }
+
+    static async registerVolunteerDoctor(name, lastName, phoneNumber, email, personalId, professionalId) {
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/doctor',
+                data: {
+                    "first_name": name,
+                    "last_name": lastName,
+                    "cellphone": phoneNumber,
+                    "email": email,
+                    "official_id_photo": personalId,
+                    "professional_card_photo": professionalId,
+                },
+                method: 'post'
+            });
+            const doctor = response.data;
+            return {
+                doctorRegistered: true
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                doctorRegistered: false
+            };
+        }
+    }
 }
 
 export default CasesAPI;

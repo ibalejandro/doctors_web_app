@@ -5,7 +5,7 @@ export const StyledCardDiv = styled.div`
     margin: 16px auto;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
-    padding: 25px;
+    padding: 30px;
 `;
 
 export const StyledInputLabel = styled.label`
@@ -48,5 +48,14 @@ export const StyledRegisterButton = styled.button`
     
     &:focus {
         outline: none;
+    }
+`;
+
+export const StyledRegisteringLoader = styled.div`
+    position: absolute;
+    left: 49%;
+    & > div {
+      width: auto;
+      height: auto;
     }
 `;

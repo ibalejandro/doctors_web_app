@@ -1,6 +1,8 @@
 import React, {useState, useRef} from "react";
 import RegistrationCard from "../../components/RegistrationCard/RegistrationCard";
-import CallAPI from "../../services/CallAPI";
+import Modal from "../../components/Modal/Modal";
+import CasesAPI from "../../services/CasesAPI";
+import RegistrationResult from "../../components/RegistrationResult/RegistrationResult";
 
 const DoctorRegistration = () => {
 
@@ -22,6 +24,14 @@ const DoctorRegistration = () => {
     const inputEmailRef = useRef(null);
     const inputPersonalIdRef = useRef(null);
     const inputProfessionalIdRef = useRef(null);
+    const [registerDisabled, setRegisterDisabled] = useState(false);
+    const [registerLoading, setRegisterLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [registrationResult, setRegistrationResult] = useState({
+       title: '',
+       body: '',
+       errorStyle: false
+    });
 
     const nameChangeHandler = (content) => {
         if (content.trim() === '') {
@@ -185,7 +195,9 @@ const DoctorRegistration = () => {
     const fieldsValidation = [validateName, validateLastName, validatePhoneNumber, validateEmail, validatePersonalId,
                               validateProfessionalId];
 
-    const registerHandler = () => {
+    const registerHandler = async () => {
+        setRegisterDisabled(true);
+        setRegisterLoading(true);
         let allFieldsValid = true;
         for (let i = 0; i < fieldsValidation.length && allFieldsValid; i++) {
             if (!fieldsValidation[i]()) {
@@ -195,12 +207,56 @@ const DoctorRegistration = () => {
         if (allFieldsValid) {
             const doctorName = name.trim();
             const doctorLastName = lastName.trim();
-            // TODO make request.
+            const doctor = await CasesAPI.registerVolunteerDoctor(doctorName, doctorLastName, phoneNumber, email,
+                                                                  personalId, professionalId);
+            console.log(doctor);
+            if (doctor.doctorRegistered) {
+                setRegistrationResult({
+                    title: "¡Registro exitoso!",
+                    body: "Revisaremos la información proporcionada y nos pondremos en contacto con usted lo más " +
+                        "pronto posible para explicarle cómo empezar a colaborar. Gracias por su compromiso con el " +
+                        "país y por ayudarnos a aplanar la curva.",
+                    errorStyle: false
+                });
+            }
+            else {
+                setRegistrationResult({
+                    title: "Error en el registro",
+                    body: "Ocurrió un error durante el proceso de registro. Por favor, intente nuevamente. Si el " +
+                        "error persiste, escríbanos a sincovid@gmail.com.",
+                    errorStyle: true
+                });
+            }
+            setRegisterLoading(false);
+            setShowModal(true);
+        }
+        else {
+            setRegisterLoading(false);
+            setRegisterDisabled(false);
+        }
+    };
+
+    const resultUnderstoodHandler = () => {
+        if (registrationResult.errorStyle) {
+            setShowModal(false);
+            setRegisterDisabled(false);
+        }
+        else {
+            window.location = '/';
         }
     };
 
     return (
       <div>
+          <Modal
+              show={showModal}
+              errorStyle={registrationResult.errorStyle}>
+              <RegistrationResult
+                title={registrationResult.title}
+                body={registrationResult.body}
+                errorStyle={registrationResult.errorStyle}
+                onUnderstoodClicked={resultUnderstoodHandler}/>
+          </Modal>
           <RegistrationCard
               name={name}
               nameError={nameError}
@@ -218,6 +274,8 @@ const DoctorRegistration = () => {
               inputPersonalIdRef={inputPersonalIdRef}
               professionalIdError={professionalIdError}
               inputProfessionalIdRef={inputProfessionalIdRef}
+              disableRegister={registerDisabled}
+              registerLoading={registerLoading}
               onNameChanged={nameChangeHandler}
               onLastNameChanged={lastNameChangeHandler}
               onPhoneNumberChanged={phoneNumberChangeHandler}
