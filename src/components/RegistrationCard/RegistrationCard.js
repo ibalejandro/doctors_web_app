@@ -45,13 +45,13 @@ const registrationCard = ({name, nameError, inputNameRef, lastName, lastNameErro
                 ref={inputEmailRef}
                 onChange={(event) => {onEmailChanged(event.target.value)}}
                 value={email}/>
-            <StyledInputLabel>Cédula de Ciudadanía/Extranjería</StyledInputLabel>
+            <StyledInputLabel>Cédula de Ciudadanía/Extranjería (también puede ser la foto)</StyledInputLabel>
             <small>{personalIdError}</small>
             <StyledFileInput
                 type="file"
                 ref={inputPersonalIdRef}
                 onChange={(event) => {onPersonalIdChanged(event.target.value)}}/>
-            <StyledInputLabel>Tarjeta Profesional</StyledInputLabel>
+            <StyledInputLabel>Tarjeta Profesional (también puede ser la foto)</StyledInputLabel>
             <small>{professionalIdError}</small>
             <StyledFileInput
                 type="file"
