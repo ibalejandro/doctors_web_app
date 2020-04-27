@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar/NavBar";
 import PrivateRoute from "./shared/PrivateRoute";
 import {Route, Switch} from "react-router";
 import Logout from "./containers/Logout/Logout";
+import DoctorRegistration from "./containers/DoctorRegistration/DoctorRegistration";
 
 function App() {
 
@@ -24,21 +25,22 @@ function App() {
     return (
         <div>
             <Router>
-                <PrivateRoute path={"/"} exact>
-                    <NavBar/>
-                    <Reports/>
-                </PrivateRoute>
-                <PrivateRoute path={"/reports"} exact>
-                    <NavBar/>
-                    <Reports/>
-                </PrivateRoute>
-                <PrivateRoute path={"/reports/:id"} exact>
-                    <NavBar/>
-                    <CaseDetail/>
-                </PrivateRoute>
-                <PrivateRoute path={"/logout"} exact>
-                    <Logout/>
-                </PrivateRoute>
+                <Switch>
+                    <Route path={"/"} exact>
+                        <DoctorRegistration/>
+                    </Route>
+                    <PrivateRoute path={"/reports"} exact>
+                        <NavBar/>
+                        <Reports/>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/reports/:id"} exact>
+                        <NavBar/>
+                        <CaseDetail/>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/logout"} exact>
+                        <Logout/>
+                    </PrivateRoute>
+                </Switch>
             </Router>
         </div>
     );

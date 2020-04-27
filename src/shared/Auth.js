@@ -46,8 +46,6 @@ export const Auth0Provider = ({
                 })
                 setUser(user);
                 setToken(token)
-            } else {
-                auth0FromHook.loginWithRedirect()
             }
 
             setLoading(false);
