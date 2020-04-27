@@ -2,6 +2,7 @@ import React, {useState, useRef} from "react";
 import RegistrationCard from "../../components/RegistrationCard/RegistrationCard";
 import Modal from "../../components/Modal/Modal";
 import CasesAPI from "../../services/CasesAPI";
+import UploadToS3API from "../../services/UploadToS3API";
 import RegistrationResult from "../../components/RegistrationResult/RegistrationResult";
 
 const DoctorRegistration = () => {
@@ -79,11 +80,21 @@ const DoctorRegistration = () => {
     };
 
     const personalIdChangeHandler = (content) => {
-        setPersonalId(content);
+        if (content) {
+            setPersonalId(inputPersonalIdRef.current.files[0]);
+        }
+        else {
+            setPersonalId(content);
+        }
     };
 
     const professionalIdChangeHandler = (content) => {
-        setProfessionalId(content);
+        if (content) {
+            setProfessionalId(inputProfessionalIdRef.current.files[0]);
+        }
+        else {
+            setProfessionalId(content);
+        }
     };
 
     const allLettersOrSpaces = (text) => {
@@ -205,27 +216,36 @@ const DoctorRegistration = () => {
             }
         }
         if (allFieldsValid) {
-            const doctorName = name.trim();
-            const doctorLastName = lastName.trim();
-            const doctor = await CasesAPI.registerVolunteerDoctor(doctorName, doctorLastName, phoneNumber, email,
-                                                                  personalId, professionalId);
-            console.log(doctor);
-            if (doctor.doctorRegistered) {
-                setRegistrationResult({
-                    title: "¡Registro exitoso!",
-                    body: "Revisaremos la información proporcionada y nos pondremos en contacto con usted lo más " +
-                        "pronto posible para explicarle cómo empezar a colaborar. Gracias por su compromiso con el " +
-                        "país y por ayudarnos a aplanar la curva.",
-                    errorStyle: false
-                });
+            const personalIdMedia = await UploadToS3API.uploadMedia(personalId);
+            if (personalIdMedia.media) {
+                const personalIdUrl = "s3://" + personalIdMedia.media.bucket + "/" + personalIdMedia.media.key;
+                const professionalIdMedia = await UploadToS3API.uploadMedia(professionalId);
+                if (professionalIdMedia.media) {
+                    const professionalIdUrl = "s3://" + professionalIdMedia.media.bucket + "/"
+                        + professionalIdMedia.media.key;
+                    const doctorName = name.trim();
+                    const doctorLastName = lastName.trim();
+                    const doctor = await CasesAPI.registerVolunteerDoctor(doctorName, doctorLastName, phoneNumber,
+                                                                          email, personalIdUrl, professionalIdUrl);
+                    if (doctor.doctorRegistered) {
+                        setRegistrationResult({
+                            title: "¡Registro exitoso!",
+                            body: "Revisaremos la información proporcionada y nos pondremos en contacto con usted " +
+                                "lo más pronto posible para explicarle cómo empezar a colaborar. Gracias por su " +
+                                "compromiso con el país y por ayudarnos a aplanar la curva.",
+                            errorStyle: false
+                        });
+                    }
+                    else {
+                        setErrorMessageOnRegistrationResult();
+                    }
+                }
+                else {
+                    setErrorMessageOnRegistrationResult();
+                }
             }
             else {
-                setRegistrationResult({
-                    title: "Error en el registro",
-                    body: "Ocurrió un error durante el proceso de registro. Por favor, intente nuevamente. Si el " +
-                        "error persiste, escríbanos a sincovid@gmail.com.",
-                    errorStyle: true
-                });
+                setErrorMessageOnRegistrationResult();
             }
             setRegisterLoading(false);
             setShowModal(true);
@@ -234,6 +254,15 @@ const DoctorRegistration = () => {
             setRegisterLoading(false);
             setRegisterDisabled(false);
         }
+    };
+
+    const setErrorMessageOnRegistrationResult = () => {
+        setRegistrationResult({
+            title: "Error en el registro",
+            body: "Ocurrió un error durante el proceso de registro. Por favor, intente nuevamente. Si el " +
+                "error persiste, escríbanos a sincovid@gmail.com.",
+            errorStyle: true
+        });
     };
 
     const resultUnderstoodHandler = () => {
