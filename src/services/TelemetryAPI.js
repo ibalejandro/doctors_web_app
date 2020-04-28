@@ -18,11 +18,11 @@ class TelemetryAPI {
                     method: 'get'
                 });
                 const telemetryResult = response.data;
-                if (telemetryResult.telemetry_report.bpm) {
+                if (telemetryResult.telemetry_report.bpmValid) {
                     heartRateAndOxygenSaturation.heartRate =
                         telemetryResult.telemetry_report.bpm.toFixed(2) + " ppm";
                 }
-                if (telemetryResult.telemetry_report.spo2) {
+                if (telemetryResult.telemetry_report.spo2Valid) {
                     heartRateAndOxygenSaturation.oxygenSaturation =
                         telemetryResult.telemetry_report.spo2.toFixed(2) + " %";
                 }
