@@ -38,6 +38,9 @@ class ReportsAPI {
         try {
             const response = await axios({
                 url: REPORTS_API_URL + '/reports/',
+                params: {
+                    "pending": true
+                },
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
