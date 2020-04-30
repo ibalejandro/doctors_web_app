@@ -38,6 +38,9 @@ class ReportsAPI {
         try {
             const response = await axios({
                 url: REPORTS_API_URL + '/reports/',
+                params: {
+                    "pending": 1
+                },
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -232,7 +235,7 @@ class ReportsAPI {
         } catch (error) {
             console.error(error);
             return {
-                updateMessage: '' // TODO change this to "Error" once the endpoint exists.
+                updateMessage: "Error"
             };
         }
     }
