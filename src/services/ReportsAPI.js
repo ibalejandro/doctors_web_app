@@ -235,7 +235,7 @@ class ReportsAPI {
         } catch (error) {
             console.error(error);
             return {
-                updateMessage: '' // TODO change this to "Error" once the endpoint exists.
+                updateMessage: "Error"
             };
         }
     }
