@@ -27,7 +27,8 @@ class TelemetryAPI {
                         telemetryResult.telemetry_report.spo2.toFixed(2) + " %";
                 }
             } catch (error) {
-                console.error(error);
+                if (error.response.status !== 404)
+                    console.error(error);
             }
         }
         return heartRateAndOxygenSaturation;
@@ -53,7 +54,8 @@ class TelemetryAPI {
                         telemetryResult.telemetry_report.breathing_frequency.toFixed(2) + " rpm";
                 }
             } catch (error) {
-                console.error(error);
+                if (error.response.status !== 404)
+                    console.error(error);
             }
         }
         return breathingFrequency;

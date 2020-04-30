@@ -4,40 +4,45 @@ class CallAPI {
 
     static async setUp() {
         let callEnvAuthorized = false;
-        try {
-            await voximplant.init({
-                micRequired: true,
-                progressTone: true,
-                progressToneCountry: "US",
-                showDebugInfo: false
-            });
-            // SDK was initialized.
-            console.log("SDK initialized.")
-            voximplant.on(window.VoxImplant.Events.ConnectionClosed, () => {
-                // Connection was closed.
-                console.log("Connection closed.")
-            });
+        if (voximplant.getClientState() !== window.VoxImplant.ClientState.LOGGED_IN) {
             try {
-                await voximplant.connect();
-                // Connection was established successfully.
-                console.log("Connection established successfully.")
+                await voximplant.init({
+                    micRequired: true,
+                    progressTone: true,
+                    progressToneCountry: "US",
+                    showDebugInfo: false
+                });
+                // SDK was initialized.
+                console.log("SDK initialized.")
+                voximplant.on(window.VoxImplant.Events.ConnectionClosed, () => {
+                    // Connection was closed.
+                    console.log("Connection closed.")
+                });
                 try {
-                    await voximplant.login(process.env.REACT_APP_VOXIMPLANT_USERNAME,
-                        process.env.REACT_APP_VOXIMPLANT_PASSWORD);
-                    // Authorization was successful.
-                    callEnvAuthorized = true;
-                    console.log("Authorization succeeded.")
+                    await voximplant.connect();
+                    // Connection was established successfully.
+                    console.log("Connection established successfully.")
+                    try {
+                        await voximplant.login(process.env.REACT_APP_VOXIMPLANT_USERNAME,
+                            process.env.REACT_APP_VOXIMPLANT_PASSWORD);
+                        // Authorization was successful.
+                        callEnvAuthorized = true;
+                        console.log("Authorization succeeded.")
+                    } catch (e) {
+                        // Authorization failed.
+                        console.error("Authorization failed.")
+                    }
                 } catch (e) {
-                    // Authorization failed.
-                    console.error("Authorization failed.")
+                    // Connection failed.
+                    console.error("Connection failed.")
                 }
             } catch (e) {
-                // Connection failed.
-                console.error("Connection failed.")
+                // SDK initialization failed.
+                console.error("SDK initialization failed.")
             }
-        } catch (e) {
-            // SDK initialization failed.
-            console.error("SDK initialization failed.")
+        } else {
+            callEnvAuthorized = true;
+            console.log("Authorization already succeeded.")
         }
 
         return callEnvAuthorized;
