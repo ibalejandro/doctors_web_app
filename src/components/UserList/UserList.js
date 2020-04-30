@@ -92,7 +92,7 @@ UserList.propTypes = {
         diagnosedWith: PropTypes.object,
         symptoms: PropTypes.object,
     })),
-    reportViewers: PropTypes.object,
+    reportViewers: PropTypes.array,
     onViewReport: PropTypes.func
 };
 

@@ -57,7 +57,6 @@ const Viewer = styled.div`
   transition: top 0.5s;
   background-size: contain;
   background-color: grey;
-  display: ${p => p.display ? "block" : "none"};
 `
 
 const DataColumn = styled.div`
@@ -113,7 +112,7 @@ const UserBasicData = ({
                 <DataColumn style={{color: "gray"}}>{age} años</DataColumn>
                 <DataColumn>
                     <ViewerList>
-                        <Viewer display={showButton} show={viewer && viewer.doctorPicture}
+                        <Viewer show={viewer && viewer.doctorPicture}
                                 pic={viewer && viewer.doctorPicture}/>
                     </ViewerList>
                 </DataColumn>

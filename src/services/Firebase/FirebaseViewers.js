@@ -32,8 +32,9 @@ export const removeViewerFromReport = async (ref) => {
 
 export const useViewerList = () => {
     const [viewers, loading, error] = useListVals(database.ref('/reports'))
-    if (!viewers || loading) {
-        return {}
+    if (error) console.log("Firebase could not get viewers", error)
+    if (!viewers || loading || error || !Array.isArray(viewers)) {
+        return []
     } else {
         return viewers
     }

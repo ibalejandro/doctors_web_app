@@ -42,7 +42,8 @@ class CasesAPI {
                 state: userCaseState.message.statuses
             };
         } catch (error) {
-            console.error(error);
+            if(error.response.status !== 404)
+                console.error(error);
             return {
                 state: timeLineItems
             };
@@ -68,7 +69,8 @@ class CasesAPI {
                 date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date)
             };
         } catch (error) {
-            console.error(error);
+            if(error.response.status !== 404)
+                console.error(error);
             return {
                 diagnosis: '',
                 conduct: '',
@@ -96,7 +98,8 @@ class CasesAPI {
                 date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date)
             };
         } catch (error) {
-            console.error(error);
+            if(error.response.status !== 404)
+                console.error(error);
             return {
                 conduct: '',
                 date: ''
@@ -123,7 +126,8 @@ class CasesAPI {
                 updateMessage: ''
             };
         } catch (error) {
-            console.error(error);
+            if(error.response.status !== 404)
+                console.error(error);
             return {
                 state: currentState,
                 updateMessage: "Error"
@@ -151,7 +155,8 @@ class CasesAPI {
                 updateMessage: "Guardado"
             };
         } catch (error) {
-            console.error(error);
+            if(error.response.status !== 404)
+                console.error(error);
             return {
                 updateMessage: "Error"
             };
