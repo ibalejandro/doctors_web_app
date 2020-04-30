@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import DiagnosticCard from "../../components/DiagnosticCard/DiagnosticCard";
 import NameAgeCard from "../../components/NameAgeCard/NameAgeCard";
 import Timeline from "../../components/TimelineComponent/TimelineComponent";
@@ -14,13 +14,15 @@ import Col from 'react-bootstrap/Col';
 import {useAuth0} from "../../shared/Auth";
 import DoctorUserCommunication from "../DoctorUserCommunication/DoctorUserCommunication";
 import ConductCard from "../../components/ConductCard/ConductCard";
+import {addViewerToReport} from "../../services/Firebase/FirebaseViewers";
+import CaseDetailUserInfo from "../../components/CaseDetailUserInfo/CaseDetailUserInfo";
 
 const CaseDetail = () => {
 
     const {loading, isAuthenticated, token, user} = useAuth0()
     const {id} = useParams()
     const [caseState, setCaseState] = useState({
-       state: []
+        state: []
     });
     const [report, setReport] = useState({})
     const [vitalSigns, setVitalSigns] = useState({});
@@ -39,6 +41,26 @@ const CaseDetail = () => {
     const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
     const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
     const [caseStateChangeLoading, setCaseStateChangeLoading] = useState(false);
+    const firebaseViewerRef = useRef(null)
+
+    useEffect(() => {
+        const addViewer = async () => {
+            const ref = await addViewerToReport({
+                id,
+                doctorId: user.sub,
+                doctorPicture: user.picture,
+                doctorName: user.nickname
+            })
+            firebaseViewerRef.current = ref
+        }
+
+        addViewer()
+
+        return () => {
+            firebaseViewerRef.current.remove()
+        }
+
+    }, [])
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -103,12 +125,10 @@ const CaseDetail = () => {
                         state: states.state
                     });
                     setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
-                }
-                else {
+                } else {
                     setCaseStateUpdatingResultMessage(reportPendingStateUpdate.updateMessage);
                 }
-            }
-            else {
+            } else {
                 setCaseStateUpdatingResultMessage(states.updateMessage);
             }
             setCaseStateChangeLoading(false);
@@ -156,7 +176,7 @@ const CaseDetail = () => {
                 onClickState={caseStateHandler}
                 updatingResultMessage={caseStateUpdatingResultMessage}
                 caseStateChangeLoading={caseStateChangeLoading}/>
-            <NameAgeCard
+            <CaseDetailUserInfo
                 id={id}
                 name={report.name}
                 city={report.city}

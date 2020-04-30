@@ -20,14 +20,13 @@ const UserReportCard = ({
     symptoms,
     index,
     hasBeenInContactWithInfected,
-    onViewReport,
-    disabled
+    disabled,
+    viewer
 }) => {
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
     let history = useHistory();
     const onClickButton = (id) => {
-        onViewReport(id);
         const newPath = "/reports/" + id;
         history.push(newPath);
     };
@@ -44,7 +43,7 @@ const UserReportCard = ({
 
     return (
         <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
-            <Accordion.Toggle as={CardHeader} eventKey={index}>
+            <Accordion.Toggle disable as={CardHeader} eventKey={index}>
                 <UserBasicData
                     id={id}
                     age={age}
@@ -54,6 +53,7 @@ const UserReportCard = ({
                     showButton={true}
                     disableButton={disabled}
                     onClickButton={() => {onClickButton(id)}}
+                    viewer={viewer}
                 />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={index}>

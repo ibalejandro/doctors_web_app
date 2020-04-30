@@ -25,10 +25,10 @@ const SmallText = styled.p`
 
 const OpenReportButton = styled.button`
   border:none;
-  background-color: #e2bed8;
+  background-color: ${(p) => p.disabled ? "#d2d2d2" : "#e2bed8"};
   height: 100%;
   &:hover {
-    transform: scale(1.2)
+    transform: ${p => p.disabled ? "": "scaleX(1.2)"};
   }
 `
 
@@ -37,37 +37,86 @@ const CardRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 20px;
+`
+
+const ViewerList = styled.div`
+  position: relative;
+  height: 100%;
+`
+
+const Viewer = styled.div`
+  position: absolute;
+  background-image: url(${p => p.pic});
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-top: -20px;
+  top: ${p => p.show ? "50%" : "-100%"};
+  transition: top 0.5s;
+  background-size: contain;
+  background-color: grey;
+  display: ${p => p.display ? "block" : "none"};
+`
+
+const DataColumn = styled.div`
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: ${p => p.width || "100%"}
+`
+
+const ScoreDataColumn = styled.div`
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: 60px;
+`
+
+const BasicInfo = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 `
 
 
 const UserBasicData = ({
-    id,
-    age,
-    name,
-    city,
-    score,
-    showButton = true,
-    disableButton,
-    onClickButton
-}) => {
+                           id,
+                           age,
+                           name,
+                           city,
+                           score,
+                           showButton = true,
+                           disableButton,
+                           onClickButton,
+                           viewer
+                       }) => {
+
     return (
         <>
             <CardRow>
-                <Col xs={4} md={3}>
-                    <div className="d-flex">
-                        <Color score={score}>{score}</Color>
-                        <div>
-                            <p className="mb-1"><strong>{name}</strong></p>
-                            <SmallText>
-                                <MdPlace/>
-                                {city}
-                            </SmallText>
-                        </div>
-                    </div>
-                </Col>
-                <Col style={{color: "gray"}}>{age} años</Col>
-                <Col style={{color: "gray"}} md={3} lg={2}
-                     className="d-none d-md-block">id.{id.substr(id.length - 5, 4)}</Col>
+                <ScoreDataColumn>
+                    <Color score={score}>{score}</Color>
+                </ScoreDataColumn>
+                <DataColumn>
+                    <BasicInfo>
+                        <p className="mb-1"><strong>{name}</strong></p>
+                        <SmallText>
+                            <MdPlace/>
+                            {city}
+                        </SmallText>
+                    </BasicInfo>
+                </DataColumn>
+                <DataColumn style={{color: "gray"}}>{age} años</DataColumn>
+                <DataColumn>
+                    <ViewerList>
+                        <Viewer display={showButton} show={viewer && viewer.doctorPicture}
+                                pic={viewer && viewer.doctorPicture}/>
+                    </ViewerList>
+                </DataColumn>
                 {showButton && (
                     <OpenReportButton xs="auto" onClick={onClickButton} disabled={disableButton}>
                         <MdArrowForward color={"#8c6380"}/>

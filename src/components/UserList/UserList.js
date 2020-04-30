@@ -33,7 +33,7 @@ const SearchIconContainer = styled.div`
   padding: 0 10px 0 5px;
 `
 
-function UserList({reports, reportViewers, onViewReport}) {
+function UserList({reports, reportViewers}) {
 
     const [filter, setFilter] = useState("")
 
@@ -43,16 +43,20 @@ function UserList({reports, reportViewers, onViewReport}) {
         .filter((report) => filterNorm.length > 0 ? report.name.trim().toLowerCase().includes(filterNorm) : true)
         .map((report, index) => {
             let isViewing = false;
-            for(const key in reportViewers) {
-              if(reportViewers[key].reportId === report.id) isViewing = true;
+            let viewer = null
+            for (const key of reportViewers) {
+                if (key.id === report.id) {
+                    isViewing = true;
+                    viewer = key
+                }
             }
 
             return <UserReportCard
-              {...report}
-              index={index}
-              key={report.id}
-              onViewReport={onViewReport}
-              disabled={isViewing}
+                {...report}
+                index={index}
+                key={report.id}
+                disabled={isViewing}
+                viewer={viewer}
             />;
         });
 
@@ -68,7 +72,7 @@ function UserList({reports, reportViewers, onViewReport}) {
             <Row className="mb-3" style={{color: "#634357"}}>
                 <Col xs={4} md={3}>Nombre</Col>
                 <Col>Edad</Col>
-                <Col>Id</Col>
+                <Col>Revisando ahora</Col>
             </Row>
             <Accordion defaultActiveKey="0">
                 {userReport}
@@ -79,17 +83,17 @@ function UserList({reports, reportViewers, onViewReport}) {
 }
 
 UserList.propTypes = {
-  reports: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    age: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    city: PropTypes.string.isRequired,
-    score: PropTypes.object.isRequired,
-    diagnosedWith: PropTypes.object,
-    symptoms: PropTypes.object,
-  })),
-  reportViewers: PropTypes.object,
-  onViewReport: PropTypes.func
+    reports: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        age: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        score: PropTypes.object.isRequired,
+        diagnosedWith: PropTypes.object,
+        symptoms: PropTypes.object,
+    })),
+    reportViewers: PropTypes.object,
+    onViewReport: PropTypes.func
 };
 
 export default UserList;
