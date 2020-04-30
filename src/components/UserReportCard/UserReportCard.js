@@ -10,14 +10,24 @@ const CardHeader = styled.div`
   background-color: #f9f9f9;
 `
 
-const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, index, hasBeenInContactWithInfected }) =>
-{
-
+const UserReportCard = ({
+    id,
+    age,
+    name,
+    city,
+    score,
+    diagnosedWith,
+    symptoms,
+    index,
+    hasBeenInContactWithInfected,
+    disabled,
+    viewer
+}) => {
     const covidScore = score && score.covidScore ? score.covidScore : 0
 
     let history = useHistory();
     const onClickButton = (id) => {
-        const newPath = "/reports/" + id.id;
+        const newPath = "/reports/" + id;
         history.push(newPath);
     };
 
@@ -27,19 +37,13 @@ const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, i
 
     useEffect(() => {
         setEpidemiologicalLink(ReportsAPI.getHasBeenInContactWithInfected(hasBeenInContactWithInfected));
-    }, [hasBeenInContactWithInfected]);
-
-    useEffect(() => {
         setSymptomsList(ReportsAPI.getSymptoms(symptoms));
-    }, [symptoms]);
-
-    useEffect(() => {
         setDiagnosedList(ReportsAPI.getComorbidities(diagnosedWith));
-    }, [diagnosedWith]);
+    }, [hasBeenInContactWithInfected, symptoms, diagnosedWith]);
 
     return (
         <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
-            <Accordion.Toggle as={CardHeader} eventKey={index}>
+            <Accordion.Toggle disable as={CardHeader} eventKey={index}>
                 <UserBasicData
                     id={id}
                     age={age}
@@ -47,7 +51,9 @@ const UserReportCard = ({ id, age, name, city, score, diagnosedWith, symptoms, i
                     city={city}
                     score={covidScore}
                     showButton={true}
-                    onClickButton={() => {onClickButton({id})}}
+                    disableButton={disabled}
+                    onClickButton={() => {onClickButton(id)}}
+                    viewer={viewer}
                 />
             </Accordion.Toggle>
             <Accordion.Collapse eventKey={index}>
@@ -80,7 +86,9 @@ UserReportCard.propTypes = {
     score: PropTypes.object.isRequired,
     diagnosedWith: PropTypes.object,
     symptoms: PropTypes.object,
-    index: PropTypes.number.isRequired
+    index: PropTypes.number.isRequired,
+    onViewReport: PropTypes.func,
+    disabled: PropTypes.bool
 };
 
 export default UserReportCard;
