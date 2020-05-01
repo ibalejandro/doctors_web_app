@@ -82,7 +82,7 @@ const LandingMainContent = () => {
                 </BasicInfoParagraph>
 
                 <ThankParagraph>
-                    <b>¡Gracias por su labor! 👏</b>
+                    <b>¡Gracias por tu labor! 👏</b>
                 </ThankParagraph>
 
                 <RegistrationForm>

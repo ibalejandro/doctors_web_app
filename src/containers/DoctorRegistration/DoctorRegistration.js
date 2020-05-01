@@ -131,7 +131,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setNameError("Por favor, ingrese su nombre.");
+            setNameError("Por favor, ingrese tu nombre.");
             inputNameRef.current.focus();
             return false;
         }
@@ -143,7 +143,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setLastNameError("Por favor, ingrese sus apellidos.");
+            setLastNameError("Por favor, ingrese tus apellidos.");
             inputLastNameRef.current.focus();
             return false;
         }
@@ -155,7 +155,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setPhoneNumberError("Por favor, verifique que su número de celular tenga 10 dígitos.");
+            setPhoneNumberError("Por favor, verifica que tu número de celular tenga 10 dígitos.");
             inputPhoneNumberRef.current.focus();
             return false;
         }
@@ -167,7 +167,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setEmailError("Por favor, verifique que su correo electrónico sea válido.");
+            setEmailError("Por favor, verifique que tu correo electrónico sea válido.");
             inputEmailRef.current.focus();
             return false;
         }
@@ -179,7 +179,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setPersonalIdError("Por favor, adjunte su Cédula de Ciudadanía/Extranjería.");
+            setPersonalIdError("Por favor, adjunta tu cédula de ciudadanía.");
             inputPersonalIdRef.current.focus();
             return false;
         }
@@ -191,7 +191,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setProfessionalIdError("Por favor, adjunte su Tarjeta Profesional.");
+            setProfessionalIdError("Por favor, adjunta tu tarjeta profesional.");
             inputProfessionalIdRef.current.focus();
             return false;
         }

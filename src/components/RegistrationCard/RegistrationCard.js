@@ -4,7 +4,6 @@ import {
     StyledInputLabel,
     StyledInput,
     StyledEmailInput,
-    StyledFileInput,
     StyledCardTitle,
     StyledRegisterButton,
     StyledRegisteringLoader,
@@ -16,6 +15,7 @@ import {useDropzone} from "react-dropzone";
 import styled from "styled-components";
 
 const DropZoneArea = styled.div`
+  cursor: pointer;
   border: 2px dashed ${p => !p.ready ? "#2BD1E7":"#1ee18b"};
   color: ${p => !p.ready ? "#2BD1E7":"#1ee18b"};
   border-radius: 5px;
@@ -53,8 +53,8 @@ const FileDropzone = ({title, onFilesDropped}) => {
     return (
         <DropZoneArea {...getRootProps()} ready={fileDropped}>
             <input {...getInputProps()}/>
-            <p>{title}</p>
-            <p>puede ser la foto</p>
+            <p>{title}.</p>
+            <p>(puede ser la foto)</p>
             <span>{fileName}</span>
         </DropZoneArea>
     )
@@ -71,7 +71,7 @@ const registrationCard = ({
     return (
         <RegistrationCardContainer>
             <StyledCardDiv>
-                <StyledCardTitle>Regístrate como médico voluntario.</StyledCardTitle>
+                <StyledCardTitle>Regístrate como médico voluntario</StyledCardTitle>
                 <StyledInputLabel>Nombre</StyledInputLabel>
                 <small>{nameError}</small>
                 <StyledInput
@@ -120,7 +120,7 @@ const registrationCard = ({
                         <small>{personalIdError}</small>
                         <FileDropzone
                             reference={inputPersonalIdRef}
-                            title={"Carga tu cédula "}
+                            title={"Carga tu cédula"}
                             onFilesDropped={onPersonalIdChanged}
                         />
                     </DoctorIdContainer>

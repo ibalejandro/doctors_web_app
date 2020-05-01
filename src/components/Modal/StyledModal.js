@@ -5,9 +5,8 @@ export const Modal = styled.div`
     z-index: 500;
     background-color: white;
     width: 70%;
-    border: ${props => props.errorStyle ? "3px solid #FF6666" : "3px solid #63AB6E"};
     border-radius: 10px;
-    box-shadow: 1px 1px 1px black;
+    box-shadow: 1px 1px 1px #e2e2e2;
     padding: 20px;
     left: 15%;
     top: 30%;

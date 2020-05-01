@@ -38,7 +38,7 @@ const generalInformation = () => {
                     El médico voluntario no tendrá la responsabilidad de gestionar toma de muestras ni ordenar exámenes.
                     Tampoco deberá cumplir un horario de atención. Solamente se espera que, en el tiempo que tenga
                     disponible, pueda poner su profesionalismo al servicio de la comunidad durante esta pandemia.
-                    ¡Gracias por su colaboración!
+                    ¡Gracias por tu colaboración!
                 </BasicInfoParagraph>
             </BasicInfoSubDiv>
         </BasicInfoDiv>
