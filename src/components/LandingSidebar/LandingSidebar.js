@@ -57,8 +57,29 @@ const LoginButton = styled.button`
   border-radius: 5px;
   max-width: 300px;
   margin-top: 30px;
+  width: 250px;
   @media (min-width: 900px) {
     margin-top: 20%;
+  }
+`
+
+const HowItWorks = styled.a`
+  text-align: center;
+  width: 250px;
+  color: white;
+  font-size: 1.3em;
+  border: none;
+  background-color: #ad9fff;
+  padding: 10px 30px;
+  &:focus {outline: none};
+  font-weight: 600;
+  border-radius: 5px;
+  max-width: 300px;
+  margin-top: 10px;
+  text-decoration: none;
+  &:hover {
+  text-decoration: none;
+    color: white;
   }
 `
 
@@ -90,6 +111,7 @@ const LandingSidebar = () => {
                 </TitleWrapper>
             </TitleContainer>
             <LoginButton onClick={loginWithRedirect}>Iniciar sesión</LoginButton>
+            <HowItWorks href="https://www.youtube.com/watch?v=QZUcViUc5PU" target="_blank" rel="noopener">Cómo funciona</HowItWorks>
             <Spacer/>
             <MadeIn>Con <span role="img" aria-label="heart"> ❤️</span> para Colombia</MadeIn>
         </LandingSidebarContainer>
