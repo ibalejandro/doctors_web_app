@@ -31,11 +31,13 @@ const UsersLink = styled.a`
 `
 
 const LandingMainContentContainer = styled.div`
-    flex: 1 1 auto;
-    overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (min-width: 900px) {
+        flex: 1 1 auto;
+        overflow: auto;  
+    }
 `
 
 const RegistrationForm = styled.div`
