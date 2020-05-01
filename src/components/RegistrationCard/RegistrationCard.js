@@ -16,8 +16,8 @@ import styled from "styled-components";
 
 const DropZoneArea = styled.div`
   cursor: pointer;
-  border: 2px dashed ${p => !p.ready ? "#2BD1E7":"#1ee18b"};
-  color: ${p => !p.ready ? "#2BD1E7":"#1ee18b"};
+  border: 2px dashed ${p => !p.ready ? p.borderColor : "#1ee18b"};
+  color: ${p => !p.ready ? p.borderColor : "#1ee18b"};
   border-radius: 5px;
   margin: 15px 5px;
   display: flex;
@@ -36,22 +36,22 @@ const DoctorIdContainer = styled.div`
   flex-grow: 1;
 `
 
-const FileDropzone = ({title, onFilesDropped}) => {
+const FileDropzone = ({title, onFilesDropped, borderColor = "#2BD1E7"}) => {
     const [fileDropped, setFileDropped] = useState(false)
     const [fileName, setFileName] = useState("")
 
     const onDrop = useCallback(acceptedFiles => {
-        if(acceptedFiles && acceptedFiles.length > 0) {
+        if (acceptedFiles && acceptedFiles.length > 0) {
             onFilesDropped(acceptedFiles[0])
             setFileDropped(true)
             setFileName(acceptedFiles[0].name)
         }
-    }, [])
+    }, [onFilesDropped])
 
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+    const {getRootProps, getInputProps } = useDropzone({onDrop})
 
     return (
-        <DropZoneArea {...getRootProps()} ready={fileDropped}>
+        <DropZoneArea {...getRootProps()} ready={fileDropped} borderColor={borderColor}>
             <input {...getInputProps()}/>
             <p>{title}.</p>
             <p>(puede ser la foto)</p>
@@ -130,14 +130,23 @@ const registrationCard = ({
                             reference={inputProfessionalIdRef}
                             title={"Carga tu tarjeta profesional"}
                             onFilesDropped={onProfessionalIdChanged}
+                            borderColor={"#8A7BEC"}
                         />
                     </DoctorIdContainer>
                 </InputColumn>
+                <div style={{color: "#b4b4b4", fontSize: "0.8em", margin: "5px 0 30px 0"}}>
+                    * Los datos requeridos los usaremos únicamente para verificar que usted es médico de profesión y
+                    está habilitado para ejercer. Sus datos de contacto son necesarios y solo seran usados para poder
+                    comunicarnos y explicarle los pasos a seguir.
+                </div>
                 <StyledRegisterButton disabled={disableRegister}
-                                      onClick={onRegisterClicked}>Enviar</StyledRegisterButton>
-                <StyledRegisteringLoader>
-                    <MoonLoader size={30} color={"#9B70FF"} loading={registerLoading}/>
-                </StyledRegisteringLoader>
+                                      onClick={onRegisterClicked}>
+                    Enviar
+                    <StyledRegisteringLoader>
+                        <MoonLoader size={20} color={"white"} loading={registerLoading}/>
+                    </StyledRegisteringLoader>
+                </StyledRegisterButton>
+
             </StyledCardDiv>
         </RegistrationCardContainer>
     );

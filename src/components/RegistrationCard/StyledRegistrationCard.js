@@ -48,6 +48,8 @@ export const StyledCardTitle = styled.h3`
 `;
 
 export const StyledRegisterButton = styled.button`
+  display: flex;
+  justify-content: center;
     width: 100%;
     background-color: #8A7BEC;
     border-radius: 10px;
@@ -62,8 +64,7 @@ export const StyledRegisterButton = styled.button`
 `;
 
 export const StyledRegisteringLoader = styled.div`
-    position: absolute;
-    left: 49%;
+  margin-left: 10px;
     & > div {
       width: auto;
       height: auto;

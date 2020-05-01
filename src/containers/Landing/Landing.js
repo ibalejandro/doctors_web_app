@@ -1,7 +1,4 @@
 import React, {useEffect} from "react";
-import DoctorRegistration from "../DoctorRegistration/DoctorRegistration";
-import GeneralInformation from "../../components/GeneralInformation/GeneralInformation";
-import LoginRedirection from "../LoginRedirection/LoginRedirection";
 import {useAuth0} from "../../shared/Auth";
 import {useHistory} from "react-router-dom";
 import styled from "styled-components";

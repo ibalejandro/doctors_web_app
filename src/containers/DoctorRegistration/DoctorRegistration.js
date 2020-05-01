@@ -224,8 +224,8 @@ const DoctorRegistration = () => {
                     if (doctor.doctorRegistered) {
                         setRegistrationResult({
                             title: "¡Registro exitoso!",
-                            body: "Revisaremos la información proporcionada y nos pondremos en contacto con usted " +
-                                "lo más pronto posible para explicarle cómo empezar a colaborar. Gracias por su " +
+                            body: "Revisaremos la información proporcionada y te contactaremos " +
+                                "lo más pronto posible para explicarte cómo empezar a colaborar. Gracias por tu " +
                                 "compromiso con el país y por ayudarnos a aplanar la curva.",
                             errorStyle: false
                         });
@@ -253,8 +253,8 @@ const DoctorRegistration = () => {
     const setErrorMessageOnRegistrationResult = () => {
         setRegistrationResult({
             title: "Error en el registro",
-            body: "Ocurrió un error durante el proceso de registro. Por favor, intente nuevamente. Si el " +
-                "error persiste, escríbanos a sincovid@gmail.com.",
+            body: "Ocurrió un error durante el proceso de registro. Por favor, intenta nuevamente. Si el " +
+                "error persiste, escribenos a sincovid@gmail.com.",
             errorStyle: true
         });
     };

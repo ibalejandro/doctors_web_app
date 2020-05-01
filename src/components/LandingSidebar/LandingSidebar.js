@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import background from './background.svg'
 import {useAuth0} from "../../shared/Auth";
+import logo from './logo.svg';
 
 const LandingSidebarContainer = styled.div`
   background-color: #8A7BEC;
@@ -83,13 +84,14 @@ const LandingSidebar = () => {
                         Doctores
                     </Title>
                     <Subtitle>
+                        <img src={logo} alt="5vid"/>
                         5vid
                     </Subtitle>
                 </TitleWrapper>
             </TitleContainer>
-            <LoginButton onClick={loginWithRedirect}>Iniciar Sesión</LoginButton>
+            <LoginButton onClick={loginWithRedirect}>Iniciar sesión</LoginButton>
             <Spacer/>
-            <MadeIn>Con ❤️ para Colombia</MadeIn>
+            <MadeIn>Con <span role="img" aria-label="heart"> ❤️</span> para Colombia</MadeIn>
         </LandingSidebarContainer>
     );
 };

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
 import DiagnosticCard from "../../components/DiagnosticCard/DiagnosticCard";
-import NameAgeCard from "../../components/NameAgeCard/NameAgeCard";
 import Timeline from "../../components/TimelineComponent/TimelineComponent";
 import UserDetailedSymptomsCard from "../../components/UserDetailedSymptomsCard/UserDetailedSymptomsCard";
 import CasesAPI from "../../services/CasesAPI";
@@ -60,7 +59,7 @@ const CaseDetail = () => {
             firebaseViewerRef.current.remove()
         }
 
-    }, [])
+    }, [id, user.nickname, user.picture, user.sub])
 
     useEffect(() => {
         const loadCaseState = async (id, token) => {
@@ -94,7 +93,7 @@ const CaseDetail = () => {
         };
         if (isAuthenticated && token && Object.keys(report).length !== 0)
             loadVitalSignsData(id, token);
-    }, [id, isAuthenticated, token, report]);
+    }, [id, isAuthenticated, token, report, vitalSigns]);
 
     useEffect(() => {
         const loadLastConduct = async (patientId, token) => {

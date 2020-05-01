@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Col} from 'react-bootstrap';
 import {MdArrowForward, MdPlace,} from "react-icons/md";
 
 const Color = styled.div`

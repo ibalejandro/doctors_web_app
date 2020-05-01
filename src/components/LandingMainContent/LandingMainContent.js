@@ -45,12 +45,6 @@ const RegistrationForm = styled.div`
   padding: 0 20px;
 `
 
-const RegistrationTitle = styled.h3``
-
-const Spacer = styled.div`
-  flex-grow: 1;
-`
-
 const Content = styled.div`
   max-width: 800px;
 `
@@ -82,7 +76,7 @@ const LandingMainContent = () => {
                 </BasicInfoParagraph>
 
                 <ThankParagraph>
-                    <b>¡Gracias por tu labor! 👏</b>
+                    <b>¡Gracias por tu labor! <span role="img" aria-label="aplausos"> 👏</span></b>
                 </ThankParagraph>
 
                 <RegistrationForm>
