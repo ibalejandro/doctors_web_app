@@ -30,7 +30,7 @@ const Logout = () => {
     return (
         <LogoutContainer>
             <div>
-                <h1>Cerrando sesión. 👩‍⚕🩺️👨‍⚕️ </h1>
+                <h1>Cerrando sesión 👩‍⚕🩺️👨‍⚕️ </h1>
                 <p>redirigiendo...</p>
             </div>
         </LogoutContainer>
