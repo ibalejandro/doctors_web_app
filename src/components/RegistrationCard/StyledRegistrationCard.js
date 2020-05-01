@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
+export const RegistrationCardContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`
+
 export const StyledCardDiv = styled.div`
-    width: 50%;
+    max-width: 600px;
     margin: 16px auto;
     border: 1px solid #eee;
     box-shadow: 0 2px 3px #ccc;
@@ -19,10 +25,10 @@ export const StyledInput = styled.input`
     width: 100%;
     margin: 0 0 20px 0;
     border: none;
-    border: solid 2px #ccc;
     border-radius: 5px;
     text-transform: capitalize;
     padding: 5px;
+    background-color: #f9f9f9;
 `;
 
 export const StyledEmailInput = styled(StyledInput)`
