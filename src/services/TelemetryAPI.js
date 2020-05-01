@@ -27,7 +27,7 @@ class TelemetryAPI {
                         telemetryResult.telemetry_report.spo2.toFixed(2) + " %";
                 }
             } catch (error) {
-                if (error.response.status !== 404)
+                if (error && error.response && error.response.status !== 404)
                     console.error(error);
             }
         }
@@ -54,7 +54,7 @@ class TelemetryAPI {
                         telemetryResult.telemetry_report.breathing_frequency.toFixed(2) + " rpm";
                 }
             } catch (error) {
-                if (error.response.status !== 404)
+                if (error && error.response && error.response.status !== 404)
                     console.error(error);
             }
         }

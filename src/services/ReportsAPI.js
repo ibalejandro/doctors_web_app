@@ -74,7 +74,7 @@ class ReportsAPI {
                 city: report.postalCode
             }
         } catch (error) {
-            if (error.response.status !== 404)
+            if (error && error.response && error.response.status !== 404)
                 console.error(error);
             return []
         }
@@ -209,7 +209,7 @@ class ReportsAPI {
                 userContactNumber: userPii.raw_insecure_value
             };
         } catch (error) {
-            if (error.response.status !== 404)
+            if (error && error.response && error.response.status !== 404)
                 console.error(error);
             return {
                 userContactNumber: null
@@ -235,7 +235,7 @@ class ReportsAPI {
                 updateMessage: ''
             };
         } catch (error) {
-            if (error.response.status !== 404)
+            if (error && error.response && error.response.status !== 404)
                 console.error(error);
             return {
                 updateMessage: "Error"

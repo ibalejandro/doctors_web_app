@@ -19,6 +19,7 @@ export const BasicInfoParagraph = styled.p`
     margin: 0 0 0 20px;
     text-align: justify;
     display: inline-block;
+    max-width: 70%;
 `;
 
 export const BasicInfoSubDiv = styled.div`
@@ -26,9 +27,14 @@ export const BasicInfoSubDiv = styled.div`
     flex-direction: row;
     margin: 40px 0 20px 0;
     text-align: center;
-    padding: 0 150px 0 150px;
+    flex-wrap: wrap;
+    justify-content: center;
 `;
 
-export const UsersLink =styled.a`
+export const UsersLink = styled.a`
     color: #2DD1E7;
 `;
+
+export const SideFigure = styled.figure`
+  width: 100px;
+`
