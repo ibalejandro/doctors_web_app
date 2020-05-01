@@ -17,7 +17,6 @@ export const addViewerToReport = async (reviewerData) => {
         return ref
     } catch (e) {
         console.log(e);
-        debugger
         return null
     }
 };

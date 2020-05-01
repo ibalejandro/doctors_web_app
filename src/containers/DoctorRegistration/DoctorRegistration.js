@@ -79,21 +79,15 @@ const DoctorRegistration = () => {
         setEmail(newEmail);
     };
 
-    const personalIdChangeHandler = (content) => {
-        if (content) {
-            setPersonalId(inputPersonalIdRef.current.files[0]);
-        }
-        else {
-            setPersonalId(content);
+    const personalIdChangeHandler = (fileContent) => {
+        if (fileContent) {
+            setPersonalId(fileContent);
         }
     };
 
-    const professionalIdChangeHandler = (content) => {
-        if (content) {
-            setProfessionalId(inputProfessionalIdRef.current.files[0]);
-        }
-        else {
-            setProfessionalId(content);
+    const professionalIdChangeHandler = (fileContent) => {
+        if (fileContent) {
+            setProfessionalId(fileContent);
         }
     };
 

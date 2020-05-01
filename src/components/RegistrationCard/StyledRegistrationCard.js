@@ -4,20 +4,16 @@ export const RegistrationCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 100px;
 `
 
 export const StyledCardDiv = styled.div`
-    max-width: 600px;
-    margin: 16px auto;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    padding: 30px;
+  max-width: 689px;  
 `;
 
 export const StyledInputLabel = styled.label`
     font-weight: bold;
     margin: 0 10px 0 0;
-    color: #2DD1E7;
     width: 100%;
 `;
 
@@ -31,6 +27,14 @@ export const StyledInput = styled.input`
     background-color: #f9f9f9;
 `;
 
+export const InputColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+  div.column {
+    flex-basis: 50%;
+  }
+`
+
 export const StyledEmailInput = styled(StyledInput)`
     text-transform: lowercase;
 `;
@@ -39,19 +43,19 @@ export const StyledFileInput = styled(StyledInput)`
     padding: 0px;
 `;
 
-export const StyledCardTitle = styled.h2`
+export const StyledCardTitle = styled.h3`
     margin: 0 0 15px 0;
 `;
 
 export const StyledRegisterButton = styled.button`
     width: 100%;
-    background-color: blueviolet;
+    background-color: #8A7BEC;
     border-radius: 10px;
     color: #FFFFFF;
     font-weight: bold;
     border: solid 2px;
     padding: 7px;
-    
+    cursor: pointer;
     &:focus {
         outline: none;
     }
