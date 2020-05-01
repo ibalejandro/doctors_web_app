@@ -89,7 +89,7 @@ const LandingSidebar = () => {
             </TitleContainer>
             <LoginButton onClick={loginWithRedirect}>Iniciar Sesión</LoginButton>
             <Spacer/>
-            <MadeIn>Con ❤️ de Colombia</MadeIn>
+            <MadeIn>Con ❤️ para Colombia</MadeIn>
         </LandingSidebarContainer>
     );
 };

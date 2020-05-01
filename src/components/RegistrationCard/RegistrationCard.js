@@ -71,7 +71,7 @@ const registrationCard = ({
     return (
         <RegistrationCardContainer>
             <StyledCardDiv>
-                <StyledCardTitle>Registrate como médico voluntario.</StyledCardTitle>
+                <StyledCardTitle>Regístrate como médico voluntario.</StyledCardTitle>
                 <StyledInputLabel>Nombre</StyledInputLabel>
                 <small>{nameError}</small>
                 <StyledInput
