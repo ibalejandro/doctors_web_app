@@ -7,9 +7,10 @@ import LandingMainContent from "../../components/LandingMainContent/LandingMainC
 
 const LandingContainer = styled.div`
   font-family: 'Roboto', sans-serif;
-  height: 100vh;
   display: flex;
+  height: 100vh;
   @media (max-width: 900px) {
+    height: 100%;
     flex-direction: column;
   }
 `

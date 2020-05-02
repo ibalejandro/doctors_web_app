@@ -88,6 +88,7 @@ flex-grow: 1;
 `
 
 const MadeIn = styled.span`
+  margin-top: 10px;
   color: white;
   align-self: center;
   padding-left: 10px;
