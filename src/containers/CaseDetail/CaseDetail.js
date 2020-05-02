@@ -93,7 +93,7 @@ const CaseDetail = () => {
         };
         if (isAuthenticated && token && Object.keys(report).length !== 0)
             loadVitalSignsData(id, token);
-    }, [id, isAuthenticated, token, report, vitalSigns]);
+    }, [id, isAuthenticated, token, report]);
 
     useEffect(() => {
         const loadLastConduct = async (patientId, token) => {
