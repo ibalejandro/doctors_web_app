@@ -78,7 +78,6 @@ function UserList({reports, reportViewers}) {
                 {userReport}
             </Accordion>
         </React.Fragment>
-
     );
 }
 
@@ -92,8 +91,7 @@ UserList.propTypes = {
         diagnosedWith: PropTypes.object,
         symptoms: PropTypes.object,
     })),
-    reportViewers: PropTypes.array,
-    onViewReport: PropTypes.func
+    reportViewers: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default UserList;

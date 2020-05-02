@@ -136,7 +136,7 @@ const registrationCard = ({
                 </InputColumn>
                 <div style={{color: "#b4b4b4", fontSize: "0.8em", margin: "5px 0 30px 0"}}>
                     * Los datos requeridos los usaremos únicamente para verificar que usted es médico de profesión y
-                    está habilitado para ejercer. Sus datos de contacto son necesarios y solo seran usados para poder
+                    está habilitado para ejercer. Sus datos de contacto son necesarios y solo serán usados para poder
                     comunicarnos y explicarle los pasos a seguir.
                 </div>
                 <StyledRegisterButton disabled={disableRegister}
