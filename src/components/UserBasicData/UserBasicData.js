@@ -85,7 +85,6 @@ const UserBasicData = ({
     name,
     city,
     score,
-    showButton = true,
     disableButton,
     onClickButton,
     viewer
@@ -113,11 +112,9 @@ const UserBasicData = ({
                     />
                 </ViewerList>
             </DataColumn>
-            {showButton && (
-                <OpenReportButton xs="auto" onClick={onClickButton} disabled={disableButton}>
-                    <MdArrowForward color={"#8c6380"}/>
-                </OpenReportButton>
-            )}
+            <OpenReportButton xs="auto" onClick={onClickButton} disabled={disableButton}>
+                <MdArrowForward color={"#8c6380"}/>
+            </OpenReportButton>
         </CardRow>
     );
 };
@@ -127,7 +124,6 @@ UserBasicData.propTypes = {
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
-    showButton: PropTypes.bool,
     disableButton: PropTypes.bool,
     onClickButton: PropTypes.func,
     viewer: PropTypes.object

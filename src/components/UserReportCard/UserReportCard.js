@@ -49,7 +49,6 @@ const UserReportCard = ({
                     name={name}
                     city={city}
                     score={covidScore}
-                    showButton={true}
                     disableButton={disabled}
                     onClickButton={() => {onClickButton(id)}}
                     viewer={viewer}
