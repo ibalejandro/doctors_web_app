@@ -131,7 +131,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setNameError("Por favor, ingrese tu nombre.");
+            setNameError("Por favor, ingresa tu nombre.");
             inputNameRef.current.focus();
             return false;
         }
@@ -143,7 +143,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setLastNameError("Por favor, ingrese tus apellidos.");
+            setLastNameError("Por favor, ingresa tus apellidos.");
             inputLastNameRef.current.focus();
             return false;
         }
@@ -167,7 +167,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setEmailError("Por favor, verifique que tu correo electrónico sea válido.");
+            setEmailError("Por favor, verifica que tu correo electrónico sea válido.");
             inputEmailRef.current.focus();
             return false;
         }
@@ -179,7 +179,7 @@ const DoctorRegistration = () => {
             return true;
         }
         else {
-            setPersonalIdError("Por favor, adjunta tu cédula de ciudadanía.");
+            setPersonalIdError("Por favor, adjunta tu cédula.");
             inputPersonalIdRef.current.focus();
             return false;
         }
