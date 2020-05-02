@@ -37,10 +37,11 @@ function UserList({reports, reportViewers}) {
 
     const [filter, setFilter] = useState("")
 
-    const filterNorm = filter.trim().toLowerCase()
+    const filterNorm = filter.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
     const userReport = reports
-        .filter((report) => filterNorm.length > 0 ? report.name.trim().toLowerCase().includes(filterNorm) : true)
+        .filter((report) => filterNorm.length > 0 ? report.name.trim().toLowerCase().normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "").includes(filterNorm) : true)
         .map((report, index) => {
             let isViewing = false;
             let viewer = null
