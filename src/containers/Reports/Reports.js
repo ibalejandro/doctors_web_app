@@ -7,7 +7,7 @@ import {useViewerList} from '../../services/Firebase/FirebaseViewers';
 
 const Reports = () => {
 
-    const {loading, isAuthenticated, token, user} = useAuth0()
+    const {loading, isAuthenticated, token} = useAuth0()
 
     const [userReports, setUserReports] = useState([])
 
