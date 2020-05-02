@@ -224,8 +224,9 @@ const DoctorRegistration = () => {
                     if (doctor.doctorRegistered) {
                         setRegistrationResult({
                             title: "¡Registro exitoso!",
-                            body: "Revisaremos la información proporcionada y te contactaremos " +
-                                "lo más pronto posible para explicarte cómo empezar a colaborar. Gracias por tu " +
+                            body: "Revisaremos la información proporcionada y te enviaremos un correo dentro de las " +
+                                "próximas 24 horas explicándote cómo empezar a colaborar. Si en este tiempo no te " +
+                                "hemos contactado, por favor escríbenos a sincovid@gmail.com. Gracias por tu " +
                                 "compromiso con el país y por ayudarnos a aplanar la curva.",
                             errorStyle: false
                         });
@@ -254,7 +255,7 @@ const DoctorRegistration = () => {
         setRegistrationResult({
             title: "Error en el registro",
             body: "Ocurrió un error durante el proceso de registro. Por favor, intenta nuevamente. Si el " +
-                "error persiste, escribenos a sincovid@gmail.com.",
+                "error persiste, escríbenos a sincovid@gmail.com.",
             errorStyle: true
         });
     };
