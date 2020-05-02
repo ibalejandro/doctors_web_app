@@ -45,7 +45,6 @@ const UserReportCard = ({
         <Card style={{border: "none", borderRadius: "10px"}} className="mb-2">
             <Accordion.Toggle disable as={CardHeader} eventKey={index}>
                 <UserBasicData
-                    id={id}
                     age={age}
                     name={name}
                     city={city}
@@ -87,8 +86,8 @@ UserReportCard.propTypes = {
     diagnosedWith: PropTypes.object,
     symptoms: PropTypes.object,
     index: PropTypes.number.isRequired,
-    onViewReport: PropTypes.func,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    viewer: PropTypes.object
 };
 
 export default UserReportCard;

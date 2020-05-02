@@ -80,60 +80,57 @@ const BasicInfo = styled.div`
   flex-direction: column;
 `
 
-
 const UserBasicData = ({
-                           id,
-                           age,
-                           name,
-                           city,
-                           score,
-                           showButton = true,
-                           disableButton,
-                           onClickButton,
-                           viewer
-                       }) => {
-
+    age,
+    name,
+    city,
+    score,
+    showButton = true,
+    disableButton,
+    onClickButton,
+    viewer
+}) => {
     return (
-        <>
-            <CardRow>
-                <ScoreDataColumn>
-                    <Color score={score}>{score}</Color>
-                </ScoreDataColumn>
-                <DataColumn>
-                    <BasicInfo>
-                        <p className="mb-1"><strong>{name}</strong></p>
-                        <SmallText>
-                            <MdPlace/>
-                            {city}
-                        </SmallText>
-                    </BasicInfo>
-                </DataColumn>
-                <DataColumn style={{color: "gray"}}>{age} años</DataColumn>
-                <DataColumn>
-                    <ViewerList>
-                        <Viewer show={viewer && viewer.doctorPicture}
-                                pic={viewer && viewer.doctorPicture}/>
-                    </ViewerList>
-                </DataColumn>
-                {showButton && (
-                    <OpenReportButton xs="auto" onClick={onClickButton} disabled={disableButton}>
-                        <MdArrowForward color={"#8c6380"}/>
-                    </OpenReportButton>
-                )}
-            </CardRow>
-        </>
+        <CardRow>
+            <ScoreDataColumn>
+                <Color score={score}>{score}</Color>
+            </ScoreDataColumn>
+            <DataColumn>
+                <BasicInfo>
+                    <p className="mb-1"><strong>{name}</strong></p>
+                    <SmallText>
+                        <MdPlace/>
+                        {city}
+                    </SmallText>
+                </BasicInfo>
+            </DataColumn>
+            <DataColumn style={{color: "gray"}}>{age} años</DataColumn>
+            <DataColumn>
+                <ViewerList>
+                    <Viewer
+                        show={viewer && viewer.doctorPicture}
+                        pic={viewer && viewer.doctorPicture}
+                    />
+                </ViewerList>
+            </DataColumn>
+            {showButton && (
+                <OpenReportButton xs="auto" onClick={onClickButton} disabled={disableButton}>
+                    <MdArrowForward color={"#8c6380"}/>
+                </OpenReportButton>
+            )}
+        </CardRow>
     );
 };
 
 UserBasicData.propTypes = {
-    id: PropTypes.string.isRequired,
     age: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     showButton: PropTypes.bool,
     disableButton: PropTypes.bool,
-    onClickButton: PropTypes.func
+    onClickButton: PropTypes.func,
+    viewer: PropTypes.object
 };
 
 export default UserBasicData;
