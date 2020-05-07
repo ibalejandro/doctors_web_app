@@ -15,6 +15,7 @@ import DoctorUserCommunication from "../DoctorUserCommunication/DoctorUserCommun
 import ConductCard from "../../components/ConductCard/ConductCard";
 import {addViewerToReport} from "../../services/Firebase/FirebaseViewers";
 import CaseDetailUserInfo from "../../components/CaseDetailUserInfo/CaseDetailUserInfo";
+import VideoCallExplanation from "../../containers/VideoCallExplanation/VideoCallExplanation";
 
 const CaseDetail = () => {
 
@@ -194,6 +195,7 @@ const CaseDetail = () => {
                         conduct={lastConduct.conduct}
                         date={lastConduct.date}
                         showSaveButton={false}/>
+                    <VideoCallExplanation/>
                     <DoctorUserCommunication
                         doctorId={user.sub}
                         patientId={report.patientId}

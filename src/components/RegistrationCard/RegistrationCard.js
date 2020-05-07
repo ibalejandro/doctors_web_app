@@ -8,7 +8,7 @@ import {
     StyledRegisterButton,
     StyledRegisteringLoader,
     RegistrationCardContainer,
-    InputColumn
+    InputColumn, StyledRequiredSignSpan, StyledRequiredSignLabel
 } from "./StyledRegistrationCard";
 import MoonLoader from "react-spinners/MoonLoader";
 import {useDropzone} from "react-dropzone";
@@ -16,8 +16,8 @@ import styled from "styled-components";
 
 const DropZoneArea = styled.div`
   cursor: pointer;
-  border: 2px dashed ${p => !p.ready ? p.borderColor : "#1ee18b"};
-  color: ${p => !p.ready ? p.borderColor : "#1ee18b"};
+  border: 2px dashed ${p => p.errorMessage ? "#D93025" : (!p.ready ? p.borderColor : "#1ee18b")};
+  color: ${p => p.errorMessage ? "#D93025" : (!p.ready ? p.borderColor : "#1ee18b")};
   border-radius: 5px;
   margin: 15px 5px;
   display: flex;
@@ -40,13 +40,17 @@ const DropZoneArea = styled.div`
     text-align: center;
     padding: 4px;
   }
+  
+  &:focus {
+    outline: none;
+  }
 `
 
 const DoctorIdContainer = styled.div`
   flex-grow: 1;
 `
 
-const FileDropzone = ({title, onFilesDropped, borderColor = "#2BD1E7"}) => {
+const FileDropzone = ({title, onFilesDropped, borderColor = "#2BD1E7", reference, errorMessage}) => {
     const [fileDropped, setFileDropped] = useState(false)
     const [fileName, setFileName] = useState("")
 
@@ -62,10 +66,15 @@ const FileDropzone = ({title, onFilesDropped, borderColor = "#2BD1E7"}) => {
     const {getRootProps, getInputProps } = useDropzone({onDrop})
 
     return (
-        <DropZoneArea {...getRootProps()} ready={fileDropped} borderColor={borderColor}>
+        <DropZoneArea
+            {...getRootProps()}
+            ready={fileDropped}
+            borderColor={borderColor}
+            ref={reference}
+            errorMessage={errorMessage}>
             <input {...getInputProps()}/>
             <p>{title}&nbsp;</p>
-            <p> (puede ser la foto)</p>
+            <p>(puede ser la foto)<StyledRequiredSignSpan>*</StyledRequiredSignSpan></p>
             <span>{fileName}</span>
         </DropZoneArea>
     )
@@ -83,20 +92,23 @@ const registrationCard = ({
         <RegistrationCardContainer>
             <StyledCardDiv>
                 <StyledCardTitle>Regístrate como médico voluntario</StyledCardTitle>
-                <StyledInputLabel>Nombre</StyledInputLabel>
+                <StyledRequiredSignLabel>* Requerido</StyledRequiredSignLabel>
+                <StyledInputLabel>Nombre <StyledRequiredSignSpan>*</StyledRequiredSignSpan></StyledInputLabel>
                 <small>{nameError}</small>
                 <StyledInput
                     type="text"
                     ref={inputNameRef}
+                    errorMessage={nameError}
                     onChange={(event) => {
                         onNameChanged(event.target.value)
                     }}
                     value={name}/>
-                <StyledInputLabel>Apellidos</StyledInputLabel>
+                <StyledInputLabel>Apellidos <StyledRequiredSignSpan>*</StyledRequiredSignSpan></StyledInputLabel>
                 <small>{lastNameError}</small>
                 <StyledInput
                     type="text"
                     ref={inputLastNameRef}
+                    errorMessage={lastNameError}
                     onChange={(event) => {
                         onLastNameChanged(event.target.value)
                     }}
@@ -104,22 +116,28 @@ const registrationCard = ({
 
                 <InputColumn>
                     <div className="column flex-grow-1">
-                        <StyledInputLabel>Número de celular</StyledInputLabel>
+                        <StyledInputLabel>
+                            Número de celular <StyledRequiredSignSpan>*</StyledRequiredSignSpan>
+                        </StyledInputLabel>
                         <small>{phoneNumberError}</small>
                         <StyledInput
                             type="text"
                             ref={inputPhoneNumberRef}
+                            errorMessage={phoneNumberError}
                             onChange={(event) => {
                                 onPhoneNumberChanged(event.target.value)
                             }}
                             value={phoneNumber}/>
                     </div>
                     <div className="column flex-grow-1 ml-3">
-                        <StyledInputLabel>Correo electrónico</StyledInputLabel>
+                        <StyledInputLabel>
+                            Correo electrónico <StyledRequiredSignSpan>*</StyledRequiredSignSpan>
+                        </StyledInputLabel>
                         <small>{emailError}</small>
                         <StyledEmailInput
                             type="text"
                             ref={inputEmailRef}
+                            errorMessage={emailError}
                             onChange={(event) => {
                                 onEmailChanged(event.target.value)
                             }}
@@ -127,18 +145,20 @@ const registrationCard = ({
                     </div>
                 </InputColumn>
                 <InputColumn>
-                    <DoctorIdContainer ref={inputPersonalIdRef}>
+                    <DoctorIdContainer>
                         <small>{personalIdError}</small>
                         <FileDropzone
                             reference={inputPersonalIdRef}
+                            errorMessage={personalIdError}
                             title={"Carga tu cédula"}
                             onFilesDropped={onPersonalIdChanged}
                         />
                     </DoctorIdContainer>
-                    <DoctorIdContainer ref={inputProfessionalIdRef}>
+                    <DoctorIdContainer>
                         <small>{professionalIdError}</small>
                         <FileDropzone
                             reference={inputProfessionalIdRef}
+                            errorMessage={professionalIdError}
                             title={"Carga tu tarjeta profesional"}
                             onFilesDropped={onProfessionalIdChanged}
                             borderColor={"#8A7BEC"}

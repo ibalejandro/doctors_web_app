@@ -43,6 +43,7 @@ const DoctorRegistration = () => {
                 let newName = capitalizeText(content);
                 newName = collapseMultipleSpaces(newName);
                 setName(newName);
+                setNameError(null);
             }
         }
     };
@@ -56,6 +57,7 @@ const DoctorRegistration = () => {
                 let newLastName = capitalizeText(content);
                 newLastName = collapseMultipleSpaces(newLastName);
                 setLastName(newLastName);
+                setLastNameError(null);
             }
         }
     };
@@ -68,6 +70,7 @@ const DoctorRegistration = () => {
             if (allNumbers(content)) {
                 if (!content.startsWith('0') && content.length <= 10) {
                     setPhoneNumber(content);
+                    setPhoneNumberError(null);
                 }
             }
         }
@@ -77,17 +80,20 @@ const DoctorRegistration = () => {
         let newEmail = removeAllSpaces(content);
         newEmail = newEmail.toLowerCase();
         setEmail(newEmail);
+        setEmailError(null);
     };
 
     const personalIdChangeHandler = (fileContent) => {
         if (fileContent) {
             setPersonalId(fileContent);
+            setPersonalIdError(null);
         }
     };
 
     const professionalIdChangeHandler = (fileContent) => {
         if (fileContent) {
             setProfessionalId(fileContent);
+            setProfessionalIdError(null);
         }
     };
 
