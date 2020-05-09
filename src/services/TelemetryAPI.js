@@ -49,7 +49,7 @@ class TelemetryAPI {
                     method: 'get'
                 });
                 const telemetryResult = response.data;
-                if (telemetryResult.telemetry_report.breathing_frequency) {
+                if (telemetryResult.telemetry_report.is_breathing_frequency_valid) {
                     breathingFrequency.breathingFrequency =
                         telemetryResult.telemetry_report.breathing_frequency.toFixed(2) + " rpm";
                 }
