@@ -63,7 +63,7 @@ const LandingMainContent = () => {
                     permite
                     a
                     los médicos voluntarios realizar revisiones en línea de los usuarios que reportan su estado de salud
-                    en <UsersLink href="http://5vid.co" target="_blank">5vid.co</UsersLink> </b> y contactarlos por
+                    en <UsersLink href="https://5vid.co" target="_blank">5vid.co</UsersLink> </b> y contactarlos por
                     videollamada
                     para llevar a cabo la clasificación inicial del riesgo. <b>El objetivo no es, de ninguna manera,
                     diagnosticar la presencia del virus, sino orientar a los usuarios con el concepto de personal
