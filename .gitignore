@@ -109,3 +109,9 @@ dist
 
 # macOS
 .DS_Store
+
+dev.now.json
+
+dev.env
+
+prod.env
