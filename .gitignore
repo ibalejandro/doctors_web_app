@@ -1,3 +1,5 @@
+now.json
+
 .idea/
 
 # Logs
@@ -104,3 +106,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# macOS
+.DS_Store
+
+dev.now.json
+
+dev.env
+
+prod.env
