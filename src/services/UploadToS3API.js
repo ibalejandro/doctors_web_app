@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const UPLOAD_TO_S3_URL = process.env.REACT_APP_UPLOAD_TO_S3_API_URL;
+const DOCTORS_DOCUMENTS_BUCKET = process.env.REACT_APP_DOCTORS_DOCUMENTS_BUCKET;
 
 class UploadToS3API {
     static async getUploadUrl(filename) {
@@ -9,7 +10,7 @@ class UploadToS3API {
                 let req = new XMLHttpRequest()
                 req.open("POST", UPLOAD_TO_S3_URL)
                 req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-                req.send(JSON.stringify({ filename: filename }))
+                req.send(JSON.stringify({ filename: filename, bucket: DOCTORS_DOCUMENTS_BUCKET}))
                 req.onload = () => {
                     res(JSON.parse(req.responseText))
                 }
