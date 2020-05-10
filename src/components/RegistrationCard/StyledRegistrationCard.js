@@ -25,6 +25,9 @@ export const StyledInput = styled.input`
     text-transform: capitalize;
     padding: 5px;
     background-color: #f9f9f9;
+    &:focus {
+        outline-color: ${props => props.errorMessage ? "#D93025" : null};
+    }
 `;
 
 export const InputColumn = styled.div`
@@ -69,4 +72,13 @@ export const StyledRegisteringLoader = styled.div`
       width: auto;
       height: auto;
     }
+`;
+
+export const StyledRequiredSignSpan = styled.span`
+    color: #D93025;
+`;
+
+export const StyledRequiredSignLabel = styled.label`
+    color: #D93025;
+    margin: 0 0 25px 0;
 `;
