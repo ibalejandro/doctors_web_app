@@ -4,7 +4,7 @@ import {StyledUnderstoodButton} from "./StyledRegistrationResult";
 const registrationResult = ({title, body, errorStyle, onUnderstoodClicked}) => {
     return (
       <div>
-          <h4>{title}</h4>
+          <h4><strong>{title}</strong></h4>
           <p>{body}</p>
           <StyledUnderstoodButton
             errorStyle={errorStyle}

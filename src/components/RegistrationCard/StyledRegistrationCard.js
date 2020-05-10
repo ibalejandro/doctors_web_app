@@ -4,7 +4,7 @@ export const RegistrationCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 `
 
 export const StyledCardDiv = styled.div`
