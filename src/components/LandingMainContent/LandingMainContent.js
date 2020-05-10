@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import DoctorRegistration from "../../containers/DoctorRegistration/DoctorRegistration";
+import Feedback from "../../containers/Feedback/Feedback";
 
 const ContentTitle = styled.div`
   margin-top: 100px;
@@ -84,6 +85,8 @@ const LandingMainContent = () => {
                 <RegistrationForm>
                     <DoctorRegistration/>
                 </RegistrationForm>
+
+                <Feedback/>
             </Content>
         </LandingMainContentContainer>
     );

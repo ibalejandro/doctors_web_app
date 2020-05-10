@@ -240,6 +240,27 @@ class CasesAPI {
             };
         }
     }
+
+    static async sendFeedback(feedback) {
+        try {
+            const response = await axios({
+                url: DOCTORS_API_URL + '/feedback',
+                data: {
+                    "feedback": feedback
+                },
+                method: 'post'
+            });
+            const feedbackResult = response.data;
+            return {
+                sendMessage: ''
+            };
+        } catch (error) {
+            console.error(error);
+            return {
+                sendMessage: "Error"
+            };
+        }
+    }
 }
 
 export default CasesAPI;
