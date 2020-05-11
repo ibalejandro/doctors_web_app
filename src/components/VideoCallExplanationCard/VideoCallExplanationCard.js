@@ -1,8 +1,8 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import {StyledCardDiv, StyledCardSubDiv, StyledCardTitle, StyledVideoDiv} from "./StyledVideoCallExplanationCard";
-import {ReactComponent as OpenIcon} from "./assets/down-arrow.svg"
-import {ReactComponent as CloseIcon} from "./assets/up-arrow.svg"
+import {ReactComponent as OpenIcon} from "./assets/down-arrow.svg";
+import {ReactComponent as CloseIcon} from "./assets/up-arrow.svg";
 
 const videoCallExplanationCard = ({showVideo, onShowVideoClick}) => {
 

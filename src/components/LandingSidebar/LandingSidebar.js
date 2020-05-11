@@ -3,6 +3,7 @@ import styled from "styled-components";
 import background from './background.svg'
 import {useAuth0} from "../../shared/Auth";
 import logo from './logo.svg';
+import Feedback from "../../containers/Feedback/Feedback";
 
 const LandingSidebarContainer = styled.div`
   background-color: #8A7BEC;
@@ -112,8 +113,9 @@ const LandingSidebar = () => {
                 </TitleWrapper>
             </TitleContainer>
             <LoginButton onClick={loginWithRedirect}>Iniciar sesión</LoginButton>
-            <HowItWorks href="https://www.youtube.com/watch?v=QZUcViUc5PU" target="_blank" rel="noopener">Cómo funciona</HowItWorks>
+            <HowItWorks href="https://www.youtube.com/watch?v=QZUcViUc5PU" target="_blank" rel="noopener">¿Cómo funciona?</HowItWorks>
             <Spacer/>
+            <Feedback/>
             <MadeIn>Con <span role="img" aria-label="heart"> ❤️</span> para Colombia</MadeIn>
         </LandingSidebarContainer>
     );
