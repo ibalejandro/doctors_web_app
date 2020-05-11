@@ -92,7 +92,7 @@ const registrationCard = ({
         <RegistrationCardContainer>
             <StyledCardDiv>
                 <StyledCardTitle>Regístrate como médico voluntario</StyledCardTitle>
-                <StyledRequiredSignLabel>* Requerido</StyledRequiredSignLabel>
+                <StyledRequiredSignLabel><span>*</span>Requerido</StyledRequiredSignLabel>
                 <StyledInputLabel>Nombre <StyledRequiredSignSpan>*</StyledRequiredSignSpan></StyledInputLabel>
                 <small>{nameError}</small>
                 <StyledInput

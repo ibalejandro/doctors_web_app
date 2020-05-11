@@ -279,8 +279,7 @@ const DoctorRegistration = () => {
     return (
       <div>
           <Modal
-              show={showModal}
-              errorStyle={registrationResult.errorStyle}>
+              show={showModal}>
               <RegistrationResult
                 title={registrationResult.title}
                 body={registrationResult.body}

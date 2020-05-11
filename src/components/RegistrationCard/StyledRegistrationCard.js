@@ -4,7 +4,7 @@ export const RegistrationCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 `
 
 export const StyledCardDiv = styled.div`
@@ -68,7 +68,7 @@ export const StyledRegisterButton = styled.button`
 
 export const StyledRegisteringLoader = styled.div`
   margin-left: 10px;
-    & > div {
+    & > div > div {
       width: auto;
       height: auto;
     }
@@ -78,7 +78,9 @@ export const StyledRequiredSignSpan = styled.span`
     color: #D93025;
 `;
 
-export const StyledRequiredSignLabel = styled.label`
-    color: #D93025;
-    margin: 0 0 25px 0;
+export const StyledRequiredSignLabel = styled.div`
+    span {
+        color: #D93025;
+        margin-right: 5px;
+    }
 `;
