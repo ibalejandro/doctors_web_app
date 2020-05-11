@@ -68,7 +68,7 @@ export const StyledRegisterButton = styled.button`
 
 export const StyledRegisteringLoader = styled.div`
   margin-left: 10px;
-    & > div {
+    & > div > div {
       width: auto;
       height: auto;
     }

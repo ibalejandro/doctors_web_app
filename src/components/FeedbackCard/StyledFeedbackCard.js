@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import React from "react";
 
+
+export const StyledLoader = styled.div`
+  margin-left: 10px;
+    & > div {
+      width: auto;
+      height: auto;
+    }`
+
 export const StyledSendButton = styled.button`
     width: 100%;
     background-color: #99FFA7;
@@ -8,7 +16,7 @@ export const StyledSendButton = styled.button`
     color: #264C28;
     border: solid 1px #99FFA7;
     padding: 4px;
-    
+
     &:focus {
         outline: none;
     }
@@ -26,7 +34,7 @@ export const StyledCardSubDiv = styled.div`
     flex-direction: row;
     align-items: center;
     position: relative;
-    
+
     svg {
       width: 20px;
       height: auto;

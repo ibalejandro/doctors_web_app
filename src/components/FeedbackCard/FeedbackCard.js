@@ -1,11 +1,14 @@
 import React from "react";
 import {
     StyledCancelIconContainer,
-    StyledCardSubDiv, StyledCardTitle, StyledErrorParagraph,
+    StyledCardSubDiv,
+    StyledCardTitle,
+    StyledErrorParagraph,
     StyledFeedbackTextArea,
-    StyledSendButton
+    StyledSendButton,
 } from "./StyledFeedbackCard";
 import {ReactComponent as CancelIcon} from "./assets/cancel.svg";
+
 
 const feedbackCard = ({
                           title, feedback, body, buttonText, errorMessage, disableSend, onCancelClicked,
@@ -36,10 +39,11 @@ const feedbackCard = ({
                 <StyledCardTitle>{title}</StyledCardTitle>
                 {cancelIcon}
             </StyledCardSubDiv>
-           {content}
+            {content}
             <StyledSendButton
                 disabled={disableSend}
-                onClick={onSendClicked}>{buttonText}
+                onClick={onSendClicked}>
+                {buttonText} {disableSend ? "(Enviando...)" : null}
             </StyledSendButton>
             <StyledErrorParagraph>{errorMessage}</StyledErrorParagraph>
         </div>
