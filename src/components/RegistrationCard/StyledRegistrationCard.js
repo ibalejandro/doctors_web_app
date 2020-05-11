@@ -78,7 +78,9 @@ export const StyledRequiredSignSpan = styled.span`
     color: #D93025;
 `;
 
-export const StyledRequiredSignLabel = styled.label`
-    color: #D93025;
-    margin: 0 0 25px 0;
+export const StyledRequiredSignLabel = styled.div`
+    span {
+        color: #D93025;
+        margin-right: 5px;
+    }
 `;

@@ -86,7 +86,7 @@ const LandingMainContent = () => {
                     <DoctorRegistration/>
                 </RegistrationForm>
 
-                <Feedback/>
+
             </Content>
         </LandingMainContentContainer>
     );

@@ -41,6 +41,7 @@ export const StyledCancelIconContainer = styled.div`
 
 export const StyledCardTitle = styled.h4`
     font-weight: bold;
+    color: black;
 `;
 
 export const StyledErrorParagraph = styled.p`
