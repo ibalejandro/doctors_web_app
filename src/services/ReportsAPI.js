@@ -184,9 +184,9 @@ class ReportsAPI {
     static getSubmissionDate(submissionTimestamp) {
         const date = new Date(parseInt(submissionTimestamp));
         let submissionMonth = (date.getMonth() + 1).toString();
-        submissionMonth = date.length > 1 ? submissionMonth : '0' + submissionMonth;
+        submissionMonth = submissionMonth.length > 1 ? submissionMonth : '0' + submissionMonth;
         let submissionDay = date.getDate().toString();
-        submissionDay = date.length > 1 ? submissionDay : '0' + submissionDay;
+        submissionDay = submissionDay.length > 1 ? submissionDay : '0' + submissionDay;
         const submissionDate = [date.getFullYear(), submissionMonth, submissionDay].join('-');
         return submissionDate;
     }
