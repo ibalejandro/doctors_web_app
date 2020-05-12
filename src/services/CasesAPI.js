@@ -135,7 +135,7 @@ class CasesAPI {
         }
     }
 
-    static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, token) {
+    static async updateDiagnosisAndConductForCase(doctorId, patientId, caseId, diagnosis, conduct, risk, token) {
         try {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
@@ -147,7 +147,8 @@ class CasesAPI {
                     "patient_id": patientId,
                     "report_id": caseId,
                     "diagnose": diagnosis,
-                    "conduct": conduct
+                    "conduct": conduct,
+                    "risk": risk ? risk : null
                 },
                 method: 'put'
             });
