@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    StyledCancelIconContainer,
+    StyledCancelIconContainer, StyledCardMessage,
     StyledCardSubDiv,
     StyledCardTitle,
     StyledErrorParagraph,
@@ -30,7 +30,7 @@ const feedbackCard = ({
     );
     if (body) {
         cancelIcon = null;
-        content = <p>{body}</p>
+        content = <StyledCardMessage>{body}</StyledCardMessage>
     }
 
     return (
@@ -43,7 +43,7 @@ const feedbackCard = ({
             <StyledSendButton
                 disabled={disableSend}
                 onClick={onSendClicked}>
-                {buttonText} {disableSend ? "(Enviando...)" : null}
+                {buttonText}
             </StyledSendButton>
             <StyledErrorParagraph>{errorMessage}</StyledErrorParagraph>
         </div>

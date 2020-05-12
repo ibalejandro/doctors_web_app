@@ -55,4 +55,9 @@ export const StyledCardTitle = styled.h4`
 export const StyledErrorParagraph = styled.p`
     text-align: center;
     margin: 0px;
+    color: black;
+`;
+
+export const StyledCardMessage = styled.p`
+    color: black;
 `;

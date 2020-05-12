@@ -31,6 +31,7 @@ const Feedback = () => {
         if (!body) {
             if (feedback.trim() !== '') {
                 setDisableSend(true);
+                setButtonText("Enviando...");
                 const feedbackResult = await CasesAPI.sendFeedback(feedback.trim());
                 if (!feedbackResult.sendMessage) {
                     setTitle("¡Gracias por ayudarnos a mejorar!");
@@ -39,6 +40,7 @@ const Feedback = () => {
                     setButtonText("Entendido");
                     setErrorMessage('');
                 } else {
+                    setButtonText("Enviar");
                     setErrorMessage(feedbackResult.sendMessage);
                 }
                 setDisableSend(false);
