@@ -16,6 +16,7 @@ import ConductCard from "../../components/ConductCard/ConductCard";
 import {addViewerToReport} from "../../services/Firebase/FirebaseViewers";
 import CaseDetailUserInfo from "../../components/CaseDetailUserInfo/CaseDetailUserInfo";
 import VideoCallExplanation from "../../containers/VideoCallExplanation/VideoCallExplanation";
+import RiskFactorCard from "../../components/RiskFactorCard/RiskFactorCard";
 
 const CaseDetail = () => {
 
@@ -35,12 +36,19 @@ const CaseDetail = () => {
         conduct: '',
         date: ''
     });
+    const [riskLevel, setRiskLevel] = useState(null)
     const [diagnosisSaveDisabled, setDiagnosisSaveDisabled] = useState(true);
     const [conductSaveDisabled, setConductSaveDisabled] = useState(true);
     const [diagnosisSavingResultMessage, setDiagnosisSavingResultMessage] = useState(null);
     const [conductSavingResultMessage, setConductSavingResultMessage] = useState(null);
     const [caseStateUpdatingResultMessage, setCaseStateUpdatingResultMessage] = useState(null);
     const [caseStateChangeLoading, setCaseStateChangeLoading] = useState(false);
+    const [riskLevelResultMessage, setRiskLevelResultMessage] = useState("")
+
+    const [updatingDiagnosis, setUpdatingDiagnosis] = useState(false)
+    const [updatingConduct, setUpdatingConduct] = useState(false)
+    const [updatingRiskLevel, setUpdatingRiskLevel] = useState(false)
+
     const firebaseViewerRef = useRef(null)
 
     useEffect(() => {
@@ -109,6 +117,7 @@ const CaseDetail = () => {
         const loadDiagnosisAndConduct = async (id, token) => {
             const diagnosisAndConduct = await CasesAPI.getDiagnosisAndConductForCase(id, token);
             setDiagnosisAndConduct(diagnosisAndConduct);
+            setRiskLevel(diagnosisAndConduct.risk)
         };
         if (isAuthenticated && token)
             loadDiagnosisAndConduct(id, token);
@@ -146,10 +155,20 @@ const CaseDetail = () => {
     };
 
     const onDiagnosisSaved = async () => {
+        setUpdatingDiagnosis(true)
         const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
-            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, riskLevel, token);
         setDiagnosisSavingResultMessage(response.updateMessage);
+        setUpdatingDiagnosis(false)
     };
+
+    const onRiskAssessmentSaved = async () => {
+        setUpdatingRiskLevel(true)
+        const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub,
+            report.patientId, id, diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, riskLevel, token)
+        setRiskLevelResultMessage(response.updateMessage)
+        setUpdatingRiskLevel(false)
+    }
 
     const onConductChange = (conduct) => {
         let newDiagnosisAndConduct = {...diagnosisAndConduct, conduct};
@@ -162,9 +181,11 @@ const CaseDetail = () => {
     };
 
     const onConductSaved = async () => {
+        setUpdatingConduct(true)
         const response = await CasesAPI.updateDiagnosisAndConductForCase(user.sub, report.patientId, id,
-            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, token);
+            diagnosisAndConduct.diagnosis, diagnosisAndConduct.conduct, riskLevel, token);
         setConductSavingResultMessage(response.updateMessage);
+        setUpdatingConduct(false)
     };
 
     if (loading) return <div>Cargando...</div>
@@ -201,6 +222,7 @@ const CaseDetail = () => {
                         patientId={report.patientId}
                         token={token}/>
                     <DiagnosticCard
+                        loadingDiagnostic={updatingDiagnosis}
                         style={{gridAre: "diagnosis"}}
                         onDiagnosisChange={onDiagnosisChange}
                         diagnosis={diagnosisAndConduct.diagnosis}
@@ -209,6 +231,7 @@ const CaseDetail = () => {
                         saveDisabled={diagnosisSaveDisabled}
                         savingResultMessage={diagnosisSavingResultMessage}/>
                     <ConductCard
+                        loadingConduct={updatingConduct}
                         style={{gridAre: "conduct"}}
                         onConductChange={onConductChange}
                         cardHeader="Conducta"
@@ -219,6 +242,13 @@ const CaseDetail = () => {
                         onConductSaved={onConductSaved}
                         saveDisabled={conductSaveDisabled}
                         savingResultMessage={conductSavingResultMessage}/>
+                    <RiskFactorCard
+                        savedResultMessage={riskLevelResultMessage}
+                        onSave={onRiskAssessmentSaved}
+                        loadingRiskLevel={updatingRiskLevel}
+                        level={riskLevel} onLevelChanged={(level) => {
+                        setRiskLevel(level)
+                    }}/>
                 </Col>
             </Row>
         </Container>

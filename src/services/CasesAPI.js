@@ -55,7 +55,7 @@ class CasesAPI {
             const response = await axios({
                 url: DOCTORS_API_URL + '/diagnostic',
                 params: {
-                    "report_id": caseId,
+                    "report_id": caseId
                 },
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -63,10 +63,12 @@ class CasesAPI {
                 method: 'get'
             });
             const userCase = response.data;
+
             return {
                 diagnosis: userCase.message[0].diagnose,
                 conduct: userCase.message[0].conduct,
-                date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date)
+                date: this.getDiagnosisDate(userCase.message[0]._diagnostic_date),
+                risk: userCase.message[0].risk || null
             };
         } catch (error) {
             if (error && error.response && error.response.status !== 404)

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Form } from 'react-bootstrap';
 
-const DiagnosticCard = ({onDiagnosisChange, diagnosis, onDiagnosisSaved, saveDisabled, date, savingResultMessage}) => {
+const DiagnosticCard = ({loadingDiagnostic, onDiagnosisChange, diagnosis, onDiagnosisSaved, saveDisabled, date, savingResultMessage}) => {
     const diagnosisChangeHandler = (event) => {
         onDiagnosisChange(event.target.value);
     };
@@ -26,7 +26,8 @@ const DiagnosticCard = ({onDiagnosisChange, diagnosis, onDiagnosisSaved, saveDis
                       type="button"
                       className="btn btn-primary mt-4"
                       onClick={onDiagnosisSaved}
-                      disabled={saveDisabled}>Guardar
+                      disabled={saveDisabled}>
+                      {loadingDiagnostic?"Guardando...":"Guardar"}
                   </button>
                   <p className="text-center">{savingResultMessage}</p>
               </div>
