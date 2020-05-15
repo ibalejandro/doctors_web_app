@@ -123,6 +123,10 @@ const CaseDetail = () => {
             loadDiagnosisAndConduct(id, token);
     }, [id, isAuthenticated, token])
 
+    useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: "smooth"})
+    }, []);
+
     const caseStateHandler = async (index) => {
         if (!caseStateChangeLoading) {
             setCaseStateChangeLoading(true);
