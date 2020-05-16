@@ -14,6 +14,7 @@ import {Route, Switch} from "react-router";
 import Logout from "./containers/Logout/Logout";
 import DoctorRegistration from "./containers/DoctorRegistration/DoctorRegistration";
 import Landing from "./containers/Landing/Landing";
+import Maintenance from "./containers/Maintenance/Maintenance";
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
             <Router>
                 <Switch>
                     <Route path={"/"} exact>
-                        <Landing/>
+                        <Maintenance/>
                     </Route>
                     <PrivateRoute path={"/reports"} exact>
                         <NavBar/>

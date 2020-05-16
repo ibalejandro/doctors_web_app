@@ -1,0 +1,109 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+section {
+    background-color: white;
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column;
+    max-width: 600px;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 40px !important;
+}
+
+p {
+    font-size: 1.5em;
+    color: #7d7d7d;
+    font-weight: 300;
+}
+
+.email-container {
+    margin-top: 30px;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    max-width: 400px;
+}
+
+#email-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    background-color: #ececec;
+    border: none;
+    font-size: 1em;
+    padding: 10px;
+    font-weight: 600;
+}
+
+#email-input:focus {
+    outline: none;
+}
+
+button {
+    background-color: #8A7BEC;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    height: 100%;
+    width: 100px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+
+.triangle {
+    width: 0;
+    height: 0;
+    border: 150px solid #8A7BEC;
+    border-bottom: 150px solid transparent;
+    border-right: 150px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.logo {
+    color: white;
+    position: absolute;
+    font-size: 30px;
+    top: 40px;
+    left: 25px;
+    font-weight: 800;
+}
+
+@media (max-width: 600px) {
+    .triangle {
+        display: none;
+    }
+    .logo {
+        display: none;
+    }
+    .logo-text {
+        display: none;
+    }
+}
+
+.logo > .logo-text {
+    transform: scale(0.7) translateY(-20px) translateX(22px);
+    text-align: end;
+}
+
+.logo-text > img {
+    width: 25px;
+    display: inline;
+}
